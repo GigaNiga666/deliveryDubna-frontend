@@ -100,7 +100,7 @@ const Saloon = () => {
                                                 }
                                             </div>
                                             <Link href={`${saloonId}/product/${dish.id}`}>
-                                                <img src={dish.image} alt={dish.name}/>
+                                                <img className={"w-full object-cover"} src={dish.image} alt={dish.name}/>
                                             </Link>
                                             <p className={"mb-1 font-semibold"}>
                                                 <span>{dish.price}</span>
