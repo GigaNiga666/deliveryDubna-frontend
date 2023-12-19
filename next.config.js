@@ -1,4 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const withPlugins = require("next-compose-plugins");
+const withImages = require("next-images");
 
-module.exports = nextConfig
+const nextConfig = {
+    images : {
+        formats : ['image/webp'],
+        disableStaticImages: true
+    },
+    reactStrictMode: false,
+    env : {
+        API_URL: "https://deliverydubna.onrender.com/api/v1"
+    },
+}
+
+module.exports = withPlugins([withImages], nextConfig)
