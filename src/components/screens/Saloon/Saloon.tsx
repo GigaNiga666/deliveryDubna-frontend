@@ -1,11 +1,13 @@
 import styles from "./Saloon.module.scss";
 import {SvgSprite} from "@/components/ui/SvgSprite/SvgSprite";
 import {useQuery} from "react-query";
-import {useParams} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import {saloonService} from "@/components/sevices/SaloonService";
 import Link from "next/link";
 import {useCart} from "@/components/hooks/useCart";
 import {Dish} from "@/components/types/Dish";
+import {useTelegram} from "@/components/hooks/useTelegram";
+import {useEffect} from "react";
 
 const Saloon = () => {
 
@@ -17,6 +19,21 @@ const Saloon = () => {
     if (!data) return <>Данные по какой-то неизвестной причине отсутствуют(</>
 
     const {cart, addFromCart, removeFromCart} = useCart()
+
+    const {tg} = useTelegram()
+    const router = useRouter()
+
+    useEffect(() => {
+
+        if (cart.length) {
+            tg.MainButton.setParams({text: "Корзина"})
+            tg.MainButton.show()
+            tg.MainButton.onClick(() => {
+                router.push("/cart")
+            })
+        }
+
+    }, [])
 
     function clickButton(category : string) {
         document.querySelector(`#${category}`)?.scrollIntoView({block: "start", behavior: "smooth"})
@@ -30,8 +47,6 @@ const Saloon = () => {
         target.parentElement?.classList.add(styles.btnWrapper)
         counter.classList.replace("hidden",styles.counter)
         counter.textContent = String(addFromCart(dish, +saloonId, data?.saloon.name as string))
-
-        console.log(cart)
     }
 
     function removeDishFromCart(target : EventTarget & HTMLButtonElement, dish : Dish) {
@@ -47,13 +62,10 @@ const Saloon = () => {
         }
 
         counter.textContent = count
-
-        console.log(cart)
     }
 
     return (
         <>
-            <Link href={'/cart'}>Cart</Link>
             <header className={"h-[250px] mb-9 relative"}>
                 <img className={styles.headerImg} src={data.saloon.image} alt={data.saloon.name}/>
                 <div className={"absolute top-[25%] pl-6"}>

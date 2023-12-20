@@ -9,7 +9,7 @@ const nextConfig = {
     },
     reactStrictMode: false,
     env : {
-        API_URL: "https://deliverydubna.onrender.com/api/v1"
+        API_URL: "http://localhost:5000/api/v1"
     },
 }
 
