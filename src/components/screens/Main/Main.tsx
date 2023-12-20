@@ -6,14 +6,27 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 import {useCart} from "@/components/hooks/useCart";
 import {useRouter} from "next/navigation";
+import {useTelegram} from "@/components/hooks/useTelegram";
 
 const Main = () => {
 
     const { data, isLoading, isError, error} = useQuery("saloons", saloonService.getAll)
     const [categoryState, setCategory] = useState<string>("")
     const {cart} = useCart()
+    const {tg} = useTelegram()
     const router = useRouter()
 
+    useEffect(() => {
+
+        if (cart.length) {
+            tg.MainButton.setParams({text: "Корзина"})
+            tg.MainButton.show()
+            tg.MainButton.onClick(() => {
+                router.push("/cart")
+            })
+        }
+
+    },[])
 
     if (isLoading) return <>Идёт загрузка</>
 
