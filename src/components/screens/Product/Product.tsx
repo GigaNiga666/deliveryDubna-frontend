@@ -28,9 +28,9 @@ const Product = () => {
     useEffect(() => {
 
         tg?.BackButton.show()
-        tg?.BackButton.onClick(() => {
-            backBtnClick()
-        })
+        // tg?.BackButton.onClick(() => {
+        //     backBtnClick()
+        // })
 
         if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина"})
