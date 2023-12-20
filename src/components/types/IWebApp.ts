@@ -248,6 +248,7 @@ interface BackButton {
     isVisible: boolean;
 
     onClick(callback: Function): BackButton;
+    offClick(callback: Function): BackButton;
 
     show(): BackButton;
 

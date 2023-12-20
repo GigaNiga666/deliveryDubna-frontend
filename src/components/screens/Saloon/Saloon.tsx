@@ -19,6 +19,11 @@ const Saloon = () => {
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
 
+    const backBtnClick = () => {
+        router.push("/cart")
+        tg?.BackButton.offClick(backBtnClick)
+    }
+
     useEffect(() => {
 
         tg?.BackButton.show()
@@ -27,7 +32,7 @@ const Saloon = () => {
         })
         tg?.MainButton.setParams({text: "Корзина"})
         tg?.MainButton.onClick(() => {
-            router.push("/cart")
+            backBtnClick()
         })
 
         if (cart.length) tg?.MainButton.show()
