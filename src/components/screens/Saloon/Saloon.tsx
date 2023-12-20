@@ -6,7 +6,8 @@ import {saloonService} from "@/components/sevices/SaloonService";
 import Link from "next/link";
 import {useCart} from "@/components/hooks/useCart";
 import {Dish} from "@/components/types/Dish";
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
+import {TelegramContext} from "@/components/providers/TelegramProvider";
 
 const Saloon = () => {
 
@@ -20,6 +21,19 @@ const Saloon = () => {
     const {cart, addFromCart, removeFromCart} = useCart()
 
     const router = useRouter()
+    const tg = useContext(TelegramContext)
+
+    useEffect(() => {
+
+        if (cart.length && tg) {
+            tg.MainButton.setParams({text: "Корзина"})
+            tg.MainButton.show()
+            tg.MainButton.onClick(() => {
+                router.push("/cart")
+            })
+        }
+
+    },[])
 
 
     function clickButton(category : string) {
