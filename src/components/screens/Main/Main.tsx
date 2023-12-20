@@ -38,6 +38,12 @@ const Main = () => {
         setCategory(category)
     }
 
+    const saloons = data.saloons.filter(saloon => {
+        const checkCategory = !categoryState || saloon.category === categoryState
+
+        return search === '' ? checkCategory : checkCategory && saloon.name.toLowerCase().includes(search.toLowerCase())
+    })
+
     return (
         <>
             <header className={styles.header}>
@@ -76,29 +82,25 @@ const Main = () => {
                 <h2 className={"font-semibold text-3xl mb-4"}>Рестораны</h2>
                 <ul className="flex flex-col gap-7">
                     {
-                        data.saloons.map(saloon =>
+                        saloons.map(saloon =>
 
-                            (search !== "" && saloon.name.includes(search)) || categoryState === saloon.category || categoryState === "" ?
-
-                                <li className={styles.saloon} key={saloon.id + saloon.name}>
-                                    <Link className={"mb-2.5 h-32"} href={`saloon/${saloon.id}`}>
-                                        <img src={saloon.image} alt={saloon.name}/>
-                                    </Link>
-                                    <Link className="font-semibold text-xl"
-                                          href={`saloon/${saloon.id}`}>{saloon.name}</Link>
-                                    <div>
-                                        <div className={"flex items-center mt-1"}>
-                                            <SvgSprite id={"star"} width={20} height={20}
-                                                       classname={"text-[#ED8A19]"}/>
-                                            <p className={"ml-2 mr-5"}>{saloon.rating} ({saloon.rating_quantity})</p>
-                                            <p>₽</p>
-                                            <p className={saloon.price === 1 || saloon.price === 1 ? "font-light text-[#B1B1B1]" : ""}>₽</p>
-                                            <p className={saloon.price <= 2 ? "font-light text-[#B1B1B1]" : ""}>₽</p>
-                                        </div>
+                            <li className={styles.saloon} key={saloon.id + saloon.name}>
+                                <Link className={"mb-2.5 h-32"} href={`saloon/${saloon.id}`}>
+                                    <img src={saloon.image} alt={saloon.name}/>
+                                </Link>
+                                <Link className="font-semibold text-xl"
+                                      href={`saloon/${saloon.id}`}>{saloon.name}</Link>
+                                <div>
+                                    <div className={"flex items-center mt-1"}>
+                                        <SvgSprite id={"star"} width={20} height={20}
+                                                   classname={"text-[#ED8A19]"}/>
+                                        <p className={"ml-2 mr-5"}>{saloon.rating} ({saloon.rating_quantity})</p>
+                                        <p>₽</p>
+                                        <p className={saloon.price === 1 || saloon.price === 1 ? "font-light text-[#B1B1B1]" : ""}>₽</p>
+                                        <p className={saloon.price <= 2 ? "font-light text-[#B1B1B1]" : ""}>₽</p>
                                     </div>
-                                </li>
-
-                                : null
+                                </div>
+                            </li>
 
                         )
                     }
