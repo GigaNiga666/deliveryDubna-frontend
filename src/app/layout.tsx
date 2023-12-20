@@ -5,6 +5,7 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {useEffect} from "react";
 import Head from "next/head";
 import {IWebApp} from "@/components/types/IWebApp";
+import {init} from "@/components/hooks/useTelegram"
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
 
@@ -17,13 +18,14 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
     })
 
     useEffect(() => {
-        const tg = (window as any).Telegram?.WebApp as IWebApp
+        const app = (window as any).Telegram?.WebApp as IWebApp
+        init(app)
 
-        tg.ready()
-        tg.expand()
+        app.ready()
+        app.expand()
 
-        tg.onEvent('viewportChanged', () => {
-            if (!tg.isExpanded) tg.expand()
+        app.onEvent('viewportChanged', () => {
+            if (!app.isExpanded) app.expand()
         })
     }, [])
 
