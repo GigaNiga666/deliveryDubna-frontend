@@ -17,7 +17,7 @@ const Product = () => {
     const amountInCart = cart.find(value => value.dish.id === Number(productId))
     const [counter, setCounter] = useState<number>(!amountInCart ? 0 : amountInCart.count)
 
-    const tg = useContext(TelegramContext)
+    const {tg} = useContext(TelegramContext)
     const router = useRouter()
 
     useEffect(() => {
@@ -28,7 +28,7 @@ const Product = () => {
         })
 
         if (cart.length && tg) {
-            tg.MainButton.setParams({text: "Корзина"})
+            tg.MainButton.setParams({text: "Корзина", color : "black", text_color: "white"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {
                 router.push("/cart")

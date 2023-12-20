@@ -1,7 +1,12 @@
 import {createContext, FC, PropsWithChildren, useEffect, useMemo, useState} from "react";
-import {IWebApp} from "@/components/types/IWebApp";
+import {IWebApp, WebAppUser} from "@/components/types/IWebApp";
 
-export const TelegramContext = createContext<IWebApp | null>(null);
+interface TelegramContext {
+    tg? : IWebApp,
+    user? : WebAppUser
+}
+
+export const TelegramContext = createContext<TelegramContext>({});
 
 const TelegramProvider : FC<PropsWithChildren> = ({children}) => {
 
@@ -14,18 +19,16 @@ const TelegramProvider : FC<PropsWithChildren> = ({children}) => {
 
         if (app) {
             app.ready()
-            app.expand()
-
-            app.onEvent('viewportChanged', () => {
-                if (!app.isExpanded) app.expand()
-            })
             setWebApp(app)
         }
 
     }, [])
 
     const value = useMemo(() => {
-        return webApp
+        return webApp ? {
+            tg : webApp,
+            user : webApp.initDataUnsafe.user
+        } : {}
     }, [webApp]);
 
     return (

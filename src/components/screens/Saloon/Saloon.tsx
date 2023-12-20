@@ -17,7 +17,7 @@ const Saloon = () => {
     const {cart, addFromCart, removeFromCart} = useCart()
 
     const router = useRouter()
-    const tg = useContext(TelegramContext)
+    const {tg} = useContext(TelegramContext)
 
     useEffect(() => {
 
@@ -25,7 +25,7 @@ const Saloon = () => {
         tg?.BackButton.onClick(() => {
             router.push("/")
         })
-        tg?.MainButton.setParams({text: "Корзина"})
+        tg?.MainButton.setParams({text: "Корзина", color : "black", text_color: "white"})
         tg?.MainButton.onClick(() => {
             router.push("/cart")
         })

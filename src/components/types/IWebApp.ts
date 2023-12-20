@@ -139,7 +139,7 @@ interface WebAppInitData {
     hash?: string;
 }
 
-interface WebAppUser {
+export interface WebAppUser {
     /**
      * A unique identifier for the user or bot.
      */

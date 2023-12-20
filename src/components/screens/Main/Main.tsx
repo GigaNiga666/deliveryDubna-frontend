@@ -13,13 +13,13 @@ const Main = () => {
     const { data, isLoading, isError, error} = useQuery("saloons", saloonService.getAll)
     const [categoryState, setCategory] = useState<string>("")
     const {cart} = useCart()
-    const tg = useContext(TelegramContext)
+    const {tg} = useContext(TelegramContext)
     const router = useRouter()
 
     useEffect(() => {
 
         if (cart.length && tg) {
-            tg.MainButton.setParams({text: "Корзина"})
+            tg.MainButton.setParams({text: "Корзина", color : "black", text_color: "white"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {
                 router.push("/cart")

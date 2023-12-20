@@ -1,12 +1,26 @@
 import styles from "./Cart.module.scss"
 import {OrderCard} from "@/components/screens/Cart/components/OrderCard/OrderCard";
 import {DishCart, useCart} from "@/components/hooks/useCart";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
+import {TelegramContext} from "@/components/providers/TelegramProvider";
 
 const Cart = () => {
 
     const {cart} = useCart()
     const [cartState, setCartState] = useState<{dish : DishCart, count : number}[]>(cart)
+
+    const router = useRouter()
+    const {tg} = useContext(TelegramContext)
+
+    useEffect(() => {
+
+        tg?.BackButton.show()
+        tg?.BackButton.onClick(() => {
+            router.back()
+        })
+
+    },[])
 
     return (
         <div className={styles.cart}>
