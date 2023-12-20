@@ -1,12 +1,11 @@
 import {IWebApp} from "@/components/types/IWebApp";
+import {useEffect} from "react";
 
-let tg : IWebApp;
-
-export function init(app : IWebApp) {
-    tg = app
-}
 
 export function useTelegram() {
+
+    const tg = (window as any).Telegram?.WebApp as IWebApp
+
 
     return {
         tg,
