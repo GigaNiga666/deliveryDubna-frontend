@@ -14,13 +14,6 @@ const Main = () => {
     const {cart} = useCart()
     const router = useRouter()
 
-    useEffect(() => {
-        // @ts-ignore
-        const app = window.Telegram?.WebApp
-
-        app.ready()
-        app.expand()
-    },[])
 
     if (isLoading) return <>Идёт загрузка</>
 

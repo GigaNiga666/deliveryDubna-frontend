@@ -20,18 +20,26 @@ export default function RootLayout({children}:{ children: React.ReactNode }) {
   //   if (!tg.isExpanded) tg.expand()
   // })
 
+  useEffect(() => {
+    // @ts-ignore
+    const app = window.Telegram?.WebApp
+
+    app.ready()
+    app.expand()
+  },[])
+
 
   return (
-    <html lang="en">
-    <Head>
-      <title>DeliveryDubna</title>
-    </Head>
-    <body>
+      <html lang="en">
+      <Head>
+        <title>DeliveryDubna</title>
+      </Head>
       <script src="https://telegram.org/js/telegram-web-app.js"></script>
+      <body>
       <QueryClientProvider client={queryClient}>
         {children}
       </QueryClientProvider>
-    </body>
-    </html>
+      </body>
+      </html>
   )
 }
