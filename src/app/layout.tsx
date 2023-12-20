@@ -3,7 +3,6 @@
 import './globals.scss'
 import {QueryClient, QueryClientProvider} from "react-query";
 import {useEffect} from "react";
-import Script from "next/script";
 import Head from "next/head";
 export default function RootLayout({children}:{ children: React.ReactNode }) {
 
@@ -23,17 +22,17 @@ export default function RootLayout({children}:{ children: React.ReactNode }) {
 
   useEffect(() => {
     // @ts-ignore
-    // const app = window.Telegram?.WebApp
-    //
-    // app.ready()
-    // app.expand()
+    const app = window.Telegram?.WebApp
+
+    app.ready()
+    app.expand()
   },[])
 
   return (
     <html lang="en">
     <Head>
       <title>DeliveryDubna</title>
-      <Script src="https://telegram.org/js/telegram-web-app.js" strategy={"beforeInteractive"}></Script>
+      <script src="https://telegram.org/js/telegram-web-app.js"></script>
     </Head>
     <body>
       <QueryClientProvider client={queryClient}>
