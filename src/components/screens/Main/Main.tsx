@@ -66,7 +66,7 @@ const Main = () => {
                                         <img src={saloon.image} alt={saloon.name}/>
                                     </Link>
                                     <Link className="font-semibold text-xl"
-                                          href={`${saloon.id}`}>{saloon.name}</Link>
+                                          href={`saloon/${saloon.id}`}>{saloon.name}</Link>
                                     <div>
                                         <div className={"flex items-center mt-1"}>
                                             <SvgSprite id={"star"} width={20} height={20}
