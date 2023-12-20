@@ -5,7 +5,6 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {useEffect} from "react";
 import Head from "next/head";
 import {IWebApp} from "@/components/types/IWebApp";
-import {init} from "@/components/hooks/useTelegram"
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
 
