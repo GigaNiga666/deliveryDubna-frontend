@@ -19,7 +19,6 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
 
     useEffect(() => {
         const app = (window as any).Telegram?.WebApp as IWebApp
-        init(app)
 
         app.ready()
         app.expand()
