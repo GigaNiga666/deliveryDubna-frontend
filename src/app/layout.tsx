@@ -20,13 +20,6 @@ export default function RootLayout({children}:{ children: React.ReactNode }) {
   //   if (!tg.isExpanded) tg.expand()
   // })
 
-  useEffect(() => {
-    // @ts-ignore
-    const app = window.Telegram?.WebApp
-
-    app.ready()
-    app.expand()
-  },[])
 
   return (
     <html lang="en">
