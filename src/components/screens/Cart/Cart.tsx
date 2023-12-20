@@ -17,7 +17,7 @@ const Cart = () => {
 
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
-            router.back()
+            router.push("/")
         })
 
     },[])

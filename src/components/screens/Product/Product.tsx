@@ -21,16 +21,11 @@ const Product = () => {
     const {tg} = useContext(TelegramContext)
     const router = useRouter()
 
-    const backBtnClick = () => {
-        router.back()
-        tg?.offEvent("backButtonClicked", backBtnClick)
-    }
-
     useEffect(() => {
 
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
-           backBtnClick()
+            router.push(`/saloon/${saloonId}`)
         })
 
         if (cart.length && tg) {
