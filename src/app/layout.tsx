@@ -32,11 +32,11 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         <html lang="en">
         <Head>
             <title>DeliveryDubna</title>
-            <script src="https://telegram.org/js/telegram-web-app.js"></script>
         </Head>
-            <body>
-            <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-            </body>
+        <body>
+        <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        </body>
         </html>
     )
 }
