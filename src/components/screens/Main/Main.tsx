@@ -21,6 +21,8 @@ const Main = () => {
 
     useEffect(() => {
 
+        tg?.BackButton.hide()
+
         if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина"})
             tg.MainButton.show()

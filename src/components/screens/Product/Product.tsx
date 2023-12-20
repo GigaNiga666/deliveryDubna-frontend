@@ -30,7 +30,7 @@ const Product = () => {
 
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
-            backBtnClick()
+           backBtnClick()
         })
 
         if (cart.length && tg) {

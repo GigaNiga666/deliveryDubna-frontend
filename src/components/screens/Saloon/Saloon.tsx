@@ -20,11 +20,16 @@ const Saloon = () => {
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
 
+    const backBtnClick = () => {
+        router.back()
+        tg?.offEvent("backButtonClicked", backBtnClick)
+    }
+
     useEffect(() => {
 
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
-            router.back()
+            backBtnClick()
         })
         tg?.MainButton.setParams({text: "Корзина"})
         tg?.MainButton.onClick(() => {
