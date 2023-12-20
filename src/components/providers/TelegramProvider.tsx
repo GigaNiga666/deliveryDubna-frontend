@@ -26,11 +26,6 @@ const TelegramProvider : FC<PropsWithChildren> = ({children}) => {
     }, [])
 
     const value = useMemo(() => {
-
-        webApp?.BackButton.onClick(() => {
-            router.back()
-        })
-
         return webApp ? {
             tg : webApp,
             user : webApp.initDataUnsafe.user

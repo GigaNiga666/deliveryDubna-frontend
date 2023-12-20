@@ -7,10 +7,11 @@ import {useContext, useEffect, useState} from "react";
 import {useCart} from "@/components/hooks/useCart";
 import {useRouter} from "next/navigation";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
+import {router} from "next/client";
 
 const Main = () => {
 
-    const { data, isLoading, isError, error} = useQuery("saloons", saloonService.getAll)
+    const {data, isLoading, isError, error} = useQuery("saloons", saloonService.getAll)
     const [categoryState, setCategory] = useState<string>("")
     const [search, setSearch] = useState<string>("")
     const {cart} = useCart()
@@ -20,6 +21,10 @@ const Main = () => {
 
     useEffect(() => {
 
+        tg?.BackButton.onClick(() => {
+            router.back()
+        })
+
         if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина"})
             tg.MainButton.show()
@@ -28,7 +33,7 @@ const Main = () => {
             })
         }
 
-    },[])
+    }, [])
 
     if (isLoading) return <>Идёт загрузка</>
 
@@ -62,14 +67,17 @@ const Main = () => {
             <nav className="mb-2">
                 <ul className={styles.navList}>
                     <li>
-                        <button className={`${styles.navItemAll} ${categoryState === "" ? styles.active : ""}`} type="button" onClick={() => categoryClick("")}>
+                        <button className={`${styles.navItemAll} ${categoryState === "" ? styles.active : ""}`}
+                                type="button" onClick={() => categoryClick("")}>
                             <p>Все</p>
                         </button>
                     </li>
                     {
                         data.categories.map(category =>
                             <li key={category}>
-                                <button className={`${styles.navItem} ${category === categoryState ? styles.active : ""}`} type="button" onClick={() => categoryClick(category)}>
+                                <button
+                                    className={`${styles.navItem} ${category === categoryState ? styles.active : ""}`}
+                                    type="button" onClick={() => categoryClick(category)}>
                                     <SvgSprite id={category} width={30} height={30}/>
                                     <p>{category}</p>
                                 </button>
@@ -101,7 +109,6 @@ const Main = () => {
                                     </div>
                                 </div>
                             </li>
-
                         )
                     }
                 </ul>
