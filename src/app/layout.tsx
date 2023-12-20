@@ -22,7 +22,8 @@ export default function RootLayout({children}:{ children: React.ReactNode }) {
   // })
 
   useEffect(() => {
-    const app = (window as any).Telegram?.WebApp;
+    // @ts-ignore
+    const app = window.Telegram?.WebApp
 
     app.ready()
     app.expand()
@@ -35,9 +36,9 @@ export default function RootLayout({children}:{ children: React.ReactNode }) {
       <Script src="https://telegram.org/js/telegram-web-app.js" strategy={"beforeInteractive"}></Script>
     </Head>
     <body>
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
     </body>
     </html>
   )
