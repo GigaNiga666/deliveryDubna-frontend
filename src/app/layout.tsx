@@ -2,9 +2,7 @@
 
 import './globals.scss'
 import {QueryClient, QueryClientProvider} from "react-query";
-import {createContext, useEffect, useMemo, useState} from "react";
 import Head from "next/head";
-import {IWebApp} from "@/components/types/IWebApp";
 import {TelegramProvider} from "@/components/providers/TelegramProvider";
 
 

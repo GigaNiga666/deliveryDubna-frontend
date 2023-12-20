@@ -14,16 +14,17 @@ const Saloon = () => {
     const saloonId = useParams().saloon
     const {data, isError, error, isLoading} = useQuery("saloon"+saloonId, () => saloonService.getOne(saloonId as string))
 
-    if (isLoading) return <>Идёт загрузка</>
-
-    if (!data) return <>Данные по какой-то неизвестной причине отсутствуют(</>
-
     const {cart, addFromCart, removeFromCart} = useCart()
 
     const router = useRouter()
     const tg = useContext(TelegramContext)
 
     useEffect(() => {
+
+        tg?.BackButton.show()
+        tg?.BackButton.onClick(() => {
+            router.push("/")
+        })
 
         if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина"})
@@ -35,6 +36,9 @@ const Saloon = () => {
 
     },[])
 
+    if (isLoading) return <>Идёт загрузка</>
+
+    if (!data) return <>Данные по какой-то неизвестной причине отсутствуют(</>
 
     function clickButton(category : string) {
         document.querySelector(`#${category}`)?.scrollIntoView({block: "start", behavior: "smooth"})
