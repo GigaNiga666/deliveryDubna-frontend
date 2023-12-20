@@ -17,13 +17,13 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
     })
 
     useEffect(() => {
-        const app = (window as any).Telegram?.WebApp as IWebApp
+        const tg = (window as any).Telegram?.WebApp as IWebApp
 
-        app.ready()
-        app.expand()
+        tg.ready()
+        tg.expand()
 
-        app.onEvent('viewportChanged', () => {
-            if (!app.isExpanded) app.expand()
+        tg.onEvent('viewportChanged', () => {
+            if (!tg.isExpanded) tg.expand()
         })
     }, [])
 
