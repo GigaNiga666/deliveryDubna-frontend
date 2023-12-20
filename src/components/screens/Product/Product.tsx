@@ -21,6 +21,9 @@ const Product = () => {
     const {tg} = useContext(TelegramContext)
     const router = useRouter()
 
+    const backBtnClick = () => {
+        router.push("/cart")
+    }
 
     useEffect(() => {
 
@@ -33,7 +36,7 @@ const Product = () => {
             tg.MainButton.setParams({text: "Корзина"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {
-                router.push("/cart")
+                router.back()
             })
         }
 

@@ -1,7 +1,7 @@
 /**
  * Available app events.
  */
-type EventType = "themeChanged" | "viewportChanged" | "mainButtonClicked";
+type EventType = "themeChanged" | "viewportChanged" | "mainButtonClicked" | "backButtonClicked";
 
 export interface IWebApp {
     /**
