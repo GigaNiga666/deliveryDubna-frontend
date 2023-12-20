@@ -23,10 +23,10 @@ export default function RootLayout({children}:{ children: React.ReactNode }) {
 
   useEffect(() => {
     // @ts-ignore
-    const app = window.Telegram?.WebApp
-
-    app.ready()
-    app.expand()
+    // const app = window.Telegram?.WebApp
+    //
+    // app.ready()
+    // app.expand()
   },[])
 
   return (
