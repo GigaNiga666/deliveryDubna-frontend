@@ -28,7 +28,7 @@ const Saloon = () => {
         })
         tg?.MainButton.setParams({text: "Корзина"})
         tg?.MainButton.onClick(() => {
-            router.back()
+            router.push("/cart")
         })
 
         if (cart.length) tg?.MainButton.show()

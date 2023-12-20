@@ -22,21 +22,22 @@ const Product = () => {
     const router = useRouter()
 
     const backBtnClick = () => {
-        router.push("/cart")
+        router.back()
+        tg?.offEvent("backButtonClicked", backBtnClick)
     }
 
     useEffect(() => {
 
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
-            router.back()
+            backBtnClick()
         })
 
         if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {
-                router.back()
+                router.push("/cart")
             })
         }
 
