@@ -12,14 +12,16 @@ const Main = () => {
 
     const { data, isLoading, isError, error} = useQuery("saloons", saloonService.getAll)
     const [categoryState, setCategory] = useState<string>("")
+    const [search, setSearch] = useState<string>("")
     const {cart} = useCart()
     const {tg} = useContext(TelegramContext)
     const router = useRouter()
 
+
     useEffect(() => {
 
         if (cart.length && tg) {
-            tg.MainButton.setParams({text: "Корзина", color : "#000000", text_color: "#fff"})
+            tg.MainButton.setParams({text: "Корзина"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {
                 router.push("/cart")
@@ -44,6 +46,10 @@ const Main = () => {
                     <input
                         type="text"
                         className={styles.searchInput}
+                        value={search}
+                        onInput={(event) => {
+                            setSearch(event.currentTarget.value)
+                        }}
                         placeholder='Искать...'/>
                 </div>
             </header>
@@ -72,7 +78,7 @@ const Main = () => {
                     {
                         data.saloons.map(saloon =>
 
-                            categoryState === saloon.category || categoryState === "" ?
+                            (search !== "" && saloon.name.includes(search)) || categoryState === saloon.category || categoryState === "" ?
 
                                 <li className={styles.saloon} key={saloon.id + saloon.name}>
                                     <Link className={"mb-2.5 h-32"} href={`saloon/${saloon.id}`}>
