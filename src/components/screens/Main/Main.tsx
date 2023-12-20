@@ -3,22 +3,22 @@ import {SvgSprite} from "@/components/ui/SvgSprite/SvgSprite";
 import {saloonService} from "@/components/sevices/SaloonService";
 import {useQuery} from "react-query";
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useCart} from "@/components/hooks/useCart";
 import {useRouter} from "next/navigation";
-import {useTelegram} from "@/components/hooks/useTelegram";
+import {TelegramContext} from "@/components/providers/TelegramProvider";
 
 const Main = () => {
 
     const { data, isLoading, isError, error} = useQuery("saloons", saloonService.getAll)
     const [categoryState, setCategory] = useState<string>("")
     const {cart} = useCart()
-    const {tg} = useTelegram()
+    const tg = useContext(TelegramContext)
     const router = useRouter()
 
     useEffect(() => {
 
-        if (cart.length) {
+        if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {

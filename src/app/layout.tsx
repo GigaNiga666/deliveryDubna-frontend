@@ -2,10 +2,11 @@
 
 import './globals.scss'
 import {QueryClient, QueryClientProvider} from "react-query";
-import {useEffect} from "react";
+import {createContext, useEffect, useMemo, useState} from "react";
 import Head from "next/head";
 import {IWebApp} from "@/components/types/IWebApp";
-import {useTelegram} from "@/components/hooks/useTelegram"
+import {TelegramProvider} from "@/components/providers/TelegramProvider";
+
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
 
@@ -17,18 +18,6 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         }
     })
 
-    const {tg} = useTelegram()
-
-    useEffect(() => {
-
-        tg.ready()
-        tg.expand()
-
-        tg.onEvent('viewportChanged', () => {
-            if (!tg.isExpanded) tg.expand()
-        })
-    }, [])
-
 
     return (
         <html lang="en">
@@ -37,7 +26,11 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         </Head>
         <body>
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+            <TelegramProvider>
+                {children}
+            </TelegramProvider>
+        </QueryClientProvider>
         </body>
         </html>
     )
