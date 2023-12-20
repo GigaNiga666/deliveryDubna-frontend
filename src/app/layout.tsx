@@ -5,7 +5,6 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {useEffect} from "react";
 import Head from "next/head";
 import {IWebApp} from "@/components/types/IWebApp";
-import {useTelegram} from "@/components/hooks/useTelegram";
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
 
@@ -17,9 +16,8 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         }
     })
 
-    const {tg} = useTelegram()
-
     useEffect(() => {
+        const tg = (window as any).Telegram?.WebApp as IWebApp
 
         tg.ready()
         tg.expand()
