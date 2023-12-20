@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import styles from "./Product.module.scss"
 import {useQuery} from "react-query";
-import {useParams} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import {saloonService} from "@/components/sevices/SaloonService";
 import {useCart} from "@/components/hooks/useCart";
 import {Dish} from "@/components/types/Dish";
+import {TelegramContext} from "@/components/providers/TelegramProvider";
 
 const Product = () => {
 
@@ -16,6 +17,26 @@ const Product = () => {
     const amountInCart = cart.find(value => value.dish.id === Number(productId))
     const [counter, setCounter] = useState<number>(!amountInCart ? 0 : amountInCart.count)
 
+    const tg = useContext(TelegramContext)
+    const router = useRouter()
+
+    useEffect(() => {
+
+        tg?.BackButton.show()
+        tg?.BackButton.onClick(() => {
+            router.push(`/saloon/${saloonId}`)
+        })
+
+        if (cart.length && tg) {
+            tg.MainButton.setParams({text: "Корзина"})
+            tg.MainButton.show()
+            tg.MainButton.onClick(() => {
+                router.push("/cart")
+            })
+        }
+
+    },[])
+
     if (isLoading) return <>Идёт загрузка</>
 
     if (!data) return <>Данные по какой-то неизвестной причине отсутствуют(</>
@@ -26,7 +47,15 @@ const Product = () => {
 
     function counterClick(value : number) {
         setCounter(prev => prev === 0 && value === -1 ? 0 : prev + value)
-        value === 1 ? addFromCart(dish as Dish, +saloonId, data?.saloon.name as string) : removeFromCart(dish as Dish)
+        if (value == 1) {
+            addFromCart(dish as Dish, +saloonId, data?.saloon.name as string)
+            if (!tg?.MainButton.isVisible) tg?.MainButton.show()
+        }
+        else {
+            removeFromCart(dish as Dish)
+            if (!cart.length) tg?.MainButton.hide()
+
+        }
     }
 
     return (

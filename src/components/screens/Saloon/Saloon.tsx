@@ -25,14 +25,13 @@ const Saloon = () => {
         tg?.BackButton.onClick(() => {
             router.push("/")
         })
+        tg?.MainButton.setParams({text: "Корзина"})
+        tg?.MainButton.onClick(() => {
+            router.push("/cart")
+        })
 
-        if (cart.length && tg) {
-            tg.MainButton.setParams({text: "Корзина"})
-            tg.MainButton.show()
-            tg.MainButton.onClick(() => {
-                router.push("/cart")
-            })
-        }
+        if (cart.length) tg?.MainButton.show()
+
 
     },[])
 
@@ -48,6 +47,8 @@ const Saloon = () => {
         const counter = target.closest("li")?.querySelector("[data-counter]");
 
         if (!counter) return
+
+        if (!tg?.MainButton.isVisible) tg?.MainButton.show()
 
         target.parentElement?.classList.add(styles.btnWrapper)
         counter.classList.replace("hidden",styles.counter)
@@ -65,6 +66,8 @@ const Saloon = () => {
             target.parentElement?.classList.remove(styles.btnWrapper)
             counter.classList.replace(styles.counter,"hidden")
         }
+
+        if (!cart.length) tg?.MainButton.hide()
 
         counter.textContent = count
     }
