@@ -16,6 +16,9 @@ const Cart = () => {
     useEffect(() => {
 
         tg?.BackButton.show()
+        tg?.BackButton.onClick(() => {
+            router.back()
+        })
 
     },[])
 

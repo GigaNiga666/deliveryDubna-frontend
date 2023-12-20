@@ -7,7 +7,6 @@ import {useContext, useEffect, useState} from "react";
 import {useCart} from "@/components/hooks/useCart";
 import {useRouter} from "next/navigation";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
-import {router} from "next/client";
 
 const Main = () => {
 
@@ -20,10 +19,6 @@ const Main = () => {
 
 
     useEffect(() => {
-
-        tg?.BackButton.onClick(() => {
-            router.back()
-        })
 
         if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина"})

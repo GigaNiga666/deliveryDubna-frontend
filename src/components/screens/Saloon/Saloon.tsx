@@ -22,6 +22,9 @@ const Saloon = () => {
     useEffect(() => {
 
         tg?.BackButton.show()
+        tg?.BackButton.onClick(() => {
+            router.back()
+        })
         tg?.MainButton.setParams({text: "Корзина"})
         tg?.MainButton.onClick(() => {
             router.push("/cart")
