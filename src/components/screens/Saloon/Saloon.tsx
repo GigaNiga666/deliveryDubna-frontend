@@ -26,7 +26,7 @@ const Saloon = () => {
         tg?.BackButton.onClick(() => {
             router.push("/")
         })
-        tg?.MainButton.setParams({text: "Корзина"})
+        tg?.MainButton.setParams({text: "Корзина", color: "#FF7020"})
         tg?.MainButton.onClick(() => {
             router.push("/cart")
         })

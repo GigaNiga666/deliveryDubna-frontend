@@ -29,7 +29,7 @@ const Product = () => {
         })
 
         if (cart.length && tg) {
-            tg.MainButton.setParams({text: "Корзина"})
+            tg.MainButton.setParams({text: "Корзина", color: "#FF7020"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {
                 router.push("/cart")
