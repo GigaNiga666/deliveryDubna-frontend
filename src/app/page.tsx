@@ -1,3 +1,4 @@
+'use client'
 import {Main} from "@/components/screens/Main/Main";
 
 const MainPage = () => {

@@ -6,7 +6,6 @@ import {saloonService} from "@/components/sevices/SaloonService";
 import Link from "next/link";
 import {useCart} from "@/components/hooks/useCart";
 import {Dish} from "@/components/types/Dish";
-import {useTelegram} from "@/components/hooks/useTelegram";
 import {useEffect} from "react";
 
 const Saloon = () => {
@@ -20,17 +19,8 @@ const Saloon = () => {
 
     const {cart, addFromCart, removeFromCart} = useCart()
 
-    const {tg} = useTelegram()
     const router = useRouter()
 
-    useEffect(() => {
-
-        if (cart.length) {
-            tg.MainButton.setParams({text: "Корзина"})
-            tg.MainButton.show()
-        }
-
-    }, [])
 
     function clickButton(category : string) {
         document.querySelector(`#${category}`)?.scrollIntoView({block: "start", behavior: "smooth"})

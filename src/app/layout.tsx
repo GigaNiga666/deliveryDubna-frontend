@@ -3,7 +3,8 @@
 import './globals.scss'
 import {QueryClient, QueryClientProvider} from "react-query";
 import {useEffect} from "react";
-import {useTelegram} from "@/components/hooks/useTelegram";
+import Script from "next/script";
+import Head from "next/head";
 export default function RootLayout({children}:{ children: React.ReactNode }) {
 
   const queryClient = new QueryClient({
@@ -14,28 +15,30 @@ export default function RootLayout({children}:{ children: React.ReactNode }) {
     }
   })
 
-  const {tg} = useTelegram();
-
-  tg.onEvent('viewportChanged', () => {
-    if (!tg.isExpanded) tg.expand()
-  })
+  // const {tg} = useTelegram();
+  //
+  // tg.onEvent('viewportChanged', () => {
+  //   if (!tg.isExpanded) tg.expand()
+  // })
 
   useEffect(() => {
-    tg.ready()
-    tg.expand()
+    const app = (window as any).Telegram?.WebApp;
+
+    app.ready()
+    app.expand()
   },[])
 
   return (
     <html lang="en">
-    <head>
-      <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <Head>
       <title>DeliveryDubna</title>
-    </head>
+      <Script src="https://telegram.org/js/telegram-web-app.js" strategy={"beforeInteractive"}></Script>
+    </Head>
     <body>
     <QueryClientProvider client={queryClient}>
-    {children}
-        </QueryClientProvider>
-      </body>
+      {children}
+    </QueryClientProvider>
+    </body>
     </html>
   )
 }

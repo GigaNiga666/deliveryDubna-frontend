@@ -1,12 +1,9 @@
-'use client'
-
 import styles from "./Main.module.scss";
 import {SvgSprite} from "@/components/ui/SvgSprite/SvgSprite";
 import {saloonService} from "@/components/sevices/SaloonService";
 import {useQuery} from "react-query";
 import Link from "next/link";
 import {useEffect, useState} from "react";
-import {useTelegram} from "@/components/hooks/useTelegram";
 import {useCart} from "@/components/hooks/useCart";
 import {useRouter} from "next/navigation";
 
@@ -14,18 +11,8 @@ const Main = () => {
 
     const { data, isLoading, isError, error} = useQuery("saloons", saloonService.getAll)
     const [categoryState, setCategory] = useState<string>("")
-    const {tg} = useTelegram()
     const {cart} = useCart()
     const router = useRouter()
-
-    useEffect(() => {
-
-        if (cart.length) {
-            tg.MainButton.setParams({text: "Корзина"})
-            tg.MainButton.show()
-        }
-
-    }, [])
 
     if (isLoading) return <>Идёт загрузка</>
 
