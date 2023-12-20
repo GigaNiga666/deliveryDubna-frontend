@@ -23,9 +23,6 @@ const Product = () => {
     useEffect(() => {
 
         tg?.BackButton.show()
-        tg?.BackButton.onClick(() => {
-            router.push(`/saloon/${saloonId}`)
-        })
 
         if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина"})

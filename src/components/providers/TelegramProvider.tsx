@@ -1,5 +1,6 @@
 import {createContext, FC, PropsWithChildren, useEffect, useMemo, useState} from "react";
 import {IWebApp, WebAppUser} from "@/components/types/IWebApp";
+import {router} from "next/client";
 
 interface TelegramContext {
     tg? : IWebApp,
@@ -25,6 +26,11 @@ const TelegramProvider : FC<PropsWithChildren> = ({children}) => {
     }, [])
 
     const value = useMemo(() => {
+
+        webApp?.BackButton.onClick(() => {
+            router.back()
+        })
+
         return webApp ? {
             tg : webApp,
             user : webApp.initDataUnsafe.user
