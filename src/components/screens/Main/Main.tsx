@@ -7,6 +7,7 @@ import {useContext, useEffect, useState} from "react";
 import {useCart} from "@/components/hooks/useCart";
 import {useRouter} from "next/navigation";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
+import {Loader} from "@/components/ui/Loader/Loader";
 
 const Main = () => {
 
@@ -30,7 +31,7 @@ const Main = () => {
 
     }, [])
 
-    if (isLoading) return <>Идёт загрузка</>
+    if (isLoading) return <Loader/>
 
     if (!data) return <>Данные по какой-то неизвестной причине отсутствуют(</>
 

@@ -8,6 +8,7 @@ import {useCart} from "@/components/hooks/useCart";
 import {Dish} from "@/components/types/Dish";
 import {useContext, useEffect} from "react";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
+import {Loader} from "@/components/ui/Loader/Loader";
 
 const Saloon = () => {
 
@@ -19,11 +20,6 @@ const Saloon = () => {
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
 
-    const backBtnClick = () => {
-        router.push("/cart")
-        tg?.BackButton.offClick(backBtnClick)
-    }
-
     useEffect(() => {
 
         tg?.BackButton.show()
@@ -32,7 +28,7 @@ const Saloon = () => {
         })
         tg?.MainButton.setParams({text: "Корзина"})
         tg?.MainButton.onClick(() => {
-            backBtnClick()
+            router.back()
         })
 
         if (cart.length) tg?.MainButton.show()
@@ -40,7 +36,7 @@ const Saloon = () => {
 
     },[])
 
-    if (isLoading) return <>Идёт загрузка</>
+    if (isLoading) return <Loader/>
 
     if (!data) return <>Данные по какой-то неизвестной причине отсутствуют(</>
 

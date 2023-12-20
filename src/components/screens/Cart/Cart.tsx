@@ -13,16 +13,11 @@ const Cart = () => {
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
 
-    const backBtnClick = () => {
-        router.back()
-        tg?.BackButton.offClick(backBtnClick)
-    }
-
     useEffect(() => {
 
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
-            backBtnClick()
+            router.back()
         })
 
     },[])
