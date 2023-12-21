@@ -75,7 +75,6 @@ const Saloon = () => {
 
     return (
         <>
-            <Link href={'/cart'}>Cart</Link>
             <header className={"h-[250px] mb-9 relative"}>
                 <img className={styles.headerImg} src={data.saloon.image} alt={data.saloon.name}/>
                 <div className={"absolute top-[25%] pl-6"}>
