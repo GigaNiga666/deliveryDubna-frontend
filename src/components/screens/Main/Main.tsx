@@ -80,7 +80,7 @@ const Main = () => {
                                     }}>
                                     {
                                         category.image.endsWith(".mp4") ?
-                                            <video width="32" height="32" autoPlay preload={"preload"} muted={true} className={"mb-auto"}>
+                                            <video width="32" height="32" autoPlay preload={"auto"} muted={true} className={"mb-auto"}>
                                                 <source src={category.image} type="video/mp4"/>
                                             </video> :
 
