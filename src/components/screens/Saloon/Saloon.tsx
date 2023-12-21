@@ -9,7 +9,6 @@ import {Dish} from "@/components/types/Dish";
 import {useContext, useEffect} from "react";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {Loader} from "@/components/ui/Loader/Loader";
-import {Icon} from "@/components/ui/Icon/Icon";
 
 const Saloon = () => {
 
@@ -25,11 +24,11 @@ const Saloon = () => {
 
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
-            router.push("/")
+            router.replace("/")
         })
         tg?.MainButton.setParams({text: "Корзина", color: "#FF7020"})
         tg?.MainButton.onClick(() => {
-            router.push("/cart")
+            router.replace("/cart")
         })
 
         if (cart.length) tg?.MainButton.show()
@@ -76,6 +75,7 @@ const Saloon = () => {
 
     return (
         <>
+            <Link href={'/cart'}>Cart</Link>
             <header className={"h-[250px] mb-9 relative"}>
                 <img className={styles.headerImg} src={data.saloon.image} alt={data.saloon.name}/>
                 <div className={"absolute top-[25%] pl-6"}>
@@ -98,9 +98,9 @@ const Saloon = () => {
                 <ul className={styles.navList}>
                     {
                         data.categories.map(category =>
-                            <li className={styles.navItem} key={category} onClick={() => clickButton(category)}>
-                                <Icon id={category} className={"w-6"}/>
-                                <p>{category}</p>
+                            <li className={styles.navItem} key={category.name} onClick={() => clickButton(category.name)}>
+                                <img className={"w-8"} src={category.image} alt={category.name}/>
+                                <p>{category.name}</p>
                             </li>
                         )
                     }
@@ -109,12 +109,12 @@ const Saloon = () => {
             <main className={styles.main}>
                 {
                     data.categories.map(category =>
-                        <div id={category} key={category + "products"}>
-                            <h2 className={"font-semibold text-3xl mb-4"}>{category}</h2>
+                        <div id={category.name} key={category + "products"}>
+                            <h2 className={"font-semibold text-3xl mb-4"}>{category.name}</h2>
                             <ul className={styles.productList}>
                                 {
                                     data.dishes.map(dish =>
-                                        dish.category === category ?
+                                        dish.category === category.name ?
                                             <li className={styles.product} key={dish.id}>
                                                 <div>
                                                     <div

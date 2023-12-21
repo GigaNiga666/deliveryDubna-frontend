@@ -8,7 +8,6 @@ import {useCart} from "@/components/hooks/useCart";
 import {useRouter} from "next/navigation";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {Loader} from "@/components/ui/Loader/Loader";
-import {Icon} from "@/components/ui/Icon/Icon";
 
 const Main = () => {
 
@@ -28,7 +27,7 @@ const Main = () => {
             tg.MainButton.setParams({text: "Корзина", color: "#FF7020"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {
-                router.push("/cart")
+                router.replace("/cart")
             })
         }
 
@@ -73,12 +72,23 @@ const Main = () => {
                     </li>
                     {
                         data.categories.map(category =>
-                            <li key={category}>
+                            <li key={category.name}>
                                 <button
-                                    className={`${styles.navItem} ${category === categoryState ? styles.active : ""}`}
-                                    type="button" onClick={() => categoryClick(category)}>
-                                    <Icon id={category} className={'w-6'}/>
-                                    <p>{category}</p>
+                                    className={`${styles.navItem} ${category.name === categoryState ? styles.active : ""}`}
+                                    type="button" onClick={(event) => {
+                                        categoryClick(category.name)
+                                        event.currentTarget.querySelector("video")?.play()
+                                    }}>
+                                    {
+                                        category.image.endsWith(".mp4") ?
+                                            <video width="32" height="32" preload={"preload"} muted={true} className={"mb-auto"}>
+                                                <source src={category.image} type="video/mp4"/>
+                                            </video> :
+
+                                            <img src={category.image} alt={category.name} className={'w-8 mb-auto'}/>
+
+                                    }
+                                    <p>{category.name}</p>
                                 </button>
                             </li>
                         )

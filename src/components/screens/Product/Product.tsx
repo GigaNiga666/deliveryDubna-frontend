@@ -25,14 +25,14 @@ const Product = () => {
 
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
-            router.push(`/saloon/${saloonId}`)
+            router.replace(`/saloon/${saloonId}`)
         })
 
         if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина", color: "#FF7020"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {
-                router.push("/cart")
+                router.replace("/cart")
             })
         }
 

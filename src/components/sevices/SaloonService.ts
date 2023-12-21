@@ -12,7 +12,10 @@ interface GetAllRes {
         info: string;
         category:string;
     }[]
-    categories : string[]
+    categories : {
+        name : string,
+        image : string
+    }[]
 }
 
 interface Saloon {
@@ -27,7 +30,10 @@ interface Saloon {
 interface GetOneRes {
     saloon : Saloon
     dishes : Dish[]
-    categories : string[]
+    categories : {
+        name : string,
+        image : string
+    }[]
 }
 
 

@@ -13,13 +13,27 @@ const Cart = () => {
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
 
+    function calculatePrice() {
+        let price = 0;
+
+        for (const cartElement of cart) {
+            price = cartElement.dish.price * cartElement.count
+        }
+
+        tg?.MainButton.setParams({text: "Стоимость: ₽"+price, color: "#FF7020"})
+    }
+
     useEffect(() => {
 
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
-            router.push("/")
+            router.replace("/")
         })
+        calculatePrice()
+        tg?.MainButton.show()
+        tg?.MainButton.onClick(() => {
 
+        })
     },[])
 
     return (

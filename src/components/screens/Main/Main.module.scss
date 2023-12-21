@@ -52,6 +52,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
 
 .navItemAll {
@@ -68,8 +69,7 @@
 }
 
 .active {
-  background-color: #FF7020;
-  color: white;
+  color: #FF7020;
 }
 
 .saloon {

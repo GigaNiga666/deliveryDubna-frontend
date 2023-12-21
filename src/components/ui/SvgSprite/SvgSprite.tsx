@@ -11,7 +11,6 @@ interface Props {
 const SvgSprite : FC<Props> = ({id, width, height, classname}) => {
     return (
         <svg className={classname || ""} width={height + "px"} height={width + "px"}>
-            {/*<use xlinkHref={'./sprite.svg'+"#"+id}/>*/}
             <use xlinkHref={sprite+"#"+id}/>
         </svg>
     );
