@@ -8,6 +8,7 @@ import {useCart} from "@/components/hooks/useCart";
 import {useRouter} from "next/navigation";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {Loader} from "@/components/ui/Loader/Loader";
+import {Icon} from "@/components/ui/Icon/Icon";
 
 const Main = () => {
 
@@ -76,7 +77,7 @@ const Main = () => {
                                 <button
                                     className={`${styles.navItem} ${category === categoryState ? styles.active : ""}`}
                                     type="button" onClick={() => categoryClick(category)}>
-                                    <SvgSprite id={category} width={30} height={30}/>
+                                    <Icon id={category} className={'w-6'}/>
                                     <p>{category}</p>
                                 </button>
                             </li>
@@ -91,7 +92,7 @@ const Main = () => {
                         saloons.map(saloon =>
 
                             <li className={styles.saloon} key={saloon.id + saloon.name}>
-                                <Link className={"mb-2.5 h-32"} href={`saloon/${saloon.id}`}>
+                                <Link className={"mb-2.5 h-48"} href={`saloon/${saloon.id}`}>
                                     <img src={saloon.image} alt={saloon.name}/>
                                 </Link>
                                 <Link className="font-semibold text-xl"

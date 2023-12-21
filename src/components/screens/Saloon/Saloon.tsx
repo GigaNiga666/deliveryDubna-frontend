@@ -9,6 +9,7 @@ import {Dish} from "@/components/types/Dish";
 import {useContext, useEffect} from "react";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {Loader} from "@/components/ui/Loader/Loader";
+import {Icon} from "@/components/ui/Icon/Icon";
 
 const Saloon = () => {
 
@@ -98,7 +99,7 @@ const Saloon = () => {
                     {
                         data.categories.map(category =>
                             <li className={styles.navItem} key={category} onClick={() => clickButton(category)}>
-                                <SvgSprite id={category} width={30} height={30}/>
+                                <Icon id={category} className={"w-6"}/>
                                 <p>{category}</p>
                             </li>
                         )
@@ -108,35 +109,43 @@ const Saloon = () => {
             <main className={styles.main}>
                 {
                     data.categories.map(category =>
-                        <div id={category} key={category+"products"}>
+                        <div id={category} key={category + "products"}>
                             <h2 className={"font-semibold text-3xl mb-4"}>{category}</h2>
                             <ul className={styles.productList}>
                                 {
                                     data.dishes.map(dish =>
                                         dish.category === category ?
-                                        <li className={styles.product} key={dish.id}>
-                                            <div className={`${cart.find(o => o.dish.id === dish.id) ? styles.counter : "hidden"}`} data-counter>
-                                                {
-                                                    cart.find(o => o.dish.id === dish.id)?.count
-                                                }
-                                            </div>
-                                            <Link href={`${saloonId}/product/${dish.id}`}>
-                                                <img className={"w-full object-cover"} src={dish.image} alt={dish.name}/>
-                                            </Link>
-                                            <p className={"mb-1 font-semibold"}>
-                                                <span>{dish.price}</span>
-                                                <span>₽</span>
-                                            </p>
-                                            <h3 className={"text-[12px] mb-4"}>{dish.name}</h3>
-                                            <p className={"text-[12px] text-[#B1B1B1] mb-2"}>{dish.weight}г</p>
-
-                                            <div className={`relative h-[32px] ${cart.find(o => o.dish.id === dish.id) ? styles.btnWrapper : ""}`}>
-                                                <button className={styles.productBtnDefault} onClick={(event) =>
-                                                    addDishToCart(event.currentTarget, dish)}></button>
-                                                <button className={styles.productBtnMinus} onClick={(event) =>
-                                                    removeDishFromCart(event.currentTarget, dish)}>-</button>
-                                            </div>
-                                        </li>
+                                            <li className={styles.product} key={dish.id}>
+                                                <div>
+                                                    <div
+                                                        className={`${cart.find(o => o.dish.id === dish.id) ? styles.counter : "hidden"}`}
+                                                        data-counter>
+                                                        {
+                                                            cart.find(o => o.dish.id === dish.id)?.count
+                                                        }
+                                                    </div>
+                                                    <Link href={`${saloonId}/product/${dish.id}`}>
+                                                        <img className={"w-full object-cover"} src={dish.image}
+                                                             alt={dish.name}/>
+                                                    </Link>
+                                                    <p className={"mb-1 font-semibold"}>
+                                                        <span>{dish.price}</span>
+                                                        <span>₽</span>
+                                                    </p>
+                                                    <h3 className={"text-[12px] mb-4"}>{dish.name}</h3>
+                                                </div>
+                                                <div>
+                                                    <p className={"text-[12px] text-[#B1B1B1] mb-2"}>{dish.weight}г</p>
+                                                    <div
+                                                        className={`relative h-[32px] ${cart.find(o => o.dish.id === dish.id) ? styles.btnWrapper : ""}`}>
+                                                        <button className={styles.productBtnDefault} onClick={(event) =>
+                                                            addDishToCart(event.currentTarget, dish)}></button>
+                                                        <button className={styles.productBtnMinus} onClick={(event) =>
+                                                            removeDishFromCart(event.currentTarget, dish)}>-
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li>
                                             : null
                                     )
                                 }
