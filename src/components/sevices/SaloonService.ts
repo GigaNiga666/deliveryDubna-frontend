@@ -10,7 +10,7 @@ interface GetAllRes {
         rating: number;
         rating_quantity: number;
         info: string;
-        category:string;
+        categories:string[];
     }[]
     categories : {
         name : string,

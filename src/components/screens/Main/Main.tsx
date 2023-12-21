@@ -41,7 +41,7 @@ const Main = () => {
     }
 
     const saloons = data.saloons.filter(saloon => {
-        const checkCategory = !categoryState || saloon.category === categoryState
+        const checkCategory = !categoryState || saloon.categories.includes(categoryState)
 
         return search === '' ? checkCategory : checkCategory && saloon.name.toLowerCase().includes(search.toLowerCase())
     })

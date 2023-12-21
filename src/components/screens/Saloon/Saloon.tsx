@@ -97,8 +97,19 @@ const Saloon = () => {
                 <ul className={styles.navList}>
                     {
                         data.categories.map(category =>
-                            <li className={styles.navItem} key={category.name} onClick={() => clickButton(category.name)}>
-                                <img className={"w-8"} src={category.image} alt={category.name}/>
+                            <li className={styles.navItem} key={category.name+saloonId} onClick={(event) => {
+                                clickButton(category.name)
+                                event.currentTarget.querySelector('video')?.play()
+                            }}>
+                                {
+                                    category.image.endsWith(".mp4") ?
+                                        <video width="32" height="32" autoPlay preload={"auto"} muted={true} className={"mb-auto"}>
+                                            <source src={category.image} type="video/mp4"/>
+                                        </video> :
+
+                                        <img src={category.image} alt={category.name} className={'w-8 mb-auto'}/>
+
+                                }
                                 <p>{category.name}</p>
                             </li>
                         )
