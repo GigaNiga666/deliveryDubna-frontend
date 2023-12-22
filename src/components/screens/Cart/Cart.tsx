@@ -17,7 +17,7 @@ const Cart = () => {
         let price = 0;
 
         for (const cartElement of cart) {
-            price = cartElement.dish.price * cartElement.count
+            price += cartElement.dish.price * cartElement.count
         }
 
         tg?.MainButton.setParams({text: "Стоимость: ₽"+price, color: "#FF7020"})

@@ -89,6 +89,11 @@ const Form = () => {
     }
 
     useEffect(() => {
+        tg?.MainButton.setParams({text: "Продолжить", color: "#FF7020"})
+        tg?.MainButton.hide()
+    }, [])
+
+    useEffect(() => {
 
         if (methodPayment !== MethodPayment.NONE) tg?.MainButton.show()
 
@@ -122,11 +127,11 @@ const Form = () => {
         <div className={styles.form}>
             <h2 className={styles.title}>Доставка</h2>
             <div className={styles.wrapper}>
-                <div className={styles.input}><input onInput={removeError} type="text" id='inputName' defaultValue={data.name}
+                <div className={styles.inputWrapper}><input className={styles.input} onInput={removeError} type="text" id='inputName' defaultValue={data.name}
                                                      placeholder='Имя'/></div>
-                <div className={styles.input}><input onInput={removeError} type="tel" onKeyPress={validateTel} defaultValue={data.telephone}
+                <div className={styles.inputWrapper}><input className={styles.input} onInput={removeError} type="tel" onKeyPress={validateTel} defaultValue={data.telephone}
                                                      id='inputTel' placeholder='Телефон'/></div>
-                <div className={styles.input}><input onInput={removeError} type="text" defaultValue={data.address} id='inputAddress' placeholder='Адрес'/></div>
+                <div className={styles.inputWrapper}><input className={styles.input} onInput={removeError} type="text" defaultValue={data.address} id='inputAddress' placeholder='Адрес'/></div>
             </div>
             <div className={styles.radioWrapper}>
                 <label className={styles.radioLabel}>
@@ -140,7 +145,7 @@ const Form = () => {
                     <span>Наличные</span>
                 </label>
             </div>
-            {currentPaymentType === 'Наличные' ? <div className={styles.input}><input onInput={removeError} id='inputSurrender' type="tel" onKeyPress={validateTel} placeholder='Сдача с ...'/></div> : null}
+            {currentPaymentType === 'Наличные' ? <div className={styles.inputWrapper}><input className={styles.input} onInput={removeError} id='inputSurrender' type="tel" onKeyPress={validateTel} placeholder='Сдача с ...'/></div> : null}
             <textarea placeholder='Комментарий к заказу...' id='inputCom' className={styles.textArea}></textarea>
             <button onClick={() => console.log(validation())}>click</button>
         </div>
