@@ -2,6 +2,7 @@
  * Available app events.
  */
 type EventType = "themeChanged" | "viewportChanged" | "mainButtonClicked" | "backButtonClicked";
+type ButtonTypes = 'default' | 'ok' | 'close' | 'cancel' | 'destructive';
 
 export interface IWebApp {
     /**
@@ -57,6 +58,8 @@ export interface IWebApp {
     /**
      * A method used to send data to the bot.
      */
+    showPopup(params : PopupParams, callback : Function) : void;
+
     showAlert(message: any): void;
 
     sendData(data: any): void;
@@ -77,6 +80,16 @@ export interface IWebApp {
      * A method that closes the Web App.
      */
     close(): void;
+}
+
+interface PopupParams {
+    title? : string,
+    message : string
+    buttons : {
+       id : string,
+       type :ButtonTypes,
+       text : string
+    }[]
 }
 
 interface ThemeParams {
