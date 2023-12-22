@@ -19,7 +19,7 @@ const Form = () => {
     const [methodPayment, setMethodPayment] = useState<MethodPayment>(MethodPayment.NONE)
     const {data, isLoading} = useQuery("paymentData",
         () => saloonService.getPaymentData(tg?.initDataUnsafe?.user?.id as number, cart.map(order => {
-            return {name : order.dish.name, count : order.count}
+            return {name : order.dish.name, count : order.count, price : order.dish.price}
         })))
 
     function validation() {
