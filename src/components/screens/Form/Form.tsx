@@ -76,7 +76,7 @@ const Form = () => {
 
     useEffect(() => {
         tg?.MainButton.onClick(buy)
-        tg?.showPopup({message: "Как получите товао,", buttons : [{id: "2", text : "Сразу", type : "ok"}]}, () => {})
+        tg?.showPopup({message: "Как желаете оплатить?", buttons : [{id: "1", text : "Сразу", type : "default"}, {id: "2", text : "При получении", type : "default"}]}, () => {})
     }, [])
 
     return (
