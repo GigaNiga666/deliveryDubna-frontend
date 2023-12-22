@@ -36,6 +36,13 @@ interface GetOneRes {
     }[]
 }
 
+interface PaymentData {
+    name : string
+    telephone : string
+    address : string
+    url : string
+}
+
 
 class SaloonService {
 
@@ -46,6 +53,11 @@ class SaloonService {
 
     async getOne(id : string) {
         const res = await $api.get<GetOneRes>("saloons/"+id)
+        return res.data
+    }
+
+    async getPaymentData(id : number) {
+        const res = await $api.post<PaymentData>(`users/paymentData/${id}`)
         return res.data
     }
 }

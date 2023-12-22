@@ -4,6 +4,8 @@ import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {useCart} from "@/components/hooks/useCart";
 import {useQuery} from "react-query";
 import {$api} from "@/components/http";
+import {saloonService} from "@/components/sevices/SaloonService";
+import {Loader} from "@/components/ui/Loader/Loader";
 
 enum MethodPayment {
     ONLINE = "online",
@@ -16,9 +18,8 @@ const Form = () => {
     const {cart} = useCart()
     const [currentPaymentType, setCurrentPaymentType] = useState<string>('Оплата картой')
     const [methodPayment, setMethodPayment] = useState<MethodPayment>(MethodPayment.NONE)
-    const {data, isLoading} = useQuery("token", async () => {
-        return await $api.get<string>("/users/paymentLink")
-    })
+    const {data, isLoading} = useQuery("paymentData",
+        () => saloonService.getPaymentData(tg?.initDataUnsafe?.user?.id as number))
 
     function validation() {
         const allInputs = document.querySelectorAll('input');
@@ -87,14 +88,14 @@ const Form = () => {
     }
 
     useEffect(() => {
-        // tg?.MainButton.onClick(buy)
-    }, [])
 
-    useEffect(() => {
-
-        if (methodPayment === MethodPayment.ONLINE && data) tg?.openInvoice(data.data)
+        if (methodPayment === MethodPayment.ONLINE && data) tg?.openInvoice(data.url)
 
     }, [methodPayment])
+
+    if (isLoading) return <Loader/>
+
+    if (!data) return <span>Данные отсутствуют по неизвестной причине :(</span>
 
     if (methodPayment === MethodPayment.NONE) return (
         <>
@@ -119,11 +120,11 @@ const Form = () => {
         <div className={styles.form}>
             <h2 className={styles.title}>Доставка</h2>
             <div className={styles.wrapper}>
-                <div className={styles.input}><input onInput={removeError} type="text" id='inputName'
+                <div className={styles.input}><input onInput={removeError} type="text" id='inputName' defaultValue={data.name}
                                                      placeholder='Имя'/></div>
-                <div className={styles.input}><input onInput={removeError} type="tel" onKeyPress={validateTel}
+                <div className={styles.input}><input onInput={removeError} type="tel" onKeyPress={validateTel} defaultValue={data.telephone}
                                                      id='inputTel' placeholder='Телефон'/></div>
-                <div className={styles.input}><input onInput={removeError} type="text" id='inputAddress' placeholder='Адрес'/></div>
+                <div className={styles.input}><input onInput={removeError} type="text" defaultValue={data.address} id='inputAddress' placeholder='Адрес'/></div>
             </div>
             <div className={styles.radioWrapper}>
                 <label className={styles.radioLabel}>
