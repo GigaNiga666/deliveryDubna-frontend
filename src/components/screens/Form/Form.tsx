@@ -16,8 +16,8 @@ const Form = () => {
     const {cart} = useCart()
     const [currentPaymentType, setCurrentPaymentType] = useState<string>('Оплата картой')
     const [methodPayment, setMethodPayment] = useState<MethodPayment>(MethodPayment.NONE)
-    const {data} = useQuery("token", async () => {
-        return await $api.get<string>("/users/paymentToken")
+    const {data, isLoading} = useQuery("token", async () => {
+        return await $api.get<string>("/users/paymentLink")
     })
 
     function validation() {
