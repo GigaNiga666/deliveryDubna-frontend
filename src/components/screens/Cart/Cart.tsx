@@ -32,7 +32,7 @@ const Cart = () => {
         calculatePrice()
         tg?.MainButton.show()
         tg?.MainButton.onClick(() => {
-
+            router.replace("/form")
         })
     },[])
 
