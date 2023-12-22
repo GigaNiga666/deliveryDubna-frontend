@@ -147,7 +147,6 @@ const Form = () => {
             </div>
             {currentPaymentType === 'Наличные' ? <div className={styles.inputWrapper}><input className={styles.input} onInput={removeError} id='inputSurrender' type="tel" onKeyPress={validateTel} placeholder='Сдача с ...'/></div> : null}
             <textarea placeholder='Комментарий к заказу...' id='inputCom' className={styles.textArea}></textarea>
-            <button onClick={() => console.log(validation())}>click</button>
         </div>
     );
 };
