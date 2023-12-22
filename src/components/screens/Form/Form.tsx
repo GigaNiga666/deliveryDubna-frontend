@@ -3,10 +3,17 @@ import {FormEvent, useContext, useEffect, useState} from "react";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {useCart} from "@/components/hooks/useCart";
 
+enum MethodPayment {
+    ONLINE = "online",
+    ONGET = 'onGet',
+    NONE= 'none'
+}
+
 const Form = () => {
     const {tg} = useContext(TelegramContext)
     const {cart} = useCart()
     const [currentPaymentType, setCurrentPaymentType] = useState<string>('Оплата картой')
+    const [methodPayment, setMethodPayment] = useState<MethodPayment>(MethodPayment.NONE)
 
     function validation() {
         const allInputs = document.querySelectorAll('input');
@@ -75,9 +82,22 @@ const Form = () => {
     }
 
     useEffect(() => {
-        tg?.MainButton.onClick(buy)
-        tg?.showPopup({message: "Как желаете оплатить?", buttons : [{id: "1", text : "Сразу", type : "default"}, {id: "2", text : "При получении", type : "default"}]}, () => {})
+        // tg?.MainButton.onClick(buy)
     }, [])
+
+    useEffect(() => {
+
+        if (methodPayment === MethodPayment.ONLINE) tg?.openInvoice("")
+
+    }, [methodPayment])
+
+    if (methodPayment === MethodPayment.NONE) return (
+        <>
+            <h2>Как вы желаете оплатить?</h2>
+            <button>При получении</button>
+            <button>Сразу</button>
+        </>
+    )
 
     return (
         <div className={styles.form}>
