@@ -2,6 +2,8 @@ import styles from "./Form.module.scss"
 import {FormEvent, useContext, useEffect, useState} from "react";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {useCart} from "@/components/hooks/useCart";
+import {useQuery} from "react-query";
+import {$api} from "@/components/http";
 
 enum MethodPayment {
     ONLINE = "online",
@@ -14,6 +16,9 @@ const Form = () => {
     const {cart} = useCart()
     const [currentPaymentType, setCurrentPaymentType] = useState<string>('Оплата картой')
     const [methodPayment, setMethodPayment] = useState<MethodPayment>(MethodPayment.NONE)
+    const {data} = useQuery("token", async () => {
+        return await $api.get<string>("/users/paymentToken")
+    })
 
     function validation() {
         const allInputs = document.querySelectorAll('input');
@@ -87,24 +92,37 @@ const Form = () => {
 
     useEffect(() => {
 
-        if (methodPayment === MethodPayment.ONLINE) tg?.openInvoice("")
+        if (methodPayment === MethodPayment.ONLINE && data) tg?.openInvoice(data.data)
 
     }, [methodPayment])
 
     if (methodPayment === MethodPayment.NONE) return (
         <>
-            <h2>Как вы желаете оплатить?</h2>
-            <button>При получении</button>
-            <button>Сразу</button>
+            <div className={"p-8 flex flex-col justify-center items-center h-full"}>
+                <h2 className={"text-center text-2xl font-semibold mb-8"}>Как вы желаете оплатить?</h2>
+                <div className={'flex gap-3 justify-center'}>
+                    <button
+                        className={"w-[140px] bg-[#FF5A30] text-white p-2 rounded-[5px] transform hover:scale-[1.05] transition-all duration-500"}
+                        onClick={() => setMethodPayment(MethodPayment.ONGET)}>При получении
+                    </button>
+                    <button
+                        className={"w-[140px] bg-[#FF5A30] text-white p-2 rounded-[5px] transform hover:scale-[1.05] transition-all duration-500"}
+                        onClick={() => setMethodPayment(MethodPayment.ONLINE)}>Сразу
+                    </button>
+                </div>
+            </div>
         </>
     )
 
-    return (
+    if (methodPayment === MethodPayment.ONGET)
+        return (
         <div className={styles.form}>
             <h2 className={styles.title}>Доставка</h2>
             <div className={styles.wrapper}>
-                <div className={styles.input}><input onInput={removeError} type="text" id='inputName' placeholder='Имя'/></div>
-                <div className={styles.input}><input onInput={removeError} type="tel" onKeyPress={validateTel} id='inputTel' placeholder='Телефон'/></div>
+                <div className={styles.input}><input onInput={removeError} type="text" id='inputName'
+                                                     placeholder='Имя'/></div>
+                <div className={styles.input}><input onInput={removeError} type="tel" onKeyPress={validateTel}
+                                                     id='inputTel' placeholder='Телефон'/></div>
                 <div className={styles.input}><input onInput={removeError} type="text" id='inputAddress' placeholder='Адрес'/></div>
             </div>
             <div className={styles.radioWrapper}>
