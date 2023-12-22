@@ -3,7 +3,6 @@ import {FormEvent, useContext, useEffect, useState} from "react";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {useCart} from "@/components/hooks/useCart";
 import {useQuery} from "react-query";
-import {$api} from "@/components/http";
 import {saloonService} from "@/components/sevices/SaloonService";
 import {Loader} from "@/components/ui/Loader/Loader";
 
@@ -89,6 +88,8 @@ const Form = () => {
 
     useEffect(() => {
 
+        if (methodPayment !== MethodPayment.NONE) tg?.MainButton.show()
+
         if (methodPayment === MethodPayment.ONLINE && data) tg?.openInvoice(data.url)
 
     }, [methodPayment])
@@ -115,8 +116,7 @@ const Form = () => {
         </>
     )
 
-    if (methodPayment === MethodPayment.ONGET)
-        return (
+    return (
         <div className={styles.form}>
             <h2 className={styles.title}>Доставка</h2>
             <div className={styles.wrapper}>

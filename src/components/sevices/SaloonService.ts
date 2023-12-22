@@ -1,5 +1,6 @@
 import {$api} from "@/components/http";
 import {Dish} from "@/components/types/Dish";
+import {DishCart} from "@/components/hooks/useCart";
 
 interface GetAllRes {
     saloons : {
@@ -56,8 +57,8 @@ class SaloonService {
         return res.data
     }
 
-    async getPaymentData(id : number) {
-        const res = await $api.post<PaymentData>(`users/paymentData/${id}`)
+    async getPaymentData(id : number, cart : {name : string, count : number}[]) {
+        const res = await $api.post<PaymentData>(`users/paymentData/${id}`, {cart})
         return res.data
     }
 }
