@@ -79,6 +79,8 @@ const Form = () => {
             address : address.value as string,
             paymentType : paymentType.value as string,
             surrender : surrender ? surrender.value : null,
+            telegramId : tg?.initDataUnsafe.user?.id as number,
+            orderId : data?.orderId as number
         }
 
         await $api.post<null>("/users/createOrder", delivery)
