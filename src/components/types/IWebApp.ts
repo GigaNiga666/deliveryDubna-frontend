@@ -1,7 +1,7 @@
 /**
  * Available app events.
  */
-type EventType = "themeChanged" | "viewportChanged" | "mainButtonClicked" | "backButtonClicked";
+type EventType = "themeChanged" | "viewportChanged" | "mainButtonClicked" | "backButtonClicked" | "invoiceClosed";
 type ButtonTypes = 'default' | 'ok' | 'close' | 'cancel' | 'destructive';
 
 export interface IWebApp {
@@ -64,7 +64,7 @@ export interface IWebApp {
 
     sendData(data: any): void;
 
-    openInvoice(url: string, callback : Function): void;
+    openInvoice(url: string): void;
 
     /**
      * A method that informs the Telegram app that the Web App is ready to be displayed.
