@@ -92,8 +92,8 @@ const Form = () => {
         tg?.MainButton.setParams({text: "Продолжить", color: "#FF7020"})
         tg?.MainButton.hide()
 
-        tg?.onEvent("invoiceClosed", (status : string) => {
-            if (status === 'paid') tg?.close()
+        tg?.onEvent("invoiceClosed", (status : any) => {
+            tg?.showAlert(status)
         })
     }, [])
 
