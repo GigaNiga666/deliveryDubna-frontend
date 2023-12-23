@@ -62,7 +62,7 @@ const Form = () => {
         }
     }
 
-    function buy() {
+    async function buy() {
         if (!validation()) return
 
         const name = document.querySelector('#inputName') as HTMLInputElement
@@ -82,7 +82,7 @@ const Form = () => {
             orderId : data?.order as number
         }
 
-        $api.post<null>("/users/createOrder", delivery)
+        await $api.post<null>("/users/createOrder", delivery)
         tg?.close()
     }
 
