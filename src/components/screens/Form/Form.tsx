@@ -82,7 +82,7 @@ const Form = () => {
             orderId : data?.order as number
         }
 
-        $api.post<null>("/users/createOrder", delivery).then(() => tg?.close())
+        $api.post<null>("/users/createOrder", delivery)
     }
 
     function removeError(e : FormEvent<HTMLInputElement>) {
