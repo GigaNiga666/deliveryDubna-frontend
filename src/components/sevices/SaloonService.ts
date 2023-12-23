@@ -42,7 +42,7 @@ interface PaymentData {
     telephone : string
     address : string
     url : string
-    orderId: number
+    order: number
 }
 
 
