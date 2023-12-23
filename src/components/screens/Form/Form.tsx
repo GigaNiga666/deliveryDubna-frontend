@@ -6,6 +6,7 @@ import {useQuery} from "react-query";
 import {saloonService} from "@/components/sevices/SaloonService";
 import {Loader} from "@/components/ui/Loader/Loader";
 import {useRouter} from "next/navigation";
+import {$api} from "@/components/http";
 
 enum MethodPayment {
     ONLINE = "online",
@@ -61,7 +62,7 @@ const Form = () => {
         }
     }
 
-    function buy() {
+    async function buy() {
 
         if (!validation()) return
 
@@ -78,9 +79,10 @@ const Form = () => {
             address : address.value as string,
             paymentType : paymentType.value as string,
             surrender : surrender ? surrender.value : null,
-            com : com.value as string
         }
 
+        await $api.post<null>("/users/createOrder", delivery)
+        tg?.close()
     }
 
     function removeError(e : FormEvent<HTMLInputElement>) {
