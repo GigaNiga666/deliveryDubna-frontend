@@ -62,7 +62,7 @@ const Form = () => {
         }
     }
 
-    async function buy() {
+    function buy() {
 
         if (!validation()) return
 
@@ -83,8 +83,7 @@ const Form = () => {
             orderId : data?.order as number
         }
 
-        await $api.post<null>("/users/createOrder", delivery)
-        tg?.close()
+        $api.post<null>("/users/createOrder", delivery).then(() => tg?.MainButton.onClick(() => buy()))
     }
 
     function removeError(e : FormEvent<HTMLInputElement>) {
