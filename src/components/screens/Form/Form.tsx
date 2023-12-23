@@ -97,7 +97,6 @@ const Form = () => {
     useEffect(() => {
         tg?.MainButton.setParams({text: "Продолжить", color: "#FF7020"})
         tg?.MainButton.hide()
-        tg?.MainButton.onClick(() => buy())
 
         tg?.onEvent("invoiceClosed", ({status} : {status : string}) => {
             if (status === 'paid') tg?.close()
@@ -106,6 +105,7 @@ const Form = () => {
     }, [])
 
     useEffect(() => {
+        tg?.MainButton.onClick(() => buy())
 
         if (methodPayment !== MethodPayment.NONE) tg?.MainButton.show()
 
