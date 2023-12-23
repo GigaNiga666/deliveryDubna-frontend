@@ -63,6 +63,7 @@ const Form = () => {
     }
 
     function buy() {
+        tg?.showAlert("FGgf")
 
         if (!validation()) return
 
