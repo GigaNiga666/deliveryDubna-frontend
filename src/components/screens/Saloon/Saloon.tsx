@@ -87,9 +87,20 @@ const Saloon = () => {
                                 <p>{data.saloon.rating_quantity}</p>
                             </div>
                         </div>
-                        <button className={"px-3 py-2 bg-white bg-opacity-80 rounded-xl"}>
-                            <SvgSprite id={"info"} width={24} height={24}/>
-                        </button>
+                        <div className={"relative"}>
+                            <button className={"px-3 py-2 bg-white bg-opacity-80 rounded-xl h-full"}
+                                    onClick={(event) => {
+                                        const info = event.currentTarget.parentElement?.querySelector("#info")
+                                        if (info?.classList.contains("opacity-0")) info.classList.replace("opacity-0", "opacity-100")
+                                        else if (info) info.classList.replace("opacity-100", "opacity-0")
+                                    }}>
+                                <SvgSprite id={"info"} width={24} height={24}/>
+                            </button>
+                            <div id={"info"} className={"opacity-0 transition-all absolute bg-white transform translate-y-1 p-5 shadow rounded-xl w-[200px]"}>
+                                <h4 className={"font-semibold"}>{data.saloon.name}</h4>
+                                <p className={"text-[12px]"}>{data.saloon.info}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </header>
