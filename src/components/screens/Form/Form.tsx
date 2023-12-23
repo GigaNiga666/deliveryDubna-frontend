@@ -83,6 +83,7 @@ const Form = () => {
         }
 
         $api.post<null>("/users/createOrder", delivery)
+        tg?.close()
     }
 
     function removeError(e : FormEvent<HTMLInputElement>) {
@@ -105,7 +106,6 @@ const Form = () => {
     useEffect(() => {
         if (methodPayment !== MethodPayment.NONE) {
             tg?.MainButton.onClick(() => {
-                tg?.MainButton.disable()
                 buy()
             })
             tg?.MainButton.show()
