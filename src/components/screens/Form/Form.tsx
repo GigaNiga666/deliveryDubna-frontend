@@ -5,6 +5,7 @@ import {useCart} from "@/components/hooks/useCart";
 import {useQuery} from "react-query";
 import {saloonService} from "@/components/sevices/SaloonService";
 import {Loader} from "@/components/ui/Loader/Loader";
+import {router} from "next/client";
 
 enum MethodPayment {
     ONLINE = "online",
@@ -92,8 +93,9 @@ const Form = () => {
         tg?.MainButton.setParams({text: "Продолжить", color: "#FF7020"})
         tg?.MainButton.hide()
 
-        tg?.onEvent("invoiceClosed", (status : any) => {
-            tg?.showAlert(status.status)
+        tg?.onEvent("invoiceClosed", ({status} : {status : string}) => {
+            if (status === 'paid') tg?.close()
+            else router.replace("/")
         })
     }, [])
 
@@ -127,7 +129,7 @@ const Form = () => {
         </>
     )
 
-    return (
+    if (methodPayment === MethodPayment.ONGET) return (
         <div className={styles.form}>
             <h2 className={styles.title}>Доставка</h2>
             <div className={styles.wrapper}>
