@@ -96,11 +96,6 @@ const Form = () => {
         tg?.MainButton.setParams({text: "Продолжить", color: "#FF7020"})
         tg?.MainButton.hide()
 
-        tg?.MainButton.onClick(() => {
-            tg?.MainButton.disable()
-            buy()
-        })
-
         tg?.onEvent("invoiceClosed", ({status} : {status : string}) => {
             if (status === 'paid') tg?.close()
             else router.replace("/")
@@ -108,7 +103,13 @@ const Form = () => {
     }, [])
 
     useEffect(() => {
-        if (methodPayment !== MethodPayment.NONE) tg?.MainButton.show()
+        if (methodPayment !== MethodPayment.NONE) {
+            tg?.MainButton.onClick(() => {
+                tg?.MainButton.disable()
+                buy()
+            })
+            tg?.MainButton.show()
+        }
 
         if (methodPayment === MethodPayment.ONLINE && data) tg?.openInvoice(data.url)
 
