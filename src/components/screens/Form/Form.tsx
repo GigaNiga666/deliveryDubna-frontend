@@ -93,7 +93,7 @@ const Form = () => {
         tg?.MainButton.hide()
 
         tg?.onEvent("invoiceClosed", (status : any) => {
-            tg?.showAlert(status)
+            tg?.showAlert(status.status)
         })
     }, [])
 
