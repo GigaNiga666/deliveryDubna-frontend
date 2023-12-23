@@ -97,7 +97,9 @@ const Form = () => {
 
         if (methodPayment !== MethodPayment.NONE) tg?.MainButton.show()
 
-        if (methodPayment === MethodPayment.ONLINE && data) tg?.openInvoice(data.url)
+        if (methodPayment === MethodPayment.ONLINE && data) tg?.openInvoice(data.url, (status : any) => {
+            tg?.showAlert(status)
+        })
 
     }, [methodPayment])
 

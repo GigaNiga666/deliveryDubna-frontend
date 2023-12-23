@@ -64,7 +64,7 @@ export interface IWebApp {
 
     sendData(data: any): void;
 
-    openInvoice(url: string): void;
+    openInvoice(url: string, callback : Function): void;
 
     /**
      * A method that informs the Telegram app that the Web App is ready to be displayed.
