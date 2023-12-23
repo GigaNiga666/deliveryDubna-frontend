@@ -82,6 +82,7 @@ const Form = () => {
             orderId : data?.order as number
         }
 
+        tg?.MainButton.hide()
         await $api.post<null>("/users/createOrder", delivery)
         tg?.close()
     }
