@@ -5,7 +5,7 @@ import {useCart} from "@/components/hooks/useCart";
 import {useQuery} from "react-query";
 import {saloonService} from "@/components/sevices/SaloonService";
 import {Loader} from "@/components/ui/Loader/Loader";
-import {router} from "next/client";
+import {useRouter} from "next/navigation";
 
 enum MethodPayment {
     ONLINE = "online",
@@ -18,6 +18,7 @@ const Form = () => {
     const {cart} = useCart()
     const [currentPaymentType, setCurrentPaymentType] = useState<string>('Оплата картой')
     const [methodPayment, setMethodPayment] = useState<MethodPayment>(MethodPayment.NONE)
+    const router = useRouter()
     const {data, isLoading} = useQuery("paymentData",
         () => saloonService.getPaymentData(tg?.initDataUnsafe?.user?.id as number, cart.map(order => {
             return {name : order.dish.name, count : order.count, price : order.dish.price, id : order.dish.id}
