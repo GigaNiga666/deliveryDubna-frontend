@@ -48,7 +48,9 @@ export function useCart() {
             return 0;
         }
 
-        localStorage?.setItem("cart", JSON.stringify(cart))
+        if (cart.length) localStorage?.setItem("cart", JSON.stringify(cart))
+        else localStorage.removeItem("cart")
+
         return currentOrder.count
     }
 
