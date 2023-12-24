@@ -1,6 +1,7 @@
 import {createContext, FC, PropsWithChildren, useEffect, useMemo, useState} from "react";
 import {IWebApp, WebAppUser} from "@/components/types/IWebApp";
 import {router} from "next/client";
+import {useRouter} from "next/navigation";
 
 interface TelegramContext {
     tg? : IWebApp,
@@ -12,6 +13,7 @@ export const TelegramContext = createContext<TelegramContext>({});
 const TelegramProvider : FC<PropsWithChildren> = ({children}) => {
 
     const [webApp, setWebApp] = useState<IWebApp | null>(null);
+    const router = useRouter()
 
 
     useEffect(() => {
@@ -21,6 +23,13 @@ const TelegramProvider : FC<PropsWithChildren> = ({children}) => {
         if (app) {
             app.ready()
             setWebApp(app)
+            if (localStorage.getItem("cart")) {
+                app.MainButton.setParams({text: "Корзина", color: "#FF7020"})
+                app.MainButton.show()
+                app.MainButton.onClick(() => {
+                    router.replace("/cart")
+                })
+            }
         }
 
     }, [])

@@ -20,10 +20,7 @@ const Main = () => {
 
 
     useEffect(() => {
-
         tg?.BackButton.hide()
-
-        tg?.MainButton.show()
 
         if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина", color: "#FF7020"})
@@ -32,12 +29,6 @@ const Main = () => {
                 router.replace("/cart")
             })
         }
-
-        if (localStorage.getItem("cart")) {
-            console.log(localStorage.getItem("cart"))
-            tg?.MainButton.show()
-        }
-
 
     }, [])
 
