@@ -1,6 +1,5 @@
 import {createContext, FC, PropsWithChildren, useEffect, useMemo, useState} from "react";
 import {IWebApp, WebAppUser} from "@/components/types/IWebApp";
-import {router} from "next/client";
 import {useRouter} from "next/navigation";
 
 interface TelegramContext {

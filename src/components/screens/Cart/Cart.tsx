@@ -8,7 +8,7 @@ import {TelegramContext} from "@/components/providers/TelegramProvider";
 const Cart = () => {
 
     const {cart} = useCart()
-    const [cartState, setCartState] = useState<{dish : DishCart, count : number}[]>(cart)
+    const [cartState, setCartState] = useState<{ dish: DishCart, count: number }[]>(cart)
     const com = useRef<HTMLTextAreaElement>(null);
 
     const router = useRouter()
@@ -21,7 +21,7 @@ const Cart = () => {
             price += cartElement.dish.price * cartElement.count
         }
 
-        tg?.MainButton.setParams({text: "Стоимость: ₽"+price, color: "#FF7020"})
+        tg?.MainButton.setParams({text: "Стоимость: ₽" + price, color: "#FF7020"})
     }
 
     useEffect(() => {
@@ -36,7 +36,9 @@ const Cart = () => {
             router.replace("/form")
             localStorage.setItem("comment", com.current?.value as string)
         })
-    },[])
+    }, [])
+
+    if (!cart.length) return <>Ваша корзина пустая :(</>
 
     return (
         <div className={styles.cart}>
@@ -44,10 +46,9 @@ const Cart = () => {
                 <h2 className={styles.title}>Корзина</h2>
                 <ul className={"px-3"}>
                     {
-                        !cart.length ? <>Ваша корзина пустая :(</> :
-                            cartState.map(order =>
-                                <OrderCard key={`${order.dish}${order.count}`} order={order} update={setCartState}/>
-                            )
+                        cartState.map(order =>
+                            !order.count ? null : <OrderCard key={`${order.dish}${order.count}`} order={order} update={setCartState}/>
+                        )
                     }
                 </ul>
                 <textarea placeholder='Комментарий к заказу...' ref={com} className={styles.textArea}></textarea>

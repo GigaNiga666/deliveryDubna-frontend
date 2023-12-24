@@ -1,13 +1,16 @@
-import {FC} from 'react';
+import {FC, useState} from 'react';
 import Link from "next/link";
-import {DishCart} from "@/components/hooks/useCart";
+import {DishCart, useCart} from "@/components/hooks/useCart";
 
 interface Props {
     order : {dish : DishCart, count : number},
-    update : Function
+    update : Function,
 }
 
 const OrderCard: FC<Props> = ({order, update}) => {
+
+    const [count, setCount] = useState<number>(order.count)
+    const {cart, addFromCart, removeFromCart} = useCart()
 
     return (
         <li className={"flex items-start p-5 mb-6 bg-white rounded-[5px] shadow"}>
@@ -20,7 +23,21 @@ const OrderCard: FC<Props> = ({order, update}) => {
                     <span className={"text-[12px] text-[#B1B1B1] font-light"}>{order.dish.saloon.name}</span>
                 </Link>
             </div>
-            <span className={"font-semibold block ml-auto"}>₽{order.dish.price}</span>
+            <div className={"ml-auto"}>
+                <span className={"font-semibold text-center block"}>₽{order.dish.price}</span>
+                <div className={"flex pt-2.5 gap-2"}>
+                    <button className={"bg-[#FF7020] rounded-[5px] text-white w-6 h-6 text-center flex justify-center items-center"} onClick={() => {
+                        setCount(count+1)
+                        addFromCart(order.dish, order.dish.saloon.id, order.dish.saloon.name)
+                        update([...cart])
+                    }}>+</button>
+                    <button className={"bg-[#FF7020] rounded-[5px] text-white w-6 h-6 text-center flex justify-center items-center"} onClick={() => {
+                        setCount(count-1)
+                        removeFromCart(order.dish)
+                        update([...cart])
+                    }}>-</button>
+                </div>
+            </div>
         </li>
     );
 };
