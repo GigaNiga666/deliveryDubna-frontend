@@ -23,14 +23,14 @@ const Main = () => {
 
         tg?.BackButton.hide()
 
-        if (localStorage.getItem("cart") && tg) {
+        if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина", color: "#FF7020"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {
                 router.replace("/cart")
             })
         }
-    }, [])
+    }, [cart])
 
     if (isLoading) return <Loader/>
 
