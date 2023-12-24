@@ -16,7 +16,7 @@ enum MethodPayment {
 
 const Form = () => {
     const {tg} = useContext(TelegramContext)
-    const {cart} = useCart()
+    const {cart, com} = useCart()
     const [currentPaymentType, setCurrentPaymentType] = useState<string>('Оплата картой')
     const [methodPayment, setMethodPayment] = useState<MethodPayment>(MethodPayment.NONE)
     const router = useRouter()
@@ -68,7 +68,6 @@ const Form = () => {
         const name = document.querySelector('#inputName') as HTMLInputElement
         const tel = document.querySelector('#inputTel') as HTMLInputElement
         const address = document.querySelector('#inputAddress') as HTMLInputElement
-        const com = document.querySelector('#inputCom') as HTMLInputElement
         const surrender = document.querySelector('#inputSurrender') as HTMLInputElement | undefined
         const paymentType = document.querySelector('input[type="radio"]:checked') as HTMLInputElement
 
@@ -79,11 +78,13 @@ const Form = () => {
             paymentType : paymentType.value as string,
             surrender : surrender ? surrender.value : null,
             telegramId : tg?.initDataUnsafe.user?.id as number,
-            orderId : data?.order as number
+            orderId : data?.order as number,
+            com
         }
 
         tg?.MainButton.hide()
         await $api.post<null>("/users/createOrder", delivery)
+        localStorage.removeItem("cart")
         tg?.close()
     }
 
@@ -99,7 +100,10 @@ const Form = () => {
         tg?.MainButton.hide()
 
         tg?.onEvent("invoiceClosed", ({status} : {status : string}) => {
-            if (status === 'paid') tg?.close()
+            if (status === 'paid') {
+                localStorage.removeItem("cart")
+                tg?.close()
+            }
             else router.replace("/")
         })
     }, [])
@@ -161,7 +165,6 @@ const Form = () => {
                 </label>
             </div>
             {currentPaymentType === 'Наличные' ? <div className={styles.inputWrapper}><input className={styles.input} onInput={removeError} id='inputSurrender' type="tel" onKeyPress={validateTel} placeholder='Сдача с ...'/></div> : null}
-            <textarea placeholder='Комментарий к заказу...' id='inputCom' className={styles.textArea}></textarea>
         </div>
     );
 };

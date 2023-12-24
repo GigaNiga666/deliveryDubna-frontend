@@ -1,14 +1,15 @@
 import styles from "./Cart.module.scss"
 import {OrderCard} from "@/components/screens/Cart/components/OrderCard/OrderCard";
 import {DishCart, useCart} from "@/components/hooks/useCart";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {useRouter} from "next/navigation";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 
 const Cart = () => {
 
-    const {cart} = useCart()
+    const {cart, setCom} = useCart()
     const [cartState, setCartState] = useState<{dish : DishCart, count : number}[]>(cart)
+    const com = useRef<HTMLTextAreaElement>(null);
 
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
@@ -33,6 +34,7 @@ const Cart = () => {
         tg?.MainButton.show()
         tg?.MainButton.onClick(() => {
             router.replace("/form")
+            setCom(com.current?.value as string)
         })
     },[])
 
@@ -44,10 +46,11 @@ const Cart = () => {
                     {
                         !cart.length ? <>Ваша корзина пустая :(</> :
                             cartState.map(order =>
-                                <OrderCard order={order} update={setCartState}/>
+                                <OrderCard key={`${order.dish}${order.count}`} order={order} update={setCartState}/>
                             )
                     }
                 </ul>
+                <textarea placeholder='Комментарий к заказу...' ref={com} className={styles.textArea}></textarea>
             </div>
         </div>
     );

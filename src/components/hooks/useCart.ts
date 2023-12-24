@@ -1,10 +1,19 @@
 import {Dish} from "@/components/types/Dish";
+import {useState} from "react";
 
 export type DishCart = Dish & {saloon : {id : number, name : string}}
 
-const cart : {dish : DishCart, count : number}[] = []
+let local = null
+
+if (typeof window !== 'undefined') {
+    local = localStorage?.getItem("cart")
+}
+
+const cart : {dish : DishCart, count : number}[] = local ? JSON.parse(local) : []
 
 export function useCart() {
+
+    const [com, setCom] = useState<string>("")
 
     function addFromCart(dish : Dish, saloonId : number, saloonName : string) {
 
@@ -12,6 +21,7 @@ export function useCart() {
 
         if (currentOrder){
             currentOrder.count++
+            localStorage?.setItem("cart", JSON.stringify(cart))
             return currentOrder.count
         }
         else {
@@ -25,6 +35,7 @@ export function useCart() {
                 },
                 count: 1
             })
+            localStorage?.setItem("cart", JSON.stringify(cart))
             return 1
         }
     }
@@ -40,10 +51,13 @@ export function useCart() {
             return 0;
         }
 
+        localStorage?.setItem("cart", JSON.stringify(cart))
         return currentOrder.count
     }
 
     return {
+        com,
+        setCom,
         cart,
         addFromCart,
         removeFromCart
