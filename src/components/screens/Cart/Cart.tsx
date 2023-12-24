@@ -7,7 +7,7 @@ import {TelegramContext} from "@/components/providers/TelegramProvider";
 
 const Cart = () => {
 
-    const {cart, setCom} = useCart()
+    const {cart} = useCart()
     const [cartState, setCartState] = useState<{dish : DishCart, count : number}[]>(cart)
     const com = useRef<HTMLTextAreaElement>(null);
 
@@ -34,7 +34,7 @@ const Cart = () => {
         tg?.MainButton.show()
         tg?.MainButton.onClick(() => {
             router.replace("/form")
-            setCom(com.current?.value as string)
+            localStorage.setItem("comment", com.current?.value as string)
         })
     },[])
 

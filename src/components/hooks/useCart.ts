@@ -1,5 +1,4 @@
 import {Dish} from "@/components/types/Dish";
-import {useState} from "react";
 
 export type DishCart = Dish & {saloon : {id : number, name : string}}
 
@@ -12,8 +11,6 @@ if (typeof window !== 'undefined') {
 const cart : {dish : DishCart, count : number}[] = local ? JSON.parse(local) : []
 
 export function useCart() {
-
-    const [com, setCom] = useState<string>("")
 
     function addFromCart(dish : Dish, saloonId : number, saloonName : string) {
 
@@ -56,8 +53,6 @@ export function useCart() {
     }
 
     return {
-        com,
-        setCom,
         cart,
         addFromCart,
         removeFromCart
