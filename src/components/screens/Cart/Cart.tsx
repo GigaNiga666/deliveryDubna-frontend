@@ -38,6 +38,12 @@ const Cart = () => {
         })
     }, [])
 
+    useEffect(() => {
+        if (!cartState.length) {
+            tg?.MainButton.hide()
+        }
+    },[cartState])
+
     if (!cart.length) return <>Ваша корзина пустая :(</>
 
     return (
