@@ -84,6 +84,7 @@ const Form = () => {
         tg?.MainButton.hide()
         await $api.post<null>("/users/createOrder", delivery)
         localStorage.removeItem("cart")
+        localStorage.removeItem("comment")
         tg?.close()
     }
 
@@ -101,6 +102,7 @@ const Form = () => {
         tg?.onEvent("invoiceClosed", ({status} : {status : string}) => {
             if (status === 'paid') {
                 localStorage.removeItem("cart")
+                localStorage.removeItem("comment")
                 tg?.close()
             }
             else router.replace("/")
