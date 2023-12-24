@@ -45,12 +45,11 @@ export function useCart() {
 
         if (currentOrder.count === 0) {
             cart.splice(cart.indexOf(currentOrder), 1)
+            if (!cart.length) localStorage.removeItem("cart")
             return 0;
         }
 
-        if (cart.length) localStorage?.setItem("cart", JSON.stringify(cart))
-        else localStorage.removeItem("cart")
-
+        localStorage?.setItem("cart", JSON.stringify(cart))
         return currentOrder.count
     }
 

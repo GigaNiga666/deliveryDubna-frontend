@@ -78,7 +78,8 @@ const Form = () => {
             paymentType : paymentType.value as string,
             surrender : surrender ? surrender.value : null,
             telegramId : tg?.initDataUnsafe.user?.id as number,
-            orderId : data?.order as number
+            orderId : data?.order as number,
+            queryId : tg?.initDataUnsafe.query_id
         }
 
         tg?.MainButton.hide()
