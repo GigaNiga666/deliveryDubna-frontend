@@ -79,7 +79,8 @@ const Form = () => {
             surrender : surrender ? surrender.value : null,
             telegramId : tg?.initDataUnsafe.user?.id as number,
             orderId : data?.order as number,
-            queryId : tg?.initDataUnsafe.query_id
+            queryId : tg?.initDataUnsafe.query_id,
+            username : tg?.initDataUnsafe.user?.username
         }
 
         tg?.MainButton.hide()
