@@ -58,8 +58,8 @@ class SaloonService {
         return res.data
     }
 
-    async getPaymentData(id : number, cart : {name : string, count : number, price : number, id : number}[]) {
-        const res = await $api.post<PaymentData>(`users/paymentData/${id}`, {cart})
+    async getPaymentData(id : number, com : string,cart : {name : string, count : number, price : number, id : number}[]) {
+        const res = await $api.post<PaymentData>(`users/paymentData/${id}`, {cart, com})
         return res.data
     }
 }

@@ -21,7 +21,7 @@ const Form = () => {
     const [methodPayment, setMethodPayment] = useState<MethodPayment>(MethodPayment.NONE)
     const router = useRouter()
     const {data, isLoading} = useQuery("paymentData",
-        () => saloonService.getPaymentData(tg?.initDataUnsafe?.user?.id as number, cart.map(order => {
+        () => saloonService.getPaymentData(tg?.initDataUnsafe?.user?.id as number, com,cart.map(order => {
             return {name : order.dish.name, count : order.count, price : order.dish.price, id : order.dish.id}
         })))
 
@@ -78,8 +78,7 @@ const Form = () => {
             paymentType : paymentType.value as string,
             surrender : surrender ? surrender.value : null,
             telegramId : tg?.initDataUnsafe.user?.id as number,
-            orderId : data?.order as number,
-            com
+            orderId : data?.order as number
         }
 
         tg?.MainButton.hide()
