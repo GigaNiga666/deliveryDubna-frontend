@@ -23,7 +23,7 @@ const Main = () => {
 
         tg?.BackButton.hide()
 
-        if (cart.length && tg) {
+        if (JSON.parse(localStorage.getItem("cart") as string).length && tg) {
             tg.MainButton.setParams({text: "Корзина", color: "#FF7020"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {
