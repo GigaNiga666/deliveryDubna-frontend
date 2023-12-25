@@ -14,7 +14,7 @@ export function useCart() {
 
     function clear() {
         cart = []
-        localStorage?.setItem("cart", JSON.stringify(cart))
+        localStorage.removeItem("cart")
     }
     function addFromCart(dish : Dish, saloonId : number, saloonName : string) {
 
