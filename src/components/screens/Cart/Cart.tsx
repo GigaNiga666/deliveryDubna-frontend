@@ -7,9 +7,9 @@ import {TelegramContext} from "@/components/providers/TelegramProvider";
 
 const Cart = () => {
 
-    const {cart} = useCart()
-    const [cartState, setCartState] = useState<{ dish: DishCart, count: number }[]>(cart)
+    const {cart, addFromCart, removeFromCart, clear} = useCart()
     const com = useRef<HTMLTextAreaElement>(null);
+    const [update, setUpdate] = useState<boolean>(false)
 
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
@@ -39,21 +39,27 @@ const Cart = () => {
     }, [])
 
     useEffect(() => {
-        if (!cartState.length) {
+        if (!cart.length) {
             tg?.MainButton.hide()
         }
-    },[cartState])
+    },[update])
 
     if (!cart.length) return <>Ваша корзина пустая :(</>
 
     return (
         <div className={styles.cart}>
             <div className={styles.wrapper}>
-                <h2 className={styles.title}>Корзина</h2>
+                <div className={"mb-10 flex justify-between items-center px-5"}>
+                    <h2 className={"text-[40px]"}>Корзина</h2>
+                    <button className={"text-right font-light hover:underline"} onClick={() => {
+                        clear()
+                        setUpdate(prevState => !prevState)
+                    }}>очистить</button>
+                </div>
                 <ul className={"px-3"}>
                     {
-                        cartState.map(order =>
-                            !order.count ? null : <OrderCard key={`${order.dish}${order.count}`} order={order} update={setCartState}/>
+                        cart.map(order =>
+                           order.count ? <OrderCard key={`${order.dish}${order.count}`} update={setUpdate} order={order} addFromCart={addFromCart} removeFromCart={removeFromCart}/> : null
                         )
                     }
                 </ul>

@@ -8,10 +8,14 @@ if (typeof window !== 'undefined') {
     local = localStorage?.getItem("cart")
 }
 
-const cart : {dish : DishCart, count : number}[] = local ? JSON.parse(local) : []
+let cart : {dish : DishCart, count : number}[] = local ? JSON.parse(local) : []
 
 export function useCart() {
 
+    function clear() {
+        cart = []
+        localStorage?.setItem("cart", JSON.stringify(cart))
+    }
     function addFromCart(dish : Dish, saloonId : number, saloonName : string) {
 
         const currentOrder = cart.find(order => order.dish.id === dish.id)
@@ -56,6 +60,7 @@ export function useCart() {
     return {
         cart,
         addFromCart,
-        removeFromCart
+        removeFromCart,
+        clear
     }
 }
