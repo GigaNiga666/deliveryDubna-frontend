@@ -13,7 +13,7 @@ import {Loader} from "@/components/ui/Loader/Loader";
 const Saloon = () => {
 
     const saloonId = useParams().saloon
-    const {data, isError, error, isLoading} = useQuery("saloon"+saloonId, () => saloonService.getOne(saloonId as string))
+    const {data, isLoading} = useQuery("saloon"+saloonId, () => saloonService.getOne(saloonId as string))
 
     const {cart, addFromCart, removeFromCart} = useCart()
 

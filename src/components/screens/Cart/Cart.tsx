@@ -1,6 +1,6 @@
 import styles from "./Cart.module.scss"
 import {OrderCard} from "@/components/screens/Cart/components/OrderCard/OrderCard";
-import {DishCart, useCart} from "@/components/hooks/useCart";
+import {useCart} from "@/components/hooks/useCart";
 import {useContext, useEffect, useRef, useState} from "react";
 import {useRouter} from "next/navigation";
 import {TelegramContext} from "@/components/providers/TelegramProvider";

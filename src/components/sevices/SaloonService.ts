@@ -1,6 +1,5 @@
 import {$api} from "@/components/http";
 import {Dish} from "@/components/types/Dish";
-import {DishCart} from "@/components/hooks/useCart";
 
 interface GetAllRes {
     saloons : {

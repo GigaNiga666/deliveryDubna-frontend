@@ -12,7 +12,7 @@ const Product = () => {
 
     const saloonId = useParams().saloon
     const productId = useParams().product
-    const {data, isError, error, isLoading} = useQuery("saloon"+saloonId, () => saloonService.getOne(saloonId as string))
+    const {data, isLoading} = useQuery("saloon"+saloonId, () => saloonService.getOne(saloonId as string))
 
     const {cart, addFromCart, removeFromCart} = useCart()
     const amountInCart = cart.find(value => value.dish.id === Number(productId))
