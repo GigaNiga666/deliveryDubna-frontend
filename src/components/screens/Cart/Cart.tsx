@@ -4,6 +4,7 @@ import {DishCart, useCart} from "@/components/hooks/useCart";
 import {useContext, useEffect, useRef, useState} from "react";
 import {useRouter} from "next/navigation";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
+import {SvgSprite} from "@/components/ui/SvgSprite/SvgSprite";
 
 const Cart = () => {
 
@@ -44,17 +45,23 @@ const Cart = () => {
         }
     },[update])
 
-    if (!cart.length) return <>Ваша корзина пустая :(</>
+    if (!cart.length) return (
+        <div className={"flex flex-col justify-center items-center h-full gap-3"}>
+            <SvgSprite id={"cart"} width={70} height={70}/>
+            <p className={"text-2xl"}>Ваша корзина <span className={"text-[#FF7020]"}>пустая</span> :(</p>
+        </div>
+    )
+
 
     return (
         <div className={styles.cart}>
             <div className={styles.wrapper}>
                 <div className={"mb-10 flex justify-between items-center px-5"}>
                     <h2 className={"text-[40px]"}>Корзина</h2>
-                    <button className={"text-right font-light hover:underline"} onClick={() => {
+                    <button className={""} onClick={() => {
                         clear()
                         setUpdate(prevState => !prevState)
-                    }}>очистить</button>
+                    }}><SvgSprite id={"trash"} width={36} height={36}/></button>
                 </div>
                 <ul className={"px-3"}>
                     {
