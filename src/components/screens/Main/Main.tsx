@@ -48,6 +48,7 @@ const Main = () => {
 
     return (
         <>
+            <img src={tg?.initDataUnsafe.user?.photo_url} alt=""/>
             <header className={styles.header}>
                 <div className={styles.searchWrapper}>
                     <SvgSprite id={"loupe"} width={20} height={20}/>

@@ -1,15 +1,24 @@
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {SvgSprite} from "@/components/ui/SvgSprite/SvgSprite";
 import {useQuery} from "react-query";
 import {userService} from "@/components/sevices/UserService";
 import {Loader} from "@/components/ui/Loader/Loader";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 const Profile = () => {
 
     const {tg} = useContext(TelegramContext)
     const { data, isLoading, isError } = useQuery("user", () =>  userService.getUserInfo(tg?.initDataUnsafe.user?.id as number))
+    const router = useRouter()
+
+    useEffect(() => {
+        tg?.BackButton.show()
+        tg?.BackButton.onClick(() => {
+            router.replace("/")
+        })
+    },[])
 
     if (isLoading) return (
         <Loader/>
