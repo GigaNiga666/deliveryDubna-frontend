@@ -63,7 +63,8 @@ const Main = () => {
                 <div className={" w-[32px] h-[32px]"}>
                     <Link href={"profile"}>
                         <img className={"rounded-[50%] w-full h-full object-cover"}
-                             src={tg?.initDataUnsafe.user?.photo_url || "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1704931200&semt=ais"} alt=""/>
+                             src={tg?.initDataUnsafe.user?.photo_url ? tg?.initDataUnsafe.user?.photo_url :
+                                  "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1704931200&semt=ais"} alt=""/>
                     </Link>
                 </div>
             </header>
