@@ -46,9 +46,10 @@ const Main = () => {
         return search === '' ? checkCategory : checkCategory && saloon.name.toLowerCase().includes(search.toLowerCase())
     })
 
+
     return (
         <>
-            <img src={tg?.initDataUnsafe.user?.photo_url} alt=""/>
+            <img src={tg?.initDataUnsafe?.chat?.photo_url} alt=""/>
             <header className={styles.header}>
                 <div className={styles.searchWrapper}>
                     <SvgSprite id={"loupe"} width={20} height={20}/>

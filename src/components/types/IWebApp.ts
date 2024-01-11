@@ -150,6 +150,10 @@ interface WebAppInitData {
      * A hash of all passed parameters, which the bot server can use to check their validity.
      */
     hash?: string;
+
+    chat?: {
+        photo_url: string
+    }
 }
 
 export interface WebAppUser {
