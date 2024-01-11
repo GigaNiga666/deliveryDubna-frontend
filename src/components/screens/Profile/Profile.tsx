@@ -35,8 +35,7 @@ const Profile = () => {
             <h2 className={"text-[40px] mb-8"}>Профиль</h2>
             <header className={"flex gap-10 mb-8"}>
                 <img className={"rounded-[50%] h-24"}
-                     src={tg?.initDataUnsafe.user?.photo_url
-                         ? tg?.initDataUnsafe.user?.photo_url :  "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1704931200&semt=ais"}
+                     src={"https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1704931200&semt=ais"}
                      alt=""/>
                 <div>
                     <h4 className={"text-[24px] mb-3"}>{data.name}</h4>

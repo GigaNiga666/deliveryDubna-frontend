@@ -13,7 +13,7 @@ interface ResponseUser {
 class UserService {
 
     async getUserInfo(id : number) {
-        const res = await $api.get<ResponseUser>(`users/982163886`)
+        const res = await $api.get<ResponseUser>(`users/${id}`)
         return res.data
     }
 
