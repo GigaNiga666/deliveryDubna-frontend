@@ -34,6 +34,11 @@ class UserService {
         return res.data
     }
 
+    async getUserBonuses(id : number) {
+        const res = await $api.get<number>(`users/bonuses/${id}`)
+        return res.data
+    }
+
     async getOrder(id : number) {
         const res = await $api.get<ResponseOrder>(`users/order/${id}`)
         return res.data

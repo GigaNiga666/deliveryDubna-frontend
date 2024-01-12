@@ -9,6 +9,7 @@ if (typeof window !== 'undefined') {
 }
 
 let cart: { dish: DishCart, count: number }[] = local ? JSON.parse(local) : []
+let bonuses = 0;
 
 export function useCart() {
 
@@ -57,10 +58,18 @@ export function useCart() {
         return currentOrder.count
     }
 
+    function setBonuses(value : number) {
+        bonuses = value
+    }
+
+    function getBonuses() {return bonuses}
+
     return {
         cart,
         addFromCart,
         removeFromCart,
-        clear
+        clear,
+        setBonuses,
+        getBonuses
     }
 }

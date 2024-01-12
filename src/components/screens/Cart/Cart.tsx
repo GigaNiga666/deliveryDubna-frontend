@@ -5,15 +5,24 @@ import {useContext, useEffect, useRef, useState} from "react";
 import {useRouter} from "next/navigation";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {SvgSprite} from "@/components/ui/SvgSprite/SvgSprite";
+import {Range} from "@/components/screens/Cart/ui/Range/Range";
+import {useQuery} from "react-query";
+import {userService} from "@/components/sevices/UserService";
+import {Loader} from "@/components/ui/Loader/Loader";
+import {text} from "node:stream/consumers";
 
 const Cart = () => {
 
-    const {cart, addFromCart, removeFromCart, clear} = useCart()
+    const {cart, setBonuses, addFromCart, removeFromCart, clear} = useCart()
     const com = useRef<HTMLTextAreaElement>(null);
     const [update, setUpdate] = useState<boolean>(false)
+    const {data, isLoading} = useQuery("bonuses", () => userService.getUserBonuses(0))
+    const [input, setInput] = useState<string>("0")
+
 
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
+    let price = calculatePrice()
 
     function calculatePrice() {
         let price = 0;
@@ -21,8 +30,7 @@ const Cart = () => {
         for (const cartElement of cart) {
             price += cartElement.dish.price * cartElement.count
         }
-
-        tg?.MainButton.setParams({text: "Стоимость: ₽" + price, color: "#FF7020"})
+         return price
     }
 
     useEffect(() => {
@@ -31,11 +39,10 @@ const Cart = () => {
         tg?.BackButton.onClick(() => {
             router.replace("/")
         })
-        calculatePrice()
+        tg?.MainButton.setParams({text: "Стоимость: ₽" + price, color: "#FF7020"})
         tg?.MainButton.show()
         tg?.MainButton.onClick(() => {
-            router.replace("/form")
-            localStorage.setItem("comment", com.current?.value as string)
+            document.querySelector("#modal")?.classList.replace("hidden", "flex")
         })
     }, [])
 
@@ -43,7 +50,17 @@ const Cart = () => {
         if (!cart.length) {
             tg?.MainButton.hide()
         }
+        price = calculatePrice()
+        tg?.MainButton.setParams({text: "Стоимость: ₽" + price, color: "#FF7020"})
     },[update])
+
+    if (isLoading) return (
+        <Loader/>
+    )
+
+    if (!data) return (
+        <>Данные отсутствуют</>
+    )
 
     if (!cart.length) return (
         <div className={"flex flex-col justify-center items-center h-full gap-3"}>
@@ -52,9 +69,12 @@ const Cart = () => {
         </div>
     )
 
-
     return (
         <div className={styles.cart}>
+            <button onClick={() => {
+                document.querySelector("#modal")?.classList.replace("hidden", "flex")
+
+            }}>F</button>
             <div className={styles.wrapper}>
                 <div className={"mb-10 flex justify-between items-center px-5"}>
                     <h2 className={"text-[40px]"}>Корзина</h2>
@@ -71,6 +91,28 @@ const Cart = () => {
                     }
                 </ul>
                 <textarea placeholder='Комментарий к заказу...' ref={com} className={styles.textArea}></textarea>
+            </div>
+            <div id={'modal'} className={"absolute hidden justify-center items-center inset-0 bg-black bg-opacity-50"}>
+                <div className={"bg-white w-3/4 rounded-xl p-3"}>
+                    <div className={"flex justify-between mb-8"}>
+                        <h4 className={"text-[20px] font-semibold"}>Оплата бонусами</h4>
+                        <div className={"flex items-center"}>
+                            <SvgSprite id={"bonus"} width={24} height={24}/>
+                            <p>{data}</p>
+                        </div>
+                    </div>
+                    <Range bonuses={data > calculatePrice() ? calculatePrice() : data} input={input} setInput={setInput}/>
+                    <button
+                        className={"flex font-semibold justify-center w-full bg-[#FF7020] text-white py-1.5 rounded-xl"}
+                        onClick={() => {
+                            router.replace("/form")
+                            localStorage.setItem("comment", com.current?.value as string)
+                            setBonuses(+input)
+                        }}
+                    >
+                        Оплатить {calculatePrice() - +input}₽
+                    </button>
+                </div>
             </div>
         </div>
     );

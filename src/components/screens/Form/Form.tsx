@@ -16,14 +16,16 @@ enum MethodPayment {
 
 const Form = () => {
     const {tg} = useContext(TelegramContext)
-    const {cart} = useCart()
+    const {cart, getBonuses} = useCart()
     const [currentPaymentType, setCurrentPaymentType] = useState<string>('Оплата картой')
     const [methodPayment, setMethodPayment] = useState<MethodPayment>(MethodPayment.NONE)
     const router = useRouter()
     const {data, isLoading} = useQuery("paymentData",
-        () => saloonService.getPaymentData(tg?.initDataUnsafe?.user?.id as number, localStorage.getItem("comment") as string,cart.map(order => {
-            return {name : order.dish.name, count : order.count, price : order.dish.price, id : order.dish.id}
-        })))
+        () => saloonService.getPaymentData(tg?.initDataUnsafe?.user?.id as number, getBonuses(),localStorage.getItem("comment") as string,
+            cart.map(order => {
+                return {name : order.dish.name, count : order.count, price : order.dish.price, id : order.dish.id}
+            }
+        )))
 
     function validation() {
         const allInputs = document.querySelectorAll('input');
