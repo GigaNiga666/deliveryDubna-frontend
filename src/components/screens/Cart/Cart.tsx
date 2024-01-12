@@ -22,7 +22,6 @@ const Cart = () => {
 
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
-    let price = calculatePrice()
 
     function calculatePrice() {
         let price = 0;
@@ -39,10 +38,11 @@ const Cart = () => {
         tg?.BackButton.onClick(() => {
             router.replace("/")
         })
-        tg?.MainButton.setParams({text: "Стоимость: ₽" + price, color: "#FF7020"})
+        tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
         tg?.MainButton.show()
         tg?.MainButton.onClick(() => {
             document.querySelector("#modal")?.classList.replace("hidden", "flex")
+            tg?.MainButton.hide()
         })
     }, [])
 
@@ -50,8 +50,7 @@ const Cart = () => {
         if (!cart.length) {
             tg?.MainButton.hide()
         }
-        price = calculatePrice()
-        tg?.MainButton.setParams({text: "Стоимость: ₽" + price, color: "#FF7020"})
+        tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice()})
     },[update])
 
     if (isLoading) return (
