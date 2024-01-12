@@ -1,15 +1,25 @@
-import {useParams} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import styles from "./Order.module.scss"
 import Link from "next/link";
 import {useQuery} from "react-query";
 import {userService} from "@/components/sevices/UserService";
 import {Loader} from "@/components/ui/Loader/Loader";
-import {defaultTheme} from "react-query/types/devtools/theme";
+import {useContext, useEffect} from "react";
+import {TelegramContext} from "@/components/providers/TelegramProvider";
 
 const Order = () => {
 
     const id = useParams().id
     const {data, isLoading, isError} = useQuery(`order${id}`, () => userService.getOrder(+id))
+    const {tg} = useContext(TelegramContext)
+    const router = useRouter()
+
+    useEffect(() => {
+        tg?.BackButton.show()
+        tg?.BackButton.onClick(() => {
+            router.replace("/profile")
+        })
+    },[])
 
     if (isLoading) return <Loader/>
 
