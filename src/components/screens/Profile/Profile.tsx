@@ -38,7 +38,7 @@ const Profile = () => {
                      src={"https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1704931200&semt=ais"}
                      alt=""/>
                 <div>
-                    <h4 className={"text-[24px] mb-3"}>{data.name}</h4>
+                    <h4 className={"text-[24px] mb-3"}>{tg?.initDataUnsafe.user?.first_name}</h4>
                     <div className={"flex gap-2"}>
                         <SvgSprite id={"bonus"} width={24} height={24}/>
                         <p>300</p>
@@ -50,8 +50,8 @@ const Profile = () => {
                 <ul>
                     {
                         data.orders.length ? data.orders.map(order =>
-                            <li className={"text-[12px] flex justify-between bg-white p-5 rounded-[10px] items-center"}>
-                                <Link className={"text-blue-500"} href={`profile/order/${order.id}`}>#{order.id}</Link>
+                            <li key={order.id} className={"text-[12px] flex justify-between bg-white p-5 rounded-[10px] items-center mb-6"}>
+                                <Link style={{color: "blue"}} className={"hover:underline"} href={`profile/order/${order.id}`}>#{order.id}</Link>
                                 <div className={"text-center"}>
                                     <p>{order.date}</p>
                                 </div>
