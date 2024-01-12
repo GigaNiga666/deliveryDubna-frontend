@@ -50,14 +50,13 @@ const Cart = () => {
         if (!cart.length) {
             tg?.MainButton.hide()
         }
-        tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice()})
     },[update])
 
     if (isLoading) return (
         <Loader/>
     )
 
-    if (!data) return (
+    if (data === undefined) return (
         <>Данные отсутствуют</>
     )
 
@@ -85,7 +84,7 @@ const Cart = () => {
                 <ul className={"px-3"}>
                     {
                         cart.map(order =>
-                           order.count ? <OrderCard key={`${order.dish}${order.count}`} update={setUpdate} order={order} addFromCart={addFromCart} removeFromCart={removeFromCart}/> : null
+                           order.count ? <OrderCard calculatePrice={calculatePrice} key={`${order.dish}${order.count}`} update={setUpdate} order={order} addFromCart={addFromCart} removeFromCart={removeFromCart}/> : null
                         )
                     }
                 </ul>
