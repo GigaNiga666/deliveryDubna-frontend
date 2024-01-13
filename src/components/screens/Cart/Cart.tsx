@@ -80,14 +80,6 @@ const Cart = () => {
 
     return (
         <div className={styles.cart}>
-            <button onClick={() => {
-                if (calculatePrice() < 100) {
-                    tg?.showAlert("Минимальная сумма заказа - 100 рублей")
-                    return
-                }
-                document.querySelector("#modal")?.classList.replace("hidden", "flex")
-                tg?.MainButton.hide()
-            }}>click</button>
             <div className={styles.wrapper}>
                 <div className={"mb-10 flex justify-between items-center px-5"}>
                     <h2 className={"text-[40px]"}>Корзина</h2>

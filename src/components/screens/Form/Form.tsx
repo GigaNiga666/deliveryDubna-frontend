@@ -118,8 +118,7 @@ const Form = () => {
             tg?.MainButton.show()
 
             tg?.MainButton.onClick(() => {
-                if (!validation()) return
-                buy()
+                if (validation()) buy()
             })
         }
 
