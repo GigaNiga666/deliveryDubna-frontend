@@ -26,7 +26,6 @@ const Main = () => {
             tg.MainButton.setParams({text: "Корзина", color: "#FF7020"})
             tg.MainButton.show()
             tg.MainButton.onClick(() => {
-                tg.showAlert("Tets")
                 router.replace("/cart")
             })
         }

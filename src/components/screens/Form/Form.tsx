@@ -64,7 +64,7 @@ const Form = () => {
         }
     }
 
-    async function buy() {
+    function buy() {
         if (!validation()) return
 
         const name = document.querySelector('#inputName') as HTMLInputElement
@@ -86,10 +86,11 @@ const Form = () => {
         }
 
         tg?.MainButton.hide()
-        await $api.post<null>("/users/createOrder", delivery)
-        localStorage.removeItem("cart")
-        localStorage.removeItem("comment")
-        tg?.close()
+        $api.post<null>("/users/createOrder", delivery).then(() => {
+            localStorage.removeItem("cart")
+            localStorage.removeItem("comment")
+            tg?.close()
+        })
     }
 
     function removeError(e : FormEvent<HTMLInputElement>) {
@@ -117,8 +118,8 @@ const Form = () => {
         if (methodPayment !== MethodPayment.NONE) {
             tg?.MainButton.show()
 
-            tg?.MainButton.onClick(async () => {
-                await buy()
+            tg?.MainButton.onClick(() => {
+                buy()
             })
         }
 
