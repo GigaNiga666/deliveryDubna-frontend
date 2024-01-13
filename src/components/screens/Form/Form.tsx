@@ -117,10 +117,10 @@ const Form = () => {
         if (methodPayment !== MethodPayment.NONE) {
             tg?.MainButton.show()
 
-            tg?.MainButton.onClick(() => {
-                if (!validation()) return
-                buy()
-            })
+            // tg?.MainButton.onClick(() => {
+            //     if (!validation()) return
+            //     buy()
+            // })
         }
 
         if (methodPayment === MethodPayment.ONLINE && data) tg?.openInvoice(data.url)
