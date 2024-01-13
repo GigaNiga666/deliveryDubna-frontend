@@ -29,7 +29,7 @@ const Main = () => {
         if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина", color: "#FF7020"})
             tg.MainButton.show()
-            // tg.MainButton.onClick(click)
+            tg.MainButton.onClick(click)
         }
 
     }, [])
@@ -52,9 +52,6 @@ const Main = () => {
     return (
         <>
             <header className={styles.header}>
-                <button onClick={() => {
-                    router.replace("/cart")
-                }}>click</button>
                 <div className={styles.searchWrapper}>
                     <SvgSprite id={"loupe"} width={20} height={20}/>
                     <input

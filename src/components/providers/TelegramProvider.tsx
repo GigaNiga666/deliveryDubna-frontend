@@ -19,15 +19,18 @@ const TelegramProvider : FC<PropsWithChildren> = ({children}) => {
 
         const app = (window as any).Telegram?.WebApp as IWebApp
 
+        function click() {
+            router.replace("/cart")
+            app.MainButton.offClick(click)
+        }
+
         if (app) {
             app.ready()
             setWebApp(app)
             if (localStorage.getItem("cart")) {
                 app.MainButton.setParams({text: "Корзина", color: "#FF7020"})
                 app.MainButton.show()
-                app.MainButton.onClick(() => {
-                    router.replace("/cart")
-                })
+                app.MainButton.onClick(click)
             }
         }
 
