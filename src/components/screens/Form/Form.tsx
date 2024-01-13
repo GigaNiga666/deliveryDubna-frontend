@@ -104,6 +104,7 @@ const Form = () => {
         tg?.MainButton.hide()
 
         tg?.MainButton.onClick(() => {
+            tg?.showAlert("Test")
             buy()
         })
 
