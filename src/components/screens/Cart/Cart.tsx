@@ -87,7 +87,16 @@ const Cart = () => {
                 <textarea placeholder='Комментарий к заказу...' ref={com} className={styles.textArea}></textarea>
             </div>
             <div id={'modal'} className={"absolute hidden justify-center items-center inset-0 bg-black bg-opacity-50"}>
-                <div className={"bg-white w-3/4 rounded-xl p-3"}>
+                <div className={"bg-white relative w-[90%] rounded-xl p-8"}>
+                    <button
+                        className={"absolute right-[5px] top-[5px] transform hover:scale-110"}
+                        onClick={() => {
+                            tg?.MainButton.show()
+                            document.querySelector("#modal")?.classList.replace("flex", "hidden")
+                        }}
+                    >
+                        <SvgSprite id={"cross"} width={24} height={24}/>
+                    </button>
                     <div className={"flex justify-between mb-8"}>
                         <h4 className={"text-[20px] font-semibold"}>Оплата бонусами</h4>
                         <div className={"flex items-center"}>
