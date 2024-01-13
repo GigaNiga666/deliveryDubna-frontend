@@ -86,6 +86,7 @@ const Form = () => {
         }
 
         tg?.MainButton.hide()
+        tg?.showAlert("Test")
         await $api.post<null>("/users/createOrder", delivery)
         localStorage.removeItem("cart")
         localStorage.removeItem("comment")
@@ -104,7 +105,6 @@ const Form = () => {
         tg?.MainButton.hide()
 
         tg?.MainButton.onClick(() => {
-            tg?.showAlert("Test")
             buy()
         })
 
