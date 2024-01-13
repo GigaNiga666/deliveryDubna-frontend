@@ -39,7 +39,6 @@ const Cart = () => {
             router.replace("/")
         })
         tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
-        tg?.MainButton.show()
         tg?.MainButton.onClick(() => {
             document.querySelector("#modal")?.classList.replace("hidden", "flex")
             tg?.MainButton.hide()
@@ -51,6 +50,12 @@ const Cart = () => {
             tg?.MainButton.hide()
         }
     },[update])
+
+    useEffect(() => {
+        if (!isLoading) {
+            tg?.MainButton.show()
+        }
+    }, [isLoading])
 
     if (isLoading) return (
         <Loader/>
@@ -86,10 +91,10 @@ const Cart = () => {
                 </ul>
                 <textarea placeholder='Комментарий к заказу...' ref={com} className={styles.textArea}></textarea>
             </div>
-            <div id={'modal'} className={"absolute hidden justify-center items-center inset-0 bg-black bg-opacity-50"}>
-                <div className={"bg-white relative w-[90%] rounded-xl p-8"}>
+            <div id={'modal'} className={"absolute flex justify-center items-center inset-0 bg-black bg-opacity-50"}>
+                <div className={"bg-white relative w-[90%] rounded-xl p-8 pt-12"}>
                     <button
-                        className={"absolute right-[5px] top-[5px] transform hover:scale-110"}
+                        className={"absolute right-[8px] top-[8px] transform hover:scale-110"}
                         onClick={() => {
                             tg?.MainButton.show()
                             document.querySelector("#modal")?.classList.replace("flex", "hidden")
@@ -104,7 +109,7 @@ const Cart = () => {
                             <p>{data}</p>
                         </div>
                     </div>
-                    <Range bonuses={data > calculatePrice() ? calculatePrice() : data} input={input} setInput={setInput}/>
+                    <Range bonuses={data > calculatePrice() ? calculatePrice() - 1 : data} input={input} setInput={setInput}/>
                     <button
                         className={"flex font-semibold justify-center w-full bg-[#FF7020] text-white py-1.5 rounded-xl"}
                         onClick={() => {

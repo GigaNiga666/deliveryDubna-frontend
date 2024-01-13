@@ -40,7 +40,7 @@ const Range : FC<Props> = ({input, setInput,bonuses}) => {
         };
 
         initializeRangeSlider();
-    }, [])
+    }, [bonuses])
 
     return (
         <div className="range">
