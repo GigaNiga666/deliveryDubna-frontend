@@ -21,7 +21,7 @@ const Form = () => {
     const [methodPayment, setMethodPayment] = useState<MethodPayment>(MethodPayment.NONE)
     const router = useRouter()
     const {data, isLoading} = useQuery("paymentData",
-        () => saloonService.getPaymentData(tg?.initDataUnsafe?.user?.id as number, getBonuses(),localStorage.getItem("comment") as string,
+        () => saloonService.getPaymentData(tg?.initDataUnsafe.user?.id as number, getBonuses(),localStorage.getItem("comment") as string,
             cart.map(order => {
                 return {name : order.dish.name, count : order.count, price : order.dish.price, id : order.dish.id}
             }
@@ -118,9 +118,7 @@ const Form = () => {
         if (methodPayment !== MethodPayment.NONE) {
             tg?.MainButton.show()
 
-            tg?.MainButton.onClick(() => {
-                buy()
-            })
+            tg?.MainButton.onClick(buy)
         }
 
         if (methodPayment === MethodPayment.ONLINE && data) tg?.openInvoice(data.url)

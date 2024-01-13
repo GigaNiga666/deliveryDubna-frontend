@@ -17,7 +17,7 @@ const Cart = () => {
     const {cart, setBonuses, addFromCart, removeFromCart, clear} = useCart()
     const com = useRef<HTMLTextAreaElement>(null);
     const [update, setUpdate] = useState<boolean>(false)
-    const {data, isLoading} = useQuery("bonuses", () => userService.getUserBonuses(982163886))
+    const {data, isLoading} = useQuery("bonuses", () => userService.getUserBonuses(tg?.initDataUnsafe.user?.id as number))
     const [input, setInput] = useState<string>("0")
 
 
@@ -39,6 +39,7 @@ const Cart = () => {
         tg?.BackButton.onClick(() => {
             router.replace("/")
         })
+        tg?.MainButton.hide()
         tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
         tg?.MainButton.onClick(() => {
             if (calculatePrice() < 100) {
@@ -79,6 +80,14 @@ const Cart = () => {
 
     return (
         <div className={styles.cart}>
+            <button onClick={() => {
+                if (calculatePrice() < 100) {
+                    tg?.showAlert("Минимальная сумма заказа - 100 рублей")
+                    return
+                }
+                document.querySelector("#modal")?.classList.replace("hidden", "flex")
+                tg?.MainButton.hide()
+            }}>click</button>
             <div className={styles.wrapper}>
                 <div className={"mb-10 flex justify-between items-center px-5"}>
                     <h2 className={"text-[40px]"}>Корзина</h2>
@@ -90,7 +99,9 @@ const Cart = () => {
                 <ul className={"px-3"}>
                     {
                         cart.map(order =>
-                           order.count ? <OrderCard calculatePrice={calculatePrice} key={`${order.dish}${order.count}`} update={setUpdate} order={order} addFromCart={addFromCart} removeFromCart={removeFromCart}/> : null
+                            order.count ? <OrderCard calculatePrice={calculatePrice} key={`${order.dish}${order.count}`}
+                                                     update={setUpdate} order={order} addFromCart={addFromCart}
+                                                     removeFromCart={removeFromCart}/> : null
                         )
                     }
                 </ul>
@@ -114,7 +125,8 @@ const Cart = () => {
                             <p>{data}</p>
                         </div>
                     </div>
-                    <Range bonuses={data > calculatePrice() ? calculatePrice() - 100 : data} input={input} setInput={setInput}/>
+                    <Range bonuses={data > calculatePrice() ? calculatePrice() - 100 : data} input={input}
+                           setInput={setInput}/>
                     <button
                         className={"flex font-semibold justify-center w-full bg-[#FF7020] text-white py-1.5 rounded-xl"}
                         onClick={() => {
