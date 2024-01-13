@@ -24,6 +24,16 @@ const Cart = () => {
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
 
+    function click() {
+        if (calculatePrice() < 100) {
+            tg?.showAlert("Минимальная сумма заказа - 100 рублей")
+            return
+        }
+        document.querySelector("#modal")?.classList.replace("hidden", "flex")
+        tg?.MainButton.hide()
+        tg?.MainButton.offClick(click)
+    }
+
     function calculatePrice() {
         let price = 0;
 
@@ -41,14 +51,7 @@ const Cart = () => {
         })
         tg?.MainButton.hide()
         tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
-        tg?.MainButton.onClick(() => {
-            if (calculatePrice() < 100) {
-                tg?.showAlert("Минимальная сумма заказа - 100 рублей")
-                return
-            }
-            document.querySelector("#modal")?.classList.replace("hidden", "flex")
-            tg?.MainButton.hide()
-        })
+        tg?.MainButton.onClick(click)
     }, [])
 
     useEffect(() => {
