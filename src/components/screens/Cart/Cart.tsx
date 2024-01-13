@@ -10,6 +10,7 @@ import {useQuery} from "react-query";
 import {userService} from "@/components/sevices/UserService";
 import {Loader} from "@/components/ui/Loader/Loader";
 import {text} from "node:stream/consumers";
+import {relativizeURL} from "next/dist/shared/lib/router/utils/relativize-url";
 
 const Cart = () => {
 
@@ -40,6 +41,10 @@ const Cart = () => {
         })
         tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
         tg?.MainButton.onClick(() => {
+            if (calculatePrice() < 100) {
+                tg?.showAlert("Минимальная сумма заказа - 100 рублей")
+                return
+            }
             document.querySelector("#modal")?.classList.replace("hidden", "flex")
             tg?.MainButton.hide()
         })
@@ -109,7 +114,7 @@ const Cart = () => {
                             <p>{data}</p>
                         </div>
                     </div>
-                    <Range bonuses={data > calculatePrice() ? calculatePrice() - 1 : data} input={input} setInput={setInput}/>
+                    <Range bonuses={data > calculatePrice() ? calculatePrice() - 100 : data} input={input} setInput={setInput}/>
                     <button
                         className={"flex font-semibold justify-center w-full bg-[#FF7020] text-white py-1.5 rounded-xl"}
                         onClick={() => {
