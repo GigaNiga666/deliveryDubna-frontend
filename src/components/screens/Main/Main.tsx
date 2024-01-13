@@ -18,6 +18,10 @@ const Main = () => {
     const {tg} = useContext(TelegramContext)
     const router = useRouter()
 
+    function click() {
+        tg?.MainButton.offClick(click)
+        router.replace("/cart")
+    }
 
     useEffect(() => {
         tg?.BackButton.hide()
@@ -25,9 +29,7 @@ const Main = () => {
         if (cart.length && tg) {
             tg.MainButton.setParams({text: "Корзина", color: "#FF7020"})
             tg.MainButton.show()
-            tg.MainButton.onClick(() => {
-                router.replace("/cart")
-            })
+            tg.MainButton.onClick(click)
         }
 
     }, [])
