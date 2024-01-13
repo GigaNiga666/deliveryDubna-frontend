@@ -117,8 +117,8 @@ const Form = () => {
         if (methodPayment !== MethodPayment.NONE) {
             tg?.MainButton.show()
 
-            tg?.MainButton.onClick(() => {
-                buy()
+            tg?.MainButton.onClick(async () => {
+                await buy()
             })
         }
 
