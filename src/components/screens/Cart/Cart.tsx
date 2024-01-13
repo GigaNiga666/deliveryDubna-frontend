@@ -24,21 +24,24 @@ const Cart = () => {
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
 
-    function click() {
+    function clickWithBonuses() {
         if (calculatePrice() < 100) {
             tg?.showAlert("Минимальная сумма заказа - 100 рублей")
             return
         }
 
-        if (data && data > 0)
-            document.querySelector("#modal")?.classList.replace("hidden", "flex")
-        else {
-            router.replace("/form")
-            localStorage.setItem("comment", com.current?.value as string)
-            setBonuses(+input)
-        }
+        document.querySelector("#modal")?.classList.replace("hidden", "flex")
+
         tg?.MainButton.hide()
-        tg?.MainButton.offClick(click)
+        tg?.MainButton.offClick(clickWithBonuses)
+    }
+
+    function clickWithoutBonuses() {
+        router.replace("/form")
+        localStorage.setItem("comment", com.current?.value as string)
+        setBonuses(+input)
+        tg?.MainButton.hide()
+        tg?.MainButton.offClick(clickWithoutBonuses)
     }
 
     function calculatePrice() {
@@ -58,7 +61,6 @@ const Cart = () => {
         })
         tg?.MainButton.hide()
         tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
-        tg?.MainButton.onClick(click)
     }, [])
 
     useEffect(() => {
@@ -68,8 +70,10 @@ const Cart = () => {
     },[update])
 
     useEffect(() => {
-        if (!isLoading) {
+        if (!isLoading && data) {
             tg?.MainButton.show()
+            if (data > 0) tg?.MainButton.onClick(clickWithBonuses)
+            else tg?.MainButton.onClick(clickWithoutBonuses)
         }
     }, [isLoading])
 
