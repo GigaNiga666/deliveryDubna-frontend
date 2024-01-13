@@ -96,7 +96,7 @@ const Cart = () => {
                 </ul>
                 <textarea placeholder='Комментарий к заказу...' ref={com} className={styles.textArea}></textarea>
             </div>
-            <div id={'modal'} className={"absolute flex justify-center items-center inset-0 bg-black bg-opacity-50"}>
+            <div id={'modal'} className={"absolute hidden justify-center items-center inset-0 bg-black bg-opacity-50"}>
                 <div className={"bg-white relative w-[90%] rounded-xl p-8 pt-12"}>
                     <button
                         className={"absolute right-[8px] top-[8px] transform hover:scale-110"}

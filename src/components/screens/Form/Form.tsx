@@ -103,6 +103,10 @@ const Form = () => {
         tg?.MainButton.setParams({text: "Продолжить", color: "#FF7020"})
         tg?.MainButton.hide()
 
+        tg?.MainButton.onClick(() => {
+            buy()
+        })
+
         tg?.onEvent("invoiceClosed", ({status} : {status : string}) => {
             if (status === 'paid') {
                 localStorage.removeItem("cart")
@@ -115,9 +119,6 @@ const Form = () => {
 
     useEffect(() => {
         if (methodPayment !== MethodPayment.NONE) {
-            tg?.MainButton.onClick(() => {
-                buy()
-            })
             tg?.MainButton.show()
         }
 
