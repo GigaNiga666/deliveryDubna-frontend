@@ -65,7 +65,6 @@ const Form = () => {
     }
 
     function buy() {
-        if (!validation()) return
 
         const name = document.querySelector('#inputName') as HTMLInputElement
         const tel = document.querySelector('#inputTel') as HTMLInputElement
@@ -118,7 +117,10 @@ const Form = () => {
         if (methodPayment !== MethodPayment.NONE) {
             tg?.MainButton.show()
 
-            tg?.MainButton.onClick(buy)
+            tg?.MainButton.onClick(() => {
+                if (!validation()) return
+                buy()
+            })
         }
 
         if (methodPayment === MethodPayment.ONLINE && data) tg?.openInvoice(data.url)
