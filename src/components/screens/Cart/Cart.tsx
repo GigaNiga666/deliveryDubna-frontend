@@ -16,7 +16,7 @@ const Cart = () => {
     const {cart, setBonuses, addFromCart, removeFromCart, clear} = useCart()
     const com = useRef<HTMLTextAreaElement>(null);
     const [update, setUpdate] = useState<boolean>(false)
-    const {data, isLoading} = useQuery("bonuses", () => userService.getUserBonuses(tg?.initDataUnsafe.user?.id as number))
+    const {data, isLoading} = useQuery("bonuses", () => userService.getUserBonuses(982163886))
     const [input, setInput] = useState<string>("0")
 
 
@@ -69,10 +69,6 @@ const Cart = () => {
 
     return (
         <div className={styles.cart}>
-            <button onClick={() => {
-                document.querySelector("#modal")?.classList.replace("hidden", "flex")
-
-            }}>F</button>
             <div className={styles.wrapper}>
                 <div className={"mb-10 flex justify-between items-center px-5"}>
                     <h2 className={"text-[40px]"}>Корзина</h2>

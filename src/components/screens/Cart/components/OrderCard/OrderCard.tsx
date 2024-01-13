@@ -32,14 +32,14 @@ const OrderCard: FC<Props> = ({order, update,addFromCart, removeFromCart, calcul
                 <div className={"flex pt-2.5 gap-2"}>
                     <button className={"bg-[#FF7020] rounded-[5px] text-white w-6 h-6 text-center flex justify-center items-center"} onClick={() => {
                         setCount(count+1)
-                        tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
                         addFromCart(order.dish, order.dish.saloon.id, order.dish.saloon.name)
+                        tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
                     }}>+</button>
                     <button className={"bg-[#FF7020] rounded-[5px] text-white w-6 h-6 text-center flex justify-center items-center"} onClick={() => {
                         setCount(count-1)
-                        tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
                         if (removeFromCart(order.dish) == 0)
                             update((prev : boolean) => !prev)
+                        tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
                     }}>-</button>
                 </div>
             </div>

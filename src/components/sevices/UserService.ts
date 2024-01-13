@@ -2,6 +2,7 @@ import {$api} from "@/components/http";
 
 interface ResponseUser {
     name : string
+    bonuses: number
     orders : {
         id: number
         date: string
