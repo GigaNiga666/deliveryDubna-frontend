@@ -70,9 +70,9 @@ const Cart = () => {
     },[update])
 
     useEffect(() => {
-        if (!isLoading && data) {
+        if (!isLoading) {
             tg?.MainButton.show()
-            if (data > 0) tg?.MainButton.onClick(clickWithBonuses)
+            if (data != undefined && data > 0) tg?.MainButton.onClick(clickWithBonuses)
             else tg?.MainButton.onClick(clickWithoutBonuses)
         }
     }, [isLoading])
