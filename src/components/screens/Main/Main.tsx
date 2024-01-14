@@ -20,6 +20,7 @@ const Main = () => {
 
     function click() {
         router.replace("/cart")
+        tg?.showAlert("Test")
         tg?.MainButton.offClick(click)
     }
 
