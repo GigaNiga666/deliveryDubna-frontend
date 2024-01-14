@@ -20,19 +20,19 @@ const Saloon = () => {
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
 
+    function click() {
+        router.replace("/cart")
+        tg?.MainButton.offClick(click)
+    }
+
     useEffect(() => {
 
-        const click = () => {
-            router.replace("/")
-            tg?.MainButton.offClick(click)
-        }
-
         tg?.BackButton.show()
-        tg?.BackButton.onClick(click)
-        tg?.MainButton.setParams({text: "Корзина", color: "#FF7020"})
-        tg?.MainButton.onClick(() => {
-            router.replace("/cart")
+        tg?.BackButton.onClick(() => {
+            router.replace("/")
         })
+        tg?.MainButton.setParams({text: "Корзина", color: "#FF7020"})
+        tg?.MainButton.onClick(click)
 
         if (cart.length) tg?.MainButton.show()
 
