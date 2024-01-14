@@ -155,7 +155,7 @@ const Cart = () => {
                     </div>
                     <Range bonuses={bonuses > calculatePrice() ? calculatePrice() - 100 : bonuses} input={input}
                            setInput={setInput}/>
-                    <p>Начислится бонусов: {bonusesAwarded}</p>
+                    <p className={"font-semibold mb-3"}>Начислится бонусов: {bonusesAwarded}</p>
                     <button
                         className={"flex font-semibold justify-center w-full bg-[#FF7020] text-white py-1.5 rounded-xl"}
                         onClick={() => {
