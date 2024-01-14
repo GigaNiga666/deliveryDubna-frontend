@@ -17,9 +17,11 @@ const Cart = () => {
     const {cart, setBonuses, addFromCart, removeFromCart, clear} = useCart()
     const com = useRef<HTMLTextAreaElement>(null);
     const [update, setUpdate] = useState<boolean>(false)
-    const {data, isLoading} = useQuery("bonuses", () => userService.getUserBonuses(tg?.initDataUnsafe.user?.id as number))
+    const {data, isLoading} = useQuery("bonuses",
+        () => userService.getUserBonuses(982163886, cart.map(dish => dish.dish.saloon.id))
+    )
     const [input, setInput] = useState<string>("0")
-
+    const [bonusesAwarded, setBonusesAwarded] = useState<number>(0)
 
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
@@ -53,6 +55,18 @@ const Cart = () => {
          return price
     }
 
+    function calculateBonuses() {
+        if (data) {
+            const {factors} = data
+            let bonusesAwardedTemp = 0
+            for (const cartEl of cart) {
+                const factor = factors.find(factor => factor.id === cartEl.dish.saloon.id)
+                bonusesAwardedTemp += cartEl.dish.price * cartEl.count * (factor?.factor as number / 100)
+            }
+            setBonusesAwarded(Math.ceil(bonusesAwardedTemp))
+        }
+    }
+
     useEffect(() => {
 
         tg?.BackButton.show()
@@ -64,6 +78,7 @@ const Cart = () => {
     }, [])
 
     useEffect(() => {
+        console.log('Sss')
         if (!cart.length) {
             tg?.MainButton.hide()
         }
@@ -71,8 +86,11 @@ const Cart = () => {
 
     useEffect(() => {
         if (!isLoading) {
+
+            calculateBonuses()
+
             tg?.MainButton.show()
-            if (data != undefined && data > 0) tg?.MainButton.onClick(clickWithBonuses)
+            if (data != undefined && data.bonuses > 0) tg?.MainButton.onClick(clickWithBonuses)
             else tg?.MainButton.onClick(clickWithoutBonuses)
         }
     }, [isLoading])
@@ -92,6 +110,8 @@ const Cart = () => {
         </div>
     )
 
+    const {bonuses} = data
+
     return (
         <div className={styles.cart}>
             <div className={styles.wrapper}>
@@ -105,7 +125,7 @@ const Cart = () => {
                 <ul className={"px-3"}>
                     {
                         cart.map(order =>
-                            order.count ? <OrderCard calculatePrice={calculatePrice} key={`${order.dish}${order.count}`}
+                            order.count ? <OrderCard calculateBonuses={calculateBonuses} calculatePrice={calculatePrice} key={`${order.dish}${order.count}`}
                                                      update={setUpdate} order={order} addFromCart={addFromCart}
                                                      removeFromCart={removeFromCart}/> : null
                         )
@@ -128,11 +148,12 @@ const Cart = () => {
                         <h4 className={"text-[20px] font-semibold"}>Оплата бонусами</h4>
                         <div className={"flex items-center"}>
                             <SvgSprite id={"bonus"} width={24} height={24}/>
-                            <p>{data}</p>
+                            <p>{bonuses}</p>
                         </div>
                     </div>
-                    <Range bonuses={data > calculatePrice() ? calculatePrice() - 100 : data} input={input}
+                    <Range bonuses={bonuses > calculatePrice() ? calculatePrice() - 100 : bonuses} input={input}
                            setInput={setInput}/>
+                    <p>Начислится бонусов: {bonusesAwarded}</p>
                     <button
                         className={"flex font-semibold justify-center w-full bg-[#FF7020] text-white py-1.5 rounded-xl"}
                         onClick={() => {

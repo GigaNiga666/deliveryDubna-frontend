@@ -8,10 +8,11 @@ interface Props {
     addFromCart : Function,
     removeFromCart : Function,
     update : Function,
-    calculatePrice: () => number
+    calculatePrice: () => number,
+    calculateBonuses : Function
 }
 
-const OrderCard: FC<Props> = ({order, update,addFromCart, removeFromCart, calculatePrice}) => {
+const OrderCard: FC<Props> = ({order, calculateBonuses,update,addFromCart, removeFromCart, calculatePrice}) => {
 
     const [count, setCount] = useState<number>(order.count)
     const {tg} = useContext(TelegramContext)
@@ -34,12 +35,14 @@ const OrderCard: FC<Props> = ({order, update,addFromCart, removeFromCart, calcul
                         setCount(count+1)
                         addFromCart(order.dish, order.dish.saloon.id, order.dish.saloon.name)
                         tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
+                        calculateBonuses()
                     }}>+</button>
                     <button className={"bg-[#FF7020] rounded-[5px] text-white w-6 h-6 text-center flex justify-center items-center"} onClick={() => {
                         setCount(count-1)
                         if (removeFromCart(order.dish) == 0)
                             update((prev : boolean) => !prev)
                         tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
+                        calculateBonuses()
                     }}>-</button>
                 </div>
             </div>

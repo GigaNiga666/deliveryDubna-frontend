@@ -28,6 +28,14 @@ interface ResponseOrder {
     }[]
 }
 
+interface ResponseBonuses {
+    bonuses : number,
+    factors: {
+        id: number,
+        factor: number
+    }[]
+}
+
 class UserService {
 
     async getUserInfo(id : number) {
@@ -35,8 +43,8 @@ class UserService {
         return res.data
     }
 
-    async getUserBonuses(id : number) {
-        const res = await $api.get<number>(`users/bonuses/${id}`)
+    async getUserBonuses(id : number, saloons: number[]) {
+        const res = await $api.post<ResponseBonuses>(`users/bonuses/${id}`, {saloons})
         return res.data
     }
 
