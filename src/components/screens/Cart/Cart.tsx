@@ -138,6 +138,8 @@ const Cart = () => {
                     <button
                         className={"absolute right-[8px] top-[8px] transform hover:scale-110"}
                         onClick={() => {
+                            if (data != undefined && data.bonuses > 0) tg?.MainButton.onClick(clickWithBonuses)
+                            else tg?.MainButton.onClick(clickWithoutBonuses)
                             tg?.MainButton.show()
                             document.querySelector("#modal")?.classList.replace("flex", "hidden")
                         }}
