@@ -21,6 +21,7 @@ const TelegramProvider : FC<PropsWithChildren> = ({children}) => {
 
         function click() {
             router.replace("/cart")
+            app.showAlert("Test2")
             app.MainButton.offClick(click)
         }
 
