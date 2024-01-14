@@ -22,10 +22,13 @@ const Saloon = () => {
 
     useEffect(() => {
 
-        tg?.BackButton.show()
-        tg?.BackButton.onClick(() => {
+        const click = () => {
             router.replace("/")
-        })
+            tg?.MainButton.offClick(click)
+        }
+
+        tg?.BackButton.show()
+        tg?.BackButton.onClick(click)
         tg?.MainButton.setParams({text: "Корзина", color: "#FF7020"})
         tg?.MainButton.onClick(() => {
             router.replace("/cart")
