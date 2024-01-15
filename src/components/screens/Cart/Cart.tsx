@@ -75,10 +75,6 @@ const Cart = () => {
         tg?.MainButton.hide()
         tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
 
-        return () => {
-            tg?.MainButton.offClick(clickWithBonuses)
-            tg?.MainButton.offClick(clickWithoutBonuses)
-        }
     }, [])
 
     useEffect(() => {
@@ -89,6 +85,11 @@ const Cart = () => {
             tg?.MainButton.show()
             if (data != undefined && data.bonuses > 0) tg?.MainButton.onClick(clickWithBonuses)
             else tg?.MainButton.onClick(clickWithoutBonuses)
+        }
+
+        return () => {
+            tg?.MainButton.offClick(clickWithBonuses)
+            tg?.MainButton.offClick(clickWithoutBonuses)
         }
     }, [isLoading])
 
