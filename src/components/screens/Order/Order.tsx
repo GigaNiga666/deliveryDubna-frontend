@@ -79,7 +79,7 @@ const Order = () => {
             <div className={"flex items-end flex-col"}>
                 <span className={"font-semibold"}>{data.isPaid ? "Оплачен" : "Не оплачен"}</span>
                 <span>Стоимость: ₽{data.price}</span>
-                <span className={"mb-2"}>Использовано бонусов: ₽{data.bonuses}</span>
+                <span className={"mb-2"}>Использовано бонусов: {data.bonuses}</span>
                 <span>Итоговая стоимость: ₽{data.price - data.bonuses}</span>
             </div>
         </main>
