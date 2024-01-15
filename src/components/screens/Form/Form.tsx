@@ -72,8 +72,6 @@ const Form = () => {
         const surrender = document.querySelector('#inputSurrender') as HTMLInputElement | undefined
         const paymentType = document.querySelector('input[type="radio"]:checked') as HTMLInputElement
 
-        tg?.showAlert(data?.order)
-
         const delivery = {
             name : name.value as string,
             telephone : tel.value as string,
@@ -85,8 +83,6 @@ const Form = () => {
             queryId : tg?.initDataUnsafe.query_id,
             username : tg?.initDataUnsafe.user?.username
         }
-
-        tg?.showAlert("Fgfe")
 
         tg?.MainButton.disable()
         $api.post<null>("/users/createOrder", delivery).then(() => {
