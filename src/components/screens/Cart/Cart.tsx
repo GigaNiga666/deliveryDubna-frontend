@@ -1,7 +1,7 @@
 import styles from "./Cart.module.scss"
 import {OrderCard} from "@/components/screens/Cart/components/OrderCard/OrderCard";
 import {useCart} from "@/components/hooks/useCart";
-import {useContext, useEffect, useRef, useState} from "react";
+import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {useRouter} from "next/navigation";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {SvgSprite} from "@/components/ui/SvgSprite/SvgSprite";
@@ -25,7 +25,7 @@ const Cart = () => {
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
 
-    function clickWithBonuses() {
+    const clickWithBonuses = useCallback(() => {
         if (calculatePrice() < 100) {
             tg?.showAlert("Минимальная сумма заказа - 100 рублей")
             return
@@ -33,15 +33,15 @@ const Cart = () => {
         tg?.MainButton.offClick(clickWithBonuses)
         tg?.MainButton.hide()
         document.querySelector("#modal")?.classList.replace("hidden", "flex")
-    }
+    }, [])
 
-    function clickWithoutBonuses() {
+    const clickWithoutBonuses = useCallback(() => {
         tg?.MainButton.offClick(clickWithoutBonuses)
         tg?.MainButton.hide()
         localStorage.setItem("comment", com.current?.value as string)
         setBonuses(+input)
         router.replace("/form")
-    }
+    }, [])
 
     function calculatePrice() {
         let price = 0;
