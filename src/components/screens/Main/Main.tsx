@@ -19,8 +19,8 @@ const Main = () => {
     const router = useRouter()
 
     const click = () => {
-        router.replace("/cart")
         tg?.MainButton.offClick(click)
+        router.replace("/cart")
     }
 
     useEffect(() => {

@@ -21,16 +21,16 @@ const Saloon = () => {
     const {tg} = useContext(TelegramContext)
 
     function click() {
-        router.replace("/cart")
         tg?.MainButton.offClick(click)
+        router.replace("/cart")
     }
 
     useEffect(() => {
 
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
-            router.replace("/")
             tg?.MainButton.offClick(click)
+            router.replace("/")
         })
         tg?.MainButton.setParams({text: "Корзина", color: "#FF7020"})
         tg?.MainButton.onClick(click)

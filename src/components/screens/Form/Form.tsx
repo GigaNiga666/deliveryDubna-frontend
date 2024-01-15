@@ -107,6 +107,11 @@ const Form = () => {
         tg?.MainButton.setParams({text: "Продолжить", color: "#FF7020"})
         tg?.MainButton.hide()
 
+        tg?.BackButton.onClick(() => {
+            tg?.MainButton.offClick(click)
+            router.replace("/")
+        })
+
         tg?.onEvent("invoiceClosed", ({status} : {status : string}) => {
             if (status === 'paid') {
                 localStorage.removeItem("cart")
@@ -115,10 +120,6 @@ const Form = () => {
             }
             else router.replace("/")
         })
-
-        return () => {
-            tg?.MainButton.offClick(click)
-        }
     }, [])
 
     useEffect(() => {
