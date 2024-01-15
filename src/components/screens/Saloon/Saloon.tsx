@@ -30,6 +30,7 @@ const Saloon = () => {
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
             router.replace("/")
+            tg?.MainButton.offClick(click)
         })
         tg?.MainButton.setParams({text: "Корзина", color: "#FF7020"})
         tg?.MainButton.onClick(click)

@@ -31,6 +31,7 @@ const Product = () => {
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
             router.replace(`/saloon/${saloonId}`)
+            tg?.MainButton.offClick(click)
         })
 
         if (cart.length && tg) {
