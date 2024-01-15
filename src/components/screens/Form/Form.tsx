@@ -72,6 +72,8 @@ const Form = () => {
         const surrender = document.querySelector('#inputSurrender') as HTMLInputElement | undefined
         const paymentType = document.querySelector('input[type="radio"]:checked') as HTMLInputElement
 
+        tg?.showAlert(data?.order)
+
         const delivery = {
             name : name.value as string,
             telephone : tel.value as string,
@@ -103,7 +105,7 @@ const Form = () => {
 
     const click = useCallback(() => {
         if (validation()) buy()
-    },[])
+    },[data])
 
     useEffect(() => {
         tg?.MainButton.setParams({text: "Продолжить", color: "#FF7020"})
