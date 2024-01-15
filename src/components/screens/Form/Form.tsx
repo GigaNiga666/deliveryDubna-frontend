@@ -1,5 +1,5 @@
 import styles from "./Form.module.scss"
-import {FormEvent, useContext, useEffect, useState} from "react";
+import {FormEvent, useCallback, useContext, useEffect, useState} from "react";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {useCart} from "@/components/hooks/useCart";
 import {useQuery} from "react-query";
@@ -99,17 +99,17 @@ const Form = () => {
         }
     }
 
-    function click() {
+    const click = useCallback(() => {
         if (validation()) buy()
-    }
+    },[])
 
     useEffect(() => {
         tg?.MainButton.setParams({text: "Продолжить", color: "#FF7020"})
         tg?.MainButton.hide()
 
         tg?.BackButton.onClick(() => {
-            tg?.MainButton.offClick(click)
             router.replace("/")
+            tg?.MainButton.offClick(click)
         })
 
         tg?.onEvent("invoiceClosed", ({status} : {status : string}) => {
@@ -125,7 +125,6 @@ const Form = () => {
     useEffect(() => {
         if (methodPayment !== MethodPayment.NONE) {
             tg?.MainButton.show()
-
             tg?.MainButton.onClick(click)
         }
 

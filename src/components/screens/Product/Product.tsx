@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import styles from "./Product.module.scss"
 import {useQuery} from "react-query";
 import {useParams, useRouter} from "next/navigation";
@@ -21,10 +21,10 @@ const Product = () => {
     const {tg} = useContext(TelegramContext)
     const router = useRouter()
 
-    function click() {
+    const click = useCallback(() => {
         router.replace("/cart")
         tg?.MainButton.offClick(click)
-    }
+    }, [])
 
     useEffect(() => {
 

@@ -3,7 +3,7 @@ import {SvgSprite} from "@/components/ui/SvgSprite/SvgSprite";
 import {saloonService} from "@/components/sevices/SaloonService";
 import {useQuery} from "react-query";
 import Link from "next/link";
-import {useContext, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import {useCart} from "@/components/hooks/useCart";
 import {useRouter} from "next/navigation";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
@@ -18,10 +18,10 @@ const Main = () => {
     const {tg} = useContext(TelegramContext)
     const router = useRouter()
 
-    const click = () => {
+    const click = useCallback( () => {
         tg?.MainButton.offClick(click)
         router.replace("/cart")
-    }
+    }, [])
 
     useEffect(() => {
         tg?.BackButton.hide()
@@ -31,7 +31,6 @@ const Main = () => {
             tg.MainButton.show()
             tg.MainButton.onClick(click)
         }
-
     }, [])
 
     if (isLoading) return <Loader/>

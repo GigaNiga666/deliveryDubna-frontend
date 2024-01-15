@@ -6,7 +6,7 @@ import {saloonService} from "@/components/sevices/SaloonService";
 import Link from "next/link";
 import {useCart} from "@/components/hooks/useCart";
 import {Dish} from "@/components/types/Dish";
-import {useContext, useEffect} from "react";
+import {useCallback, useContext, useEffect} from "react";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {Loader} from "@/components/ui/Loader/Loader";
 
@@ -20,10 +20,10 @@ const Saloon = () => {
     const router = useRouter()
     const {tg} = useContext(TelegramContext)
 
-    function click() {
+    const click = useCallback(() =>  {
         tg?.MainButton.offClick(click)
         router.replace("/cart")
-    }
+    }, [])
 
     useEffect(() => {
 
