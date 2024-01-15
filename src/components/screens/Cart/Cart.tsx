@@ -30,6 +30,7 @@ const Cart = () => {
             tg?.showAlert("Минимальная сумма заказа - 100 рублей")
             return
         }
+        tg?.showAlert("Fre")
         tg?.MainButton.offClick(clickWithBonuses)
         tg?.MainButton.hide()
         document.querySelector("#modal")?.classList.replace("hidden", "flex")
