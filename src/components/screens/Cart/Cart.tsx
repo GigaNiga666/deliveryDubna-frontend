@@ -75,6 +75,11 @@ const Cart = () => {
         tg?.MainButton.hide()
         tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
 
+        return () => {
+            tg?.MainButton.offClick(clickWithoutBonuses)
+            tg?.MainButton.offClick(clickWithBonuses)
+        }
+
     }, [])
 
     useEffect(() => {
