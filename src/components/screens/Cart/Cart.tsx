@@ -18,7 +18,7 @@ const Cart = () => {
     const com = useRef<HTMLTextAreaElement>(null);
     const [update, setUpdate] = useState<boolean>(false)
     const {data, isLoading} = useQuery("bonuses",
-        () => userService.getUserBonuses(tg?.initDataUnsafe.user?.id as number, cart.map(dish => dish.dish.saloon.id))
+        () => userService.getUserBonuses(982163886, cart.map(dish => dish.dish.saloon.id))
     )
     const [input, setInput] = useState<string>("0")
     const [bonusesAwarded, setBonusesAwarded] = useState<number>(0)
