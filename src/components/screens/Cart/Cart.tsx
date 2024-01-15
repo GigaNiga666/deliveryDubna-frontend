@@ -16,7 +16,6 @@ const Cart = () => {
 
     const {cart, setBonuses, addFromCart, removeFromCart, clear} = useCart()
     const com = useRef<HTMLTextAreaElement>(null);
-    const [update, setUpdate] = useState<boolean>(false)
     const {data, isLoading} = useQuery("bonuses",
         () => userService.getUserBonuses(982163886, cart.map(dish => dish.dish.saloon.id))
     )
@@ -31,19 +30,19 @@ const Cart = () => {
             tg?.showAlert("Минимальная сумма заказа - 100 рублей")
             return
         }
+        tg?.MainButton.offClick(clickWithBonuses)
 
         document.querySelector("#modal")?.classList.replace("hidden", "flex")
 
         tg?.MainButton.hide()
-        tg?.MainButton.offClick(clickWithBonuses)
     }
 
     function clickWithoutBonuses() {
         router.replace("/form")
+        tg?.MainButton.offClick(clickWithoutBonuses)
         localStorage.setItem("comment", com.current?.value as string)
         setBonuses(+input)
         tg?.MainButton.hide()
-        tg?.MainButton.offClick(clickWithoutBonuses)
     }
 
     function calculatePrice() {
@@ -76,13 +75,6 @@ const Cart = () => {
         tg?.MainButton.hide()
         tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
     }, [])
-
-    useEffect(() => {
-        console.log('Sss')
-        if (!cart.length) {
-            tg?.MainButton.hide()
-        }
-    },[update])
 
     useEffect(() => {
         if (!isLoading) {
@@ -119,14 +111,14 @@ const Cart = () => {
                     <h2 className={"text-[40px]"}>Корзина</h2>
                     <button className={""} onClick={() => {
                         clear()
-                        setUpdate(prevState => !prevState)
+                        setInput('0')
                     }}><SvgSprite id={"trash"} width={36} height={36}/></button>
                 </div>
                 <ul className={"px-3"}>
                     {
                         cart.map(order =>
                             order.count ? <OrderCard calculateBonuses={calculateBonuses} calculatePrice={calculatePrice} key={`${order.dish}${order.count}`}
-                                                     update={setUpdate} order={order} addFromCart={addFromCart}
+                                                     order={order} addFromCart={addFromCart}
                                                      removeFromCart={removeFromCart}/> : null
                         )
                     }

@@ -7,12 +7,11 @@ interface Props {
     order : {dish : DishCart, count : number},
     addFromCart : Function,
     removeFromCart : Function,
-    update : Function,
     calculatePrice: () => number,
     calculateBonuses : Function
 }
 
-const OrderCard: FC<Props> = ({order, calculateBonuses,update,addFromCart, removeFromCart, calculatePrice}) => {
+const OrderCard: FC<Props> = ({order, calculateBonuses,addFromCart, removeFromCart, calculatePrice}) => {
 
     const [count, setCount] = useState<number>(order.count)
     const {tg} = useContext(TelegramContext)
