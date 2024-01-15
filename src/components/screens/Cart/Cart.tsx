@@ -30,14 +30,12 @@ const Cart = () => {
             tg?.showAlert("Минимальная сумма заказа - 100 рублей")
             return
         }
-        tg?.showAlert("Fre")
         tg?.MainButton.offClick(clickWithBonuses)
         tg?.MainButton.hide()
         document.querySelector("#modal")?.classList.replace("hidden", "flex")
     }, [])
 
     const clickWithoutBonuses = useCallback(() => {
-        tg?.showAlert("Fre31231")
         tg?.MainButton.offClick(clickWithoutBonuses)
         tg?.MainButton.hide()
         localStorage.setItem("comment", com.current?.value as string)
