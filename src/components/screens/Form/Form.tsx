@@ -84,6 +84,8 @@ const Form = () => {
             username : tg?.initDataUnsafe.user?.username
         }
 
+        tg?.showAlert("Fgfe")
+
         tg?.MainButton.disable()
         $api.post<null>("/users/createOrder", delivery).then(() => {
             localStorage.removeItem("cart")
