@@ -99,6 +99,10 @@ const Form = () => {
         }
     }
 
+    function click() {
+        if (validation()) buy()
+    }
+
     useEffect(() => {
         tg?.MainButton.setParams({text: "Продолжить", color: "#FF7020"})
         tg?.MainButton.hide()
@@ -111,15 +115,17 @@ const Form = () => {
             }
             else router.replace("/")
         })
+
+        return () => {
+            tg?.MainButton.offClick(click)
+        }
     }, [])
 
     useEffect(() => {
         if (methodPayment !== MethodPayment.NONE) {
             tg?.MainButton.show()
 
-            tg?.MainButton.onClick(() => {
-                if (validation()) buy()
-            })
+            tg?.MainButton.onClick(click)
         }
 
         if (methodPayment === MethodPayment.ONLINE && data) tg?.openInvoice(data.url)
