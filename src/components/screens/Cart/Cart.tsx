@@ -100,12 +100,15 @@ const Cart = () => {
         <>Данные отсутствуют</>
     )
 
-    if (!cart.length) return (
-        <div className={"flex flex-col justify-center items-center h-full gap-3"}>
-            <SvgSprite id={"cart"} width={70} height={70}/>
-            <p className={"text-2xl"}>Ваша корзина <span className={"text-[#FF7020]"}>пустая</span> :(</p>
-        </div>
-    )
+    if (!cart.length) {
+        tg?.MainButton.hide()
+        return (
+            <div className={"flex flex-col justify-center items-center h-full gap-3"}>
+                <SvgSprite id={"cart"} width={70} height={70}/>
+                <p className={"text-2xl"}>Ваша корзина <span className={"text-[#FF7020]"}>пустая</span> :(</p>
+            </div>
+        )
+    }
 
     const {bonuses} = data
 
