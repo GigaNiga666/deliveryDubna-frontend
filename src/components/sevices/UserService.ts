@@ -18,6 +18,7 @@ interface ResponseOrder {
     telephone: string,
     price: number,
     isPaid: boolean,
+    bonuses: number,
     dishes: {
         amount: number,
         image: string,
