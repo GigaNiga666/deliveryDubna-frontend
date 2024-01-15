@@ -37,6 +37,7 @@ const Cart = () => {
     }, [])
 
     const clickWithoutBonuses = useCallback(() => {
+        tg?.showAlert("Fre31231")
         tg?.MainButton.offClick(clickWithoutBonuses)
         tg?.MainButton.hide()
         localStorage.setItem("comment", com.current?.value as string)
