@@ -30,7 +30,6 @@ const Cart = () => {
             tg?.showAlert("Минимальная сумма заказа - 100 рублей")
             return
         }
-        tg?.showAlert("Test")
         tg?.MainButton.hide()
         tg?.MainButton.offClick(clickWithBonuses)
         document.querySelector("#modal")?.classList.replace("hidden", "flex")
@@ -70,6 +69,8 @@ const Cart = () => {
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
             router.replace("/")
+            tg?.MainButton.offClick(clickWithBonuses)
+            tg?.MainButton.offClick(clickWithoutBonuses)
         })
         tg?.MainButton.hide()
         tg?.MainButton.setParams({text: "Стоимость: ₽" + calculatePrice(), color: "#FF7020"})
