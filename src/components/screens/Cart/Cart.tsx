@@ -87,10 +87,6 @@ const Cart = () => {
             else tg?.MainButton.onClick(clickWithoutBonuses)
         }
 
-        return () => {
-            tg?.MainButton.offClick(clickWithBonuses)
-            tg?.MainButton.offClick(clickWithoutBonuses)
-        }
     }, [isLoading])
 
     if (isLoading) return (
