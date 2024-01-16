@@ -176,15 +176,17 @@ const Cart = () => {
                         id={'btn'}
                         className={"flex font-semibold justify-center w-full bg-[#FF7020] text-white py-1.5 rounded-xl"}
                         onClick={async (event) => {
-                            event.currentTarget.disabled = true
-                            const {state,msg} = await userService.usePromo(promo,982163886)
-                            console.log(state, msg)
-                            if (state === "error") {
-                                tg?.showAlert(msg)
-                                return
+                            if (promo) {
+                                event.currentTarget.disabled = true
+                                const {state,msg} = await userService.usePromo(promo,982163886)
+                                console.log(state, msg)
+                                if (state === "error") {
+                                    tg?.showAlert(msg)
+                                    return
+                                }
+                                setPromocode({promo: promo, value: msg as number})
                             }
 
-                            setPromocode({promo: promo, value: msg as number})
                             router.replace("/form")
                             localStorage.setItem("comment", com.current?.value as string)
                             setBonuses(+input)
