@@ -54,6 +54,11 @@ class UserService {
         return res.data
     }
 
+    async usePromo(promo: string, id: number) {
+        const res = await $api.post<{state: string, msg : string | number}>(`promo/use`, {promo,id})
+        return res.data
+    }
+
 }
 
 export const userService = new UserService()

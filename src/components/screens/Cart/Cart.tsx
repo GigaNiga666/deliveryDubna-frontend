@@ -14,12 +14,13 @@ import {relativizeURL} from "next/dist/shared/lib/router/utils/relativize-url";
 
 const Cart = () => {
 
-    const {cart, setBonuses, addFromCart, removeFromCart, clear} = useCart()
+    const {cart, setBonuses, addFromCart, removeFromCart, clear, setPromo : setPromocode} = useCart()
     const com = useRef<HTMLTextAreaElement>(null);
     const {data, isLoading} = useQuery("bonuses",
-        () => userService.getUserBonuses(tg?.initDataUnsafe.user?.id as number, cart.map(dish => dish.dish.saloon.id))
+        () => userService.getUserBonuses(982163886, cart.map(dish => dish.dish.saloon.id))
     )
     const [input, setInput] = useState<string>("0")
+    const [promo, setPromo] = useState<string>("")
     const [bonusesAwarded, setBonusesAwarded] = useState<number>(0)
 
     const router = useRouter()
@@ -42,6 +43,10 @@ const Cart = () => {
         setBonuses(+input)
         router.replace("/form")
     }, [])
+
+    function checkPromo() {
+
+    }
 
     function calculatePrice() {
         let price = 0;
@@ -133,6 +138,16 @@ const Cart = () => {
                         )
                     }
                 </ul>
+                <div className={"px-3 py-3.5 bg-[#F8A917] bg-opacity-70 flex items-center"}>
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink"
+                         width="24" height="24" x="0" y="0" viewBox="0 0 409.603 409.603"
+                         className=""><g>
+                        <path d="M375.468.002h-141.87c-9.385 0-22.502 5.437-29.133 12.063L9.961 206.568c-13.281 13.266-13.281 35.016 0 48.266l144.824 144.819c13.251 13.266 34.98 13.266 48.251-.015L397.54 205.165c6.625-6.625 12.063-19.763 12.063-29.128v-141.9c0-18.77-15.366-34.135-34.135-34.135zm-68.271 136.535c-18.852 0-34.135-15.299-34.135-34.135 0-18.867 15.283-34.135 34.135-34.135 18.852 0 34.14 15.268 34.14 34.135.001 18.836-15.288 34.135-34.14 34.135z" fill="white" opacity="1">
+                        </path></g>
+                    </svg>
+                    <p className={"text-white text-[14px] flex-grow ml-[10px]"}>Промокод</p>
+                    <input value={promo} onInput={(e) => setPromo(e.currentTarget.value)} className={"placeholder-white text-[14px] text-white"} type="text" placeholder={"Введите промокод..."}/>
+                </div>
                 <textarea placeholder='Комментарий к заказу...' ref={com} className={styles.textArea}></textarea>
             </div>
             <div id={'modal'} className={"absolute hidden justify-center items-center inset-0 bg-black bg-opacity-50"}>
@@ -160,7 +175,17 @@ const Cart = () => {
                     <p className={"font-semibold mb-3"}>Начислится бонусов: {bonusesAwarded}</p>
                     <button
                         className={"flex font-semibold justify-center w-full bg-[#FF7020] text-white py-1.5 rounded-xl"}
-                        onClick={() => {
+                        onClick={async (event) => {
+                            event.currentTarget.disabled = true
+                            const {state,msg} = await userService.usePromo(promo,982163886)
+
+                            if (state === "error") {
+                                event.currentTarget.disabled = false
+                                tg?.showAlert(msg)
+                                return
+                            }
+
+                            setPromocode({promo: promo, value: msg as number})
                             router.replace("/form")
                             localStorage.setItem("comment", com.current?.value as string)
                             setBonuses(+input)

@@ -10,6 +10,7 @@ if (typeof window !== 'undefined') {
 
 let cart: { dish: DishCart, count: number }[] = local ? JSON.parse(local) : []
 let bonuses = 0;
+let promocode : {promo: string, value: number} = {promo: "", value: 0}
 
 export function useCart() {
 
@@ -64,12 +65,22 @@ export function useCart() {
 
     function getBonuses() {return bonuses}
 
+    function setPromo(promo : {promo: string, value: number}) {
+        promocode = promo
+    }
+
+    function getPromo() {
+        return promocode
+    }
+
     return {
         cart,
         addFromCart,
         removeFromCart,
         clear,
         setBonuses,
-        getBonuses
+        getBonuses,
+        setPromo,
+        getPromo
     }
 }
