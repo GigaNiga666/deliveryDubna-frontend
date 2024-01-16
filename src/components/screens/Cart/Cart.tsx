@@ -33,6 +33,8 @@ const Cart = () => {
         }
         tg?.MainButton.offClick(clickWithBonuses)
         tg?.MainButton.hide()
+        const btn = document.querySelector('#btn') as HTMLButtonElement
+        btn.disabled = false
         document.querySelector("#modal")?.classList.replace("hidden", "flex")
     }, [])
 
@@ -44,9 +46,6 @@ const Cart = () => {
         router.replace("/form")
     }, [])
 
-    function checkPromo() {
-
-    }
 
     function calculatePrice() {
         let price = 0;
@@ -121,6 +120,9 @@ const Cart = () => {
 
     return (
         <div className={styles.cart}>
+            <button onClick={() => {
+                clickWithBonuses()
+            }}>click</button>
             <div className={styles.wrapper}>
                 <div className={"mb-10 flex justify-between items-center px-5"}>
                     <h2 className={"text-[40px]"}>Корзина</h2>
@@ -174,13 +176,13 @@ const Cart = () => {
                            setInput={setInput}/>
                     <p className={"font-semibold mb-3"}>Начислится бонусов: {bonusesAwarded}</p>
                     <button
+                        id={'btn'}
                         className={"flex font-semibold justify-center w-full bg-[#FF7020] text-white py-1.5 rounded-xl"}
                         onClick={async (event) => {
                             event.currentTarget.disabled = true
                             const {state,msg} = await userService.usePromo(promo,982163886)
-
+                            console.log(state, msg)
                             if (state === "error") {
-                                event.currentTarget.disabled = false
                                 tg?.showAlert(msg)
                                 return
                             }
