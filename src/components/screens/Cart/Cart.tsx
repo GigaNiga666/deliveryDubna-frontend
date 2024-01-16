@@ -120,9 +120,6 @@ const Cart = () => {
 
     return (
         <div className={styles.cart}>
-            <button onClick={() => {
-                clickWithBonuses()
-            }}>click</button>
             <div className={styles.wrapper}>
                 <div className={"mb-10 flex justify-between items-center px-5"}>
                     <h2 className={"text-[40px]"}>Корзина</h2>
