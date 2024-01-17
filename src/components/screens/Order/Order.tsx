@@ -80,6 +80,7 @@ const Order = () => {
                 <span className={"font-semibold"}>{data.isPaid ? "Оплачен" : "Не оплачен"}</span>
                 <span>Стоимость: ₽{data.price}</span>
                 <span className={"mb-2"}>Использовано бонусов: {data.bonuses}</span>
+                {data.promocode?.promo}
                 {
                     data.promocode ?
                         <div className={"mb-2"}>
