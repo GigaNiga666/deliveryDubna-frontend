@@ -19,6 +19,7 @@ interface ResponseOrder {
     price: number,
     isPaid: boolean,
     bonuses: number,
+    promocode: {promo: string, value: number} | null
     dishes: {
         amount: number,
         image: string,
