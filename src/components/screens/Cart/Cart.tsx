@@ -17,7 +17,7 @@ const Cart = () => {
     const {cart, setBonuses, addFromCart, removeFromCart, clear, setPromo : setPromocode} = useCart()
     const com = useRef<HTMLTextAreaElement>(null);
     const {data, isLoading} = useQuery("bonuses",
-        () => userService.getUserBonuses(982163886, cart.map(dish => dish.dish.saloon.id))
+        () => userService.getUserBonuses(tg?.initDataUnsafe.user?.id as number, cart.map(dish => dish.dish.saloon.id))
     )
     const [input, setInput] = useState<string>("0")
     const [promo, setPromo] = useState<string>("")
@@ -178,7 +178,7 @@ const Cart = () => {
                         onClick={async (event) => {
                             if (promo) {
                                 event.currentTarget.disabled = true
-                                const {state,msg} = await userService.usePromo(promo,982163886)
+                                const {state,msg} = await userService.usePromo(promo,tg?.initDataUnsafe.user?.id as number)
                                 console.log(state, msg)
                                 if (state === "error") {
                                     tg?.showAlert(msg)
