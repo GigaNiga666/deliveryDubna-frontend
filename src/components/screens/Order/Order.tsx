@@ -83,11 +83,11 @@ const Order = () => {
                 {
                     data.promocode ?
                         <div className={"mb-2 flex flex-col"}>
-                            <span>Использован промокод: {data.promocode.promo}</span>
-                            <span>Скидка промокода: {data.promocode.value}</span>
+                            <span>Промокод: {data.promocode.promo}</span>
+                            <span>Скидка: {data.promocode.value}%</span>
                         </div> : null
                 }
-                <span>Итоговая стоимость: ₽{data.price - data.bonuses}</span>
+                <span>Итоговая стоимость: ₽{(data.price - data.bonuses) * (data.promocode ? data.promocode?.value / 100 : 1)}</span>
             </div>
         </main>
     );
