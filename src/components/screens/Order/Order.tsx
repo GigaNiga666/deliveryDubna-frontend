@@ -87,7 +87,7 @@ const Order = () => {
                             <span>Скидка: {data.promocode.value}%</span>
                         </div> : null
                 }
-                <span>Итоговая стоимость: ₽{(data.price - data.bonuses) * (data.promocode ? data.promocode?.value / 100 : 1)}</span>
+                <span>Итоговая стоимость: ₽{(data.price - data.bonuses) * (data.promocode ? Math.ceil(data.promocode?.value / 100) : 1)}</span>
             </div>
         </main>
     );
