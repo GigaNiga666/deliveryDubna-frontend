@@ -17,7 +17,8 @@ const Order = () => {
     useEffect(() => {
         tg?.BackButton.show()
         tg?.BackButton.onClick(() => {
-            router.replace("/profile")
+            router.back()
+            // router.replace("/profile")
         })
     },[])
 
