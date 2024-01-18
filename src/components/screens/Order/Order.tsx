@@ -15,11 +15,18 @@ const Order = () => {
     const router = useRouter()
 
     useEffect(() => {
-        tg?.BackButton.show()
-        tg?.BackButton.onClick(() => {
+
+        const click = () => {
             router.back()
-            // router.replace("/profile")
-        })
+            tg?.BackButton.offClick(click)
+        }
+
+        tg?.BackButton.show()
+        tg?.BackButton.onClick(click)
+
+        return () => {
+            tg?.BackButton.offClick(click)
+        }
     },[])
 
     if (isLoading) return <Loader/>
