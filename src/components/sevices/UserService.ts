@@ -16,6 +16,7 @@ interface ResponseOrder {
     paymentType: string,
     surrender: number | null,
     telephone: string,
+    name : string
     price: number,
     isPaid: boolean,
     bonuses: number,
@@ -38,10 +39,21 @@ interface ResponseBonuses {
     }[]
 }
 
+interface ResponseOrders {
+    states : string[],
+    orders : {
+        id: number,
+        date: string,
+        state : string,
+        price : number,
+        isPaid : boolean
+    }[]
+}
+
 class UserService {
 
     async getUserInfo(id : number) {
-        const res = await $api.get<ResponseUser>(`users/${id}`)
+        const res = await $api.get<ResponseUser>(`users/get/${id}`)
         return res.data
     }
 
@@ -55,8 +67,18 @@ class UserService {
         return res.data
     }
 
+    async getOrders() {
+        const res = await $api.get<ResponseOrders>("users/orders")
+        return res.data
+    }
+
     async usePromo(promo: string, id: number) {
         const res = await $api.post<{state: string, msg : string | number}>(`promo/use`, {promo,id})
+        return res.data
+    }
+
+    async updateOrder(state : string, id : number) {
+        const res = await $api.put(`/users/order/${id}`, {state})
         return res.data
     }
 

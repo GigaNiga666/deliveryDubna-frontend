@@ -30,6 +30,10 @@ const Order = () => {
             <h2 className={"text-[40px] mb-6"}>Заказ #{id}</h2>
             <ul className={"flex flex-col gap-[10px] mb-8"}>
                 <li>
+                    <h4 className={styles.infoName}>Имя</h4>
+                    <p className={styles.infoContent}>{data.name || "Отсутствует"}</p>
+                </li>
+                <li>
                     <h4 className={styles.infoName}>Адрес</h4>
                     <p className={styles.infoContent}>{data.address || "Отсутствует"}</p>
                 </li>
@@ -84,7 +88,7 @@ const Order = () => {
                     data.promocode ?
                         <div className={"mb-2 flex flex-col"}>
                             <span>Промокод: {data.promocode.promo}</span>
-                            <span>Скидка: {data.promocode.value}%</span>
+                            <span className={"text-right"}>Скидка: {data.promocode.value}%</span>
                         </div> : null
                 }
                 <span>Итоговая стоимость: ₽{(data.price - data.bonuses) * (data.promocode ? Math.ceil(data.promocode?.value / 100) : 1)}</span>
