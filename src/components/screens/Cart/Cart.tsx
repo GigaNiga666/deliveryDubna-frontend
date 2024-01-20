@@ -14,7 +14,7 @@ import {relativizeURL} from "next/dist/shared/lib/router/utils/relativize-url";
 
 const Cart = () => {
 
-    const {cart, setBonuses, addFromCart, removeFromCart, clear, setPromo : setPromocode} = useCart()
+    const {cart, setBonuses, addFromCart, removeFromCart, clear, setPromo : setPromocode, getPromo} = useCart()
     const com = useRef<HTMLTextAreaElement>(null);
     const {data, isLoading} = useQuery("bonuses",
         () => userService.getUserBonuses(982163886, cart.map(dish => dish.dish.saloon.id))
@@ -234,7 +234,7 @@ const Cart = () => {
                             setBonuses(+input)
                         }}
                     >
-                        Оплатить {calculatePrice() - +input}₽
+                        Оплатить {(calculatePrice() - +input) * (getPromo().value ? Math.ceil(getPromo().value / 100) : 1)}₽
                     </button>
                 </div>
             </div>
