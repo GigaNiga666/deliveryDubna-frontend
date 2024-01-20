@@ -153,7 +153,7 @@ const Cart = () => {
                                className={"ml-4 placeholder-white text-[14px] text-white flex-grow"} type="text"
                                placeholder={"Промокод..."}/>
                     </div>
-                    <button id={"promocodeApply"} className={"text-[12px] bg-white px-4 w-[95px]"}
+                    <button id={"promocodeApply"} className={"text-[14px] bg-white text-center w-[95px]"}
                             onClick={async (event) => {
                                 if (promo) {
                                     const loader = document.querySelector("#loader") as HTMLSpanElement
@@ -178,11 +178,11 @@ const Cart = () => {
                         <div id={'loader'} className={"hidden h-[24px]"}><Loader/></div>
                         <span id={"apply"}>Применить</span>
                     </button>
-                    <button id={"promocodeCancel"} className={"text-[12px] bg-white px-4 w-[95px] hidden"}
+                    <button id={"promocodeCancel"} className={"text-[14px] bg-white text-center w-[95px] hidden"}
                             onClick={async (event) => {
                                 document.querySelector("#promocodeApply")?.classList.remove("hidden")
                                 event.currentTarget.classList.add("hidden")
-                                tg?.showAlert("Промокод успешно использован!")
+                                tg?.showAlert("Промокод отменён")
                             }}>
                         <span>Отменить</span>
                     </button>
