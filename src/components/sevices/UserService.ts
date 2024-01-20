@@ -77,6 +77,11 @@ class UserService {
         return res.data
     }
 
+    async checkPromo(promo: string, id: number) {
+        const res = await $api.post<{state: string, msg : string | number}>(`promo/check`, {promo,id})
+        return res.data
+    }
+
     async updateOrder(state : string, id : number) {
         const res = await $api.put(`/users/order/${id}`, {state})
         return res.data

@@ -17,7 +17,7 @@ const Cart = () => {
     const {cart, setBonuses, addFromCart, removeFromCart, clear, setPromo : setPromocode} = useCart()
     const com = useRef<HTMLTextAreaElement>(null);
     const {data, isLoading} = useQuery("bonuses",
-        () => userService.getUserBonuses(tg?.initDataUnsafe.user?.id as number, cart.map(dish => dish.dish.saloon.id))
+        () => userService.getUserBonuses(982163886, cart.map(dish => dish.dish.saloon.id))
     )
     const [input, setInput] = useState<string>("0")
     const [promo, setPromo] = useState<string>("")
@@ -137,15 +137,55 @@ const Cart = () => {
                         )
                     }
                 </ul>
-                <div className={"px-3 py-3.5 bg-[#F8A917] bg-opacity-70 flex items-center"}>
-                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink"
-                         width="24" height="24" x="0" y="0" viewBox="0 0 409.603 409.603"
-                         className=""><g>
-                        <path d="M375.468.002h-141.87c-9.385 0-22.502 5.437-29.133 12.063L9.961 206.568c-13.281 13.266-13.281 35.016 0 48.266l144.824 144.819c13.251 13.266 34.98 13.266 48.251-.015L397.54 205.165c6.625-6.625 12.063-19.763 12.063-29.128v-141.9c0-18.77-15.366-34.135-34.135-34.135zm-68.271 136.535c-18.852 0-34.135-15.299-34.135-34.135 0-18.867 15.283-34.135 34.135-34.135 18.852 0 34.14 15.268 34.14 34.135.001 18.836-15.288 34.135-34.14 34.135z" fill="white" opacity="1">
-                        </path></g>
-                    </svg>
-                    <p className={"text-white text-[14px] flex-grow ml-[10px]"}>Промокод</p>
-                    <input value={promo} onInput={(e) => setPromo(e.currentTarget.value)} className={"placeholder-white text-[14px] text-white"} type="text" placeholder={"Введите промокод..."}/>
+                <div className={"flex shadow"}>
+                    <div className={"px-3 py-3.5 bg-[#FF7020] flex items-center flex-grow"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink"
+                             width="24" height="24" x="0" y="0" viewBox="0 0 409.603 409.603"
+                             className="">
+                            <g>
+                                <path
+                                    d="M375.468.002h-141.87c-9.385 0-22.502 5.437-29.133 12.063L9.961 206.568c-13.281 13.266-13.281 35.016 0 48.266l144.824 144.819c13.251 13.266 34.98 13.266 48.251-.015L397.54 205.165c6.625-6.625 12.063-19.763 12.063-29.128v-141.9c0-18.77-15.366-34.135-34.135-34.135zm-68.271 136.535c-18.852 0-34.135-15.299-34.135-34.135 0-18.867 15.283-34.135 34.135-34.135 18.852 0 34.14 15.268 34.14 34.135.001 18.836-15.288 34.135-34.14 34.135z"
+                                    fill="white" opacity="1">
+                                </path>
+                            </g>
+                        </svg>
+                        <input value={promo} onInput={(e) => setPromo(e.currentTarget.value)}
+                               className={"ml-4 placeholder-white text-[14px] text-white flex-grow"} type="text"
+                               placeholder={"Промокод..."}/>
+                    </div>
+                    <button id={"promocodeApply"} className={"text-[12px] bg-white px-4 w-[95px]"}
+                            onClick={async (event) => {
+                                if (promo) {
+                                    const loader = document.querySelector("#loader") as HTMLSpanElement
+                                    const text = event.currentTarget.querySelector("#apply") as HTMLSpanElement
+                                    loader.classList.remove("hidden")
+                                    text.classList.add("hidden")
+                                    const {state, msg} = await userService.checkPromo(promo, 982163886)
+                                    if (state === "error") {
+                                        tg?.showAlert(msg)
+                                        loader.classList.add("hidden")
+                                        text.classList.remove("hidden")
+                                        return
+                                    }
+                                    setPromocode({promo: promo, value: msg as number})
+                                    loader.classList.add("hidden")
+                                    text.classList.remove("hidden")
+                                    document.querySelector("#promocodeApply")?.classList.add("hidden")
+                                    document.querySelector("#promocodeCancel")?.classList.remove("hidden")
+                                    tg?.showAlert("Промокод успешно использован!")
+                                }
+                            }}>
+                        <div id={'loader'} className={"hidden h-[24px]"}><Loader/></div>
+                        <span id={"apply"}>Применить</span>
+                    </button>
+                    <button id={"promocodeCancel"} className={"text-[12px] bg-white px-4 w-[95px] hidden"}
+                            onClick={async (event) => {
+                                document.querySelector("#promocodeApply")?.classList.remove("hidden")
+                                event.currentTarget.classList.add("hidden")
+                                tg?.showAlert("Промокод успешно использован!")
+                            }}>
+                        <span>Отменить</span>
+                    </button>
                 </div>
                 <textarea placeholder='Комментарий к заказу...' ref={com} className={styles.textArea}></textarea>
             </div>
@@ -178,13 +218,13 @@ const Cart = () => {
                         onClick={async (event) => {
                             if (promo) {
                                 event.currentTarget.disabled = true
-                                const {state,msg} = await userService.usePromo(promo,tg?.initDataUnsafe.user?.id as number)
+                                const {state,msg} = await userService.usePromo(promo,982163886)
                                 console.log(state, msg)
                                 if (state === "error") {
                                     tg?.showAlert(msg)
+                                    setPromocode({promo: '', value: 0})
                                     return
                                 }
-                                setPromocode({promo: promo, value: msg as number})
                             }
 
                             router.replace("/form")
