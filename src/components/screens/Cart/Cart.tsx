@@ -173,6 +173,7 @@ const Cart = () => {
                                     document.querySelector("#promocodeApply")?.classList.add("hidden")
                                     document.querySelector("#promocodeCancel")?.classList.remove("hidden")
                                     tg?.showAlert("Промокод успешно использован!")
+                                    tg?.MainButton.setText("Стоимость: ₽" + (Math.ceil(calculatePrice() * +msg / 100)))
                                 }
                             }}>
                         <div id={'loader'} className={"hidden h-[24px]"}><Loader/></div>
@@ -183,6 +184,7 @@ const Cart = () => {
                                 document.querySelector("#promocodeApply")?.classList.remove("hidden")
                                 event.currentTarget.classList.add("hidden")
                                 tg?.showAlert("Промокод отменён")
+                                tg?.MainButton.setText("Стоимость: ₽" + calculatePrice())
                             }}>
                         <span>Отменить</span>
                     </button>
