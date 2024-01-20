@@ -85,6 +85,7 @@ const Form = () => {
         }
 
         tg?.MainButton.disable()
+        tg?.MainButton.showProgress(true)
         $api.post<null>("/users/createOrder", delivery).then(() => {
             localStorage.removeItem("cart")
             localStorage.removeItem("comment")
