@@ -197,6 +197,7 @@ const Cart = () => {
                                 document.querySelector("#promocodeApply")?.classList.remove("hidden")
                                 event.currentTarget.classList.add("hidden")
                                 tg?.showAlert("Промокод отменён")
+                                setPromocode({promo: '', value: 0})
                                 tg?.MainButton.setText("Стоимость: ₽" + calculatePrice())
                             }}>
                         <span>Отменить</span>
