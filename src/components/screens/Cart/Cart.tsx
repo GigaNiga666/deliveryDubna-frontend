@@ -36,9 +36,22 @@ const Cart = () => {
         const btn = document.querySelector('#btn') as HTMLButtonElement
         btn.disabled = false
         document.querySelector("#modal")?.classList.replace("hidden", "flex")
+        setInput("1")
+        setInput("0")
     }, [])
 
-    const clickWithoutBonuses = useCallback(() => {
+    const clickWithoutBonuses = useCallback(async () => {
+        if (promo) {
+            tg?.MainButton.disable()
+            tg?.MainButton.showProgress(true)
+            const {state,msg} = await userService.usePromo(promo,982163886)
+            if (state === "error") {
+                tg?.showAlert(msg)
+                setPromocode({promo: '', value: 0})
+                tg?.MainButton.showProgress(false)
+                return
+            }
+        }
         tg?.MainButton.offClick(clickWithoutBonuses)
         tg?.MainButton.hide()
         localStorage.setItem("comment", com.current?.value as string)
@@ -221,7 +234,6 @@ const Cart = () => {
                             if (promo) {
                                 event.currentTarget.disabled = true
                                 const {state,msg} = await userService.usePromo(promo,982163886)
-                                console.log(state, msg)
                                 if (state === "error") {
                                     tg?.showAlert(msg)
                                     setPromocode({promo: '', value: 0})
