@@ -21,6 +21,7 @@ const Cart = () => {
     )
     const [input, setInput] = useState<string>("0")
     const [promo, setPromo] = useState<string>("")
+    const [modal, setModal] = useState<boolean>(false)
     const [bonusesAwarded, setBonusesAwarded] = useState<number>(0)
 
     const router = useRouter()
@@ -36,8 +37,7 @@ const Cart = () => {
         const btn = document.querySelector('#btn') as HTMLButtonElement
         btn.disabled = false
         document.querySelector("#modal")?.classList.replace("hidden", "flex")
-        setInput("1")
-        setInput("0")
+        setModal(true)
     }, [])
 
     const clickWithoutBonuses = useCallback(async () => {
@@ -213,6 +213,7 @@ const Cart = () => {
                             else tg?.MainButton.onClick(clickWithoutBonuses)
                             tg?.MainButton.show()
                             document.querySelector("#modal")?.classList.replace("flex", "hidden")
+                            setModal(false)
                         }}
                     >
                         <SvgSprite id={"cross"} width={24} height={24}/>
