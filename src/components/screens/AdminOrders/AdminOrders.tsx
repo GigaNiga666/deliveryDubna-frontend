@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
@@ -13,6 +13,15 @@ const AdminOrders = () => {
     const [search, setSearch] = useState<string>("")
 
     const router = useRouter()
+
+    const backClick = useCallback(() => {
+        router.back()
+        tg?.BackButton.offClick(backClick)
+    }, [])
+
+    useEffect(() => {
+        tg?.BackButton.onClick(backClick)
+    }, [])
 
     if (isLoading) return <Loader/>
 

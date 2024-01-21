@@ -2,12 +2,14 @@
 import {useCallback, useContext, useEffect, useState} from "react";
 import {TelegramContext} from "@/components/providers/TelegramProvider";
 import {userService} from "@/components/sevices/UserService";
+import {useRouter} from "next/navigation";
 
 const CMMPage = () => {
 
     const {tg} = useContext(TelegramContext)
 
     const [msg, setMsg] = useState<string>("")
+    const router = useRouter()
 
     const click = useCallback(async () => {
         tg?.MainButton.showProgress(true)
@@ -16,8 +18,18 @@ const CMMPage = () => {
         tg?.showAlert(res)
     }, [msg])
 
+    const backClick = useCallback(() => {
+        router.back()
+        tg?.BackButton.offClick(backClick)
+    }, [])
+
     useEffect(() => {
         tg?.MainButton.onClick(click)
+        tg?.BackButton.onClick(backClick)
+
+        return () => {
+            tg?.MainButton.offClick(click)
+        }
     }, [])
 
     return (
