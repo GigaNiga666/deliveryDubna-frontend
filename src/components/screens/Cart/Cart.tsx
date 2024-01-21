@@ -17,7 +17,7 @@ const Cart = () => {
     const {cart, setBonuses, addFromCart, removeFromCart, clear, setPromo : setPromocode, getPromo} = useCart()
     const com = useRef<HTMLTextAreaElement>(null);
     const {data, isLoading} = useQuery("bonuses",
-        () => userService.getUserBonuses(982163886, cart.map(dish => dish.dish.saloon.id))
+        () => userService.getUserBonuses(tg?.initDataUnsafe.user?.id as number, cart.map(dish => dish.dish.saloon.id))
     )
     const [input, setInput] = useState<string>("0")
     const [promo, setPromo] = useState<string>("")
@@ -44,7 +44,7 @@ const Cart = () => {
         if (promo) {
             tg?.MainButton.disable()
             tg?.MainButton.showProgress(true)
-            const {state,msg} = await userService.usePromo(promo,982163886)
+            const {state,msg} = await userService.usePromo(promo,tg?.initDataUnsafe.user?.id as number)
             if (state === "error") {
                 tg?.showAlert(msg)
                 setPromocode({promo: '', value: 0})
@@ -173,7 +173,7 @@ const Cart = () => {
                                     const text = event.currentTarget.querySelector("#apply") as HTMLSpanElement
                                     loader.classList.remove("hidden")
                                     text.classList.add("hidden")
-                                    const {state, msg} = await userService.checkPromo(promo, 982163886)
+                                    const {state, msg} = await userService.checkPromo(promo, tg?.initDataUnsafe.user?.id as number)
                                     if (state === "error") {
                                         tg?.showAlert(msg)
                                         loader.classList.add("hidden")
@@ -235,7 +235,7 @@ const Cart = () => {
                         onClick={async (event) => {
                             if (promo) {
                                 event.currentTarget.disabled = true
-                                const {state,msg} = await userService.usePromo(promo,982163886)
+                                const {state,msg} = await userService.usePromo(promo,tg?.initDataUnsafe.user?.id as number)
                                 if (state === "error") {
                                     tg?.showAlert(msg)
                                     setPromocode({promo: '', value: 0})

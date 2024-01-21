@@ -10,7 +10,7 @@ import {useRouter} from "next/navigation";
 const Profile = () => {
 
     const {tg} = useContext(TelegramContext)
-    const { data, isLoading, isError } = useQuery("user", () =>  userService.getUserInfo(tg?.initDataUnsafe.user?.id as number))
+    const { data, isLoading, isError } = useQuery("user", () =>  userService.getUserInfo(982163886))
     const router = useRouter()
 
     useEffect(() => {
@@ -39,9 +39,26 @@ const Profile = () => {
                      alt=""/>
                 <div>
                     <h4 className={"text-[24px] mb-3"}>{tg?.initDataUnsafe.user?.first_name}</h4>
-                    <div className={"flex gap-2"}>
-                        <SvgSprite id={"bonus"} width={24} height={24}/>
-                        <p>{data.bonuses}</p>
+                    <h4 className={"text-[24px] mb-3"}>Станислав</h4>
+                    <div className={"flex"}>
+                        <div className={"flex gap-2"}>
+                            <SvgSprite id={"bonus"} width={24} height={24}/>
+                            <p>{data.bonuses}</p>
+                        </div>
+                        <div className={"flex gap-2 ml-[50px]"}>
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                 xmlnsXlink="http://www.w3.org/1999/xlink"
+                                 width="18" height="18" x="0" y="0" viewBox="0 0 409.603 409.603"
+                                 className="">
+                                <g>
+                                    <path
+                                        d="M375.468.002h-141.87c-9.385 0-22.502 5.437-29.133 12.063L9.961 206.568c-13.281 13.266-13.281 35.016 0 48.266l144.824 144.819c13.251 13.266 34.98 13.266 48.251-.015L397.54 205.165c6.625-6.625 12.063-19.763 12.063-29.128v-141.9c0-18.77-15.366-34.135-34.135-34.135zm-68.271 136.535c-18.852 0-34.135-15.299-34.135-34.135 0-18.867 15.283-34.135 34.135-34.135 18.852 0 34.14 15.268 34.14 34.135.001 18.836-15.288 34.135-34.14 34.135z"
+                                        fill="#FD6A7E" opacity="1">
+                                    </path>
+                                </g>
+                            </svg>
+                            <Link href={"profile/myPromo"} className={"hover:underline"}>Мои промокоды</Link>
+                        </div>
                     </div>
                 </div>
             </header>
@@ -50,8 +67,10 @@ const Profile = () => {
                 <ul>
                     {
                         data.orders.length ? data.orders.map(order =>
-                            <li key={order.id} className={"text-[12px] flex justify-between bg-white p-5 rounded-[10px] items-center mb-6"}>
-                                <Link style={{color: "blue"}} className={"hover:underline"} href={`profile/order/${order.id}`}>#{order.id}</Link>
+                            <li key={order.id}
+                                className={"text-[12px] flex justify-between bg-white p-5 rounded-[10px] items-center mb-6"}>
+                                <Link style={{color: "blue"}} className={"hover:underline"}
+                                      href={`profile/order/${order.id}`}>#{order.id}</Link>
                                 <div className={"text-center"}>
                                     <p>{order.date}</p>
                                 </div>
