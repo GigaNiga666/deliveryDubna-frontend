@@ -10,7 +10,7 @@ import {useRouter} from "next/navigation";
 const Profile = () => {
 
     const {tg} = useContext(TelegramContext)
-    const { data, isLoading, isError } = useQuery("user", () =>  userService.getUserInfo(982163886))
+    const { data, isLoading, isError } = useQuery("user", () =>  userService.getUserInfo(tg?.initDataUnsafe.user?.id as number))
     const router = useRouter()
 
     useEffect(() => {
