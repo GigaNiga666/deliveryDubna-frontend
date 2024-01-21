@@ -24,6 +24,8 @@ const CMMPage = () => {
     }, [])
 
     useEffect(() => {
+        tg?.BackButton.show()
+        tg?.MainButton.show()
         tg?.MainButton.onClick(click)
         tg?.BackButton.onClick(backClick)
 

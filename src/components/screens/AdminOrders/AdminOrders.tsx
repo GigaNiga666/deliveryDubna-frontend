@@ -20,6 +20,7 @@ const AdminOrders = () => {
     }, [])
 
     useEffect(() => {
+        tg?.BackButton.show()
         tg?.BackButton.onClick(backClick)
     }, [])
 
