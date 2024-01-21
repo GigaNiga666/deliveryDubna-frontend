@@ -39,7 +39,6 @@ const Profile = () => {
                      alt=""/>
                 <div>
                     <h4 className={"text-[24px] mb-3"}>{tg?.initDataUnsafe.user?.first_name}</h4>
-                    <h4 className={"text-[24px] mb-3"}>Станислав</h4>
                     <div className={"flex"}>
                         <div className={"flex gap-2"}>
                             <SvgSprite id={"bonus"} width={24} height={24}/>
