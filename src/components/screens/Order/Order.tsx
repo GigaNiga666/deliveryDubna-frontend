@@ -99,7 +99,7 @@ const Order = () => {
                             <span className={"text-right"}>Скидка: {data.promocode.value}%</span>
                         </div> : null
                 }
-                <span>Итоговая стоимость: ₽{(data.price - data.bonuses) - (data.promocode ? (data.price - data.bonuses) * Math.ceil(data.promocode?.value / 100) : 1)}</span>
+                <span>Итоговая стоимость: ₽{(data.price - data.bonuses) - (data.promocode ? Math.ceil(data.promocode?.value / 100 * (data.price - data.bonuses)) : 1)}</span>
             </div>
         </main>
     );
