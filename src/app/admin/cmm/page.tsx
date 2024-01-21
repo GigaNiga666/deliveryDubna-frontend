@@ -14,8 +14,9 @@ const CMMPage = () => {
     const click = useCallback(async () => {
         tg?.MainButton.showProgress(true)
         const res  = await userService.distribution(msg, tg?.initDataUnsafe.user?.id as number)
-        tg?.MainButton.showProgress(false)
         tg?.showAlert(res)
+        tg?.MainButton.showProgress(false)
+        tg?.MainButton.hideProgress()
     }, [msg])
 
     const backClick = useCallback(() => {
@@ -26,6 +27,7 @@ const CMMPage = () => {
     useEffect(() => {
         tg?.BackButton.show()
         tg?.MainButton.show()
+        tg?.MainButton.setParams({text: "Разослать", color: "#FF7020"})
         tg?.MainButton.onClick(click)
         tg?.BackButton.onClick(backClick)
 
