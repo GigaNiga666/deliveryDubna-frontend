@@ -187,7 +187,7 @@ const Cart = () => {
                                     document.querySelector("#promocodeApply")?.classList.add("hidden")
                                     document.querySelector("#promocodeCancel")?.classList.remove("hidden")
                                     tg?.showAlert("Промокод успешно использован!")
-                                    tg?.MainButton.setText("Стоимость: ₽" + (Math.ceil(calculatePrice() * +msg / 100)))
+                                    tg?.MainButton.setText("Стоимость: ₽" + (calculatePrice() - Math.ceil(calculatePrice() * +msg / 100)))
                                 }
                             }}>
                         <div id={'loader'} className={"hidden h-[24px]"}><Loader/></div>
@@ -249,7 +249,7 @@ const Cart = () => {
                             setBonuses(+input)
                         }}
                     >
-                        Оплатить {Math.ceil((calculatePrice() - +input) * (getPromo().value ? getPromo().value / 100 : 1))}₽
+                        Оплатить {Math.ceil((calculatePrice() - +input) - (getPromo().value ? getPromo().value / 100 * (calculatePrice() - +input) : 0))}₽
                     </button>
                 </div>
             </div>
