@@ -53,7 +53,7 @@ const MyPromo = () => {
                 {
                     data.map(promo =>
                         <li className={"bg-[#FF7020] text-white shadow flex justify-between px-3 py-2 rounded-[5px] font-semibold mb-5"}>
-                            <span onClick={copyText}>{promo.promo}</span>
+                            <span onClick={copyText} className={"cursor-pointer"}>{promo.promo}</span>
                             <span>{promo.value}%</span>
                         </li>
                     )
