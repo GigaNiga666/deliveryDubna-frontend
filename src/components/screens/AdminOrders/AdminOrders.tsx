@@ -11,10 +11,6 @@ const AdminOrders = () => {
     const {tg} = useContext(TelegramContext)
     const {data, isLoading} = useQuery("orders", () => userService.getOrders())
     const [search, setSearch] = useState<string>("")
-    const [id, setId] = useState<boolean>(false)
-    const [date, setDate] = useState<boolean>(false)
-    const [state, setState] = useState<boolean>(false)
-    const [price, setPrice] = useState<boolean>(false)
 
     const router = useRouter()
 
@@ -26,27 +22,7 @@ const AdminOrders = () => {
 
         if (!search) return true
 
-        let idBool = false;
-        let dateBool = false;
-        let stateBool = false;
-        let priceBool = false;
-
-        if (id) {
-            idBool = order.id.toString().includes(search)
-        }
-        if (date) {
-            dateBool = order.date.includes(search)
-        }
-
-        if (state) {
-            stateBool = order.state.includes(search)
-        }
-
-        if (price) {
-            priceBool = order.price.toString().includes(search)
-        }
-
-        return idBool || dateBool || stateBool || priceBool
+        return order.id.toString().includes(search) || order.date.includes(search) || order.state.includes(search) || order.price.toString().includes(search)
     })
 
     return (
@@ -58,27 +34,15 @@ const AdminOrders = () => {
             <div>
                 <ul>
                     <div className={styles.orderHeader}>
-                        <label className={"flex gap-1"}>
-                            <input type="checkbox" onInput={(e) => setId(e.currentTarget.checked)}/>
-                            <p>Id</p>
-                        </label>
-                        <label className={"flex gap-1"}>
-                            <input type="checkbox" onInput={(e) => setDate(e.currentTarget.checked)}/>
-                            <p>Дата заказа</p>
-                        </label>
-                        <label className={"flex gap-1"}>
-                            <input type="checkbox" onInput={(e) => setState(e.currentTarget.checked)}/>
-                            <p>Статус</p>
-                        </label>
-                        <label className={"flex gap-1"}>
-                            <input type="checkbox" onInput={(e) => setPrice(e.currentTarget.checked)}/>
-                            <p>Цена</p>
-                        </label>
+                        <p>Id</p>
+                        <p>Дата заказа</p>
+                        <p>Статус</p>
+                        <p>Цена</p>
                     </div>
                     {
                         orders.map(order =>
                             <li key={order.id} className={styles.orderItem}>
-                                <Link style={{color: "blue"}} className={"hover:underline"}
+                            <Link style={{color: "blue"}} className={"hover:underline"}
                                       href={`/profile/order/${order.id}`}>#{order.id}</Link>
                                 <div className={"text-center"}>
                                     <p>{order.date}</p>

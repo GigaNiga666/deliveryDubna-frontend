@@ -92,6 +92,10 @@ class UserService {
         return res.data
     }
 
+    async distribution(msg : string, id : number) {
+        const res = await $api.post<string>(`/users/distribution`, {msg,id})
+        return res.data
+    }
 }
 
 export const userService = new UserService()
