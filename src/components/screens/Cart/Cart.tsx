@@ -249,7 +249,7 @@ const Cart = () => {
                             setBonuses(+input)
                         }}
                     >
-                        Оплатить {Math.ceil((calculatePrice() - +input) - (getPromo().value ? getPromo().value / 100 * (calculatePrice() - +input) : 0))}₽
+                        Оплатить {(calculatePrice() - +input) - Math.ceil((getPromo().value ? getPromo().value / 100 * (calculatePrice() - +input) : 0))}₽
                     </button>
                 </div>
             </div>
