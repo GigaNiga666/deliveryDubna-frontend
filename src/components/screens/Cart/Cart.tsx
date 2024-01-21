@@ -138,6 +138,7 @@ const Cart = () => {
                     <h2 className={"text-[40px]"}>Корзина</h2>
                     <button className={""} onClick={() => {
                         clear()
+                        setModal(prev => !prev)
                         setInput('0')
                     }}><SvgSprite id={"trash"} width={36} height={36}/></button>
                 </div>
