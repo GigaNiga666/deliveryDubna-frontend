@@ -30,7 +30,6 @@ const TelegramProvider : FC<PropsWithChildren> = ({children}) => {
             if (localStorage.getItem("cart")) {
                 app.MainButton.setParams({text: "Корзина", color: "#FF7020"})
                 app.MainButton.show()
-                app.MainButton.onClick(click)
             }
         }
 
