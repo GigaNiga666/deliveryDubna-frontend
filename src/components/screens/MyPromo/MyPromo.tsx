@@ -30,7 +30,7 @@ const MyPromo = () => {
     )
 
     if (!data) return (
-        <div className={"flex justify-center items-center h-full text-xl font-semibold"}>
+        <div className={"flex justify-center items-center h-full text-xl font-semibold p-4 text-center"}>
             У вас ещё нету бонусных промокодов (
         </div>
     )

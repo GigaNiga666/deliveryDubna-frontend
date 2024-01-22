@@ -39,12 +39,12 @@ const Profile = () => {
                      alt=""/>
                 <div>
                     <h4 className={"text-[24px] mb-3"}>{tg?.initDataUnsafe.user?.first_name}</h4>
-                    <div className={"flex"}>
-                        <div className={"flex gap-2"}>
+                    <div className={"flex items-center"}>
+                        <div className={"flex gap-2 items-center"}>
                             <SvgSprite id={"bonus"} width={24} height={24}/>
                             <p>{data.bonuses}</p>
                         </div>
-                        <div className={"flex gap-2 ml-[50px]"}>
+                        <div className={"flex gap-2 ml-[50px] items-center"}>
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
                                  xmlnsXlink="http://www.w3.org/1999/xlink"
                                  width="18" height="18" x="0" y="0" viewBox="0 0 409.603 409.603"
@@ -56,7 +56,7 @@ const Profile = () => {
                                     </path>
                                 </g>
                             </svg>
-                            <Link href={"profile/myPromo"} className={"hover:underline"}>Мои промокоды</Link>
+                            <Link href={"profile/myPromo"} className={"hover:underline"}>Промокоды</Link>
                         </div>
                     </div>
                 </div>
