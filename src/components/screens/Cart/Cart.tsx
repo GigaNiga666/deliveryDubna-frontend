@@ -114,7 +114,7 @@ const Cart = () => {
     useEffect(() => {
         const fullPrice = calculatePrice()
 
-        const realPrice = fullPrice - +input / fullPrice
+        const realPrice = (fullPrice - +input) / fullPrice
 
         if (data) {
             const {factors} = data
