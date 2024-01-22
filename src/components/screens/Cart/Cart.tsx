@@ -111,6 +111,23 @@ const Cart = () => {
 
     }, [isLoading])
 
+    useEffect(() => {
+        const fullPrice = calculatePrice()
+
+        const realPrice = fullPrice - +input / fullPrice
+
+        if (data) {
+            const {factors} = data
+            let bonusesAwardedTemp = 0
+            for (const cartEl of cart) {
+                const factor = factors.find(factor => factor.id === cartEl.dish.saloon.id)
+                bonusesAwardedTemp += cartEl.dish.price * cartEl.count * (factor?.factor as number / 100)
+            }
+            setBonusesAwarded(Math.round(bonusesAwardedTemp * realPrice))
+        }
+
+    }, [input])
+
     if (isLoading) return (
         <Loader/>
     )
