@@ -233,6 +233,7 @@ const Cart = () => {
                             tg?.MainButton.show()
                             document.querySelector("#modal")?.classList.replace("flex", "hidden")
                             setModal(false)
+                            setInput("0")
                         }}
                     >
                         <SvgSprite id={"cross"} width={24} height={24}/>
