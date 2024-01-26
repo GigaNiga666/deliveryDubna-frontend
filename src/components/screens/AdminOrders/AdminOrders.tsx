@@ -61,7 +61,6 @@ const AdminOrders = () => {
 
     function sort(e : any, field : string) {
         const svgSprite = e.currentTarget.querySelector("svg") as SVGSVGElement;
-
         if (svgSprite.classList.contains("hidden")) svgSprite.classList.remove("hidden")
 
         if (svgSprite.classList.contains("up")) {
