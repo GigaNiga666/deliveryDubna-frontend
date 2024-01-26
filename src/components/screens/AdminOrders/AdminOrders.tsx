@@ -6,11 +6,19 @@ import styles from "./styles.module.scss"
 import {useQuery} from "react-query";
 import {userService} from "@/components/sevices/UserService";
 import {Loader} from "@/components/ui/Loader/Loader";
+import {SvgSprite} from "@/components/ui/SvgSprite/SvgSprite";
 
 const AdminOrders = () => {
     const {tg} = useContext(TelegramContext)
-    const {data, isLoading} = useQuery("orders", () => userService.getOrders())
+    const {data, isLoading} = useQuery("orders", async () => await getOrders())
     const [search, setSearch] = useState<string>("")
+    const [orders, setOrders] = useState<{
+        id: number,
+            date: string,
+            state : string,
+            price : number,
+            isPaid : boolean
+    }[]>([])
 
     const router = useRouter()
 
@@ -25,16 +33,46 @@ const AdminOrders = () => {
         tg?.BackButton.onClick(backClick)
     }, [])
 
+    useEffect(() => {
+        if (!data) return
+
+        setOrders(data.orders.filter(order => {
+
+            if (!search) return true
+
+            return order.id.toString().includes(search) || order.date.includes(search) || order.state.includes(search) || order.price.toString().includes(search)
+        }))
+    }, [search])
+
     if (isLoading) return <Loader/>
 
     if (!data) return <>Данные отсутствуют по неизвестной причине(</>
 
-    const orders = data.orders.filter(order => {
+    async function getOrders() {
+        return await userService.getOrders().then((res) => {
+            setOrders(res.orders)
+            return res
+        })
+    }
 
-        if (!search) return true
+    function byField(fieldName : string, custom : number){
+        return custom === 1 ? (a : any, b : any) => a[fieldName] > b[fieldName] ? 1 : -1 : (a : any, b : any) => a[fieldName] > b[fieldName] ? -1 : 1;
+    }
 
-        return order.id.toString().includes(search) || order.date.includes(search) || order.state.includes(search) || order.price.toString().includes(search)
-    })
+    function sort(e : any, field : string) {
+        const svgSprite = e.currentTarget.querySelector("svg") as SVGSVGElement;
+
+        if (svgSprite.classList.contains("hidden")) svgSprite.classList.remove("hidden")
+
+        if (svgSprite.classList.contains("up")) {
+            svgSprite.classList.replace("up", "bottom")
+            setOrders([...orders].sort(byField(field, 1)))
+        }
+        else if (svgSprite.classList.contains("bottom")){
+            svgSprite.classList.replace("bottom", "up")
+            setOrders([...orders].sort(byField(field, -1)))
+        }
+    }
 
     return (
         <main className={"p-4"}>
@@ -45,10 +83,14 @@ const AdminOrders = () => {
             <div>
                 <ul>
                     <div className={styles.orderHeader}>
-                        <p>Id</p>
-                        <p>Дата заказа</p>
-                        <p>Статус</p>
-                        <p>Цена</p>
+                        <div className={"flex gap-1 cursor-pointer select-none"} onClick={(e) => sort(e,"id")}><span>Id</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
+                        </div>
+                        <div className={"flex gap-1 cursor-pointer select-none"} onClick={(e) => sort(e,"date")}><span>Дата заказа</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
+                        </div>
+                        <div className={"flex gap-1 cursor-pointer select-none"} onClick={(e) => sort(e,"state")}><span>Статус</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
+                        </div>
+                        <div className={"flex gap-1 cursor-pointer select-none"} onClick={(e) => sort(e,"price")}><span>Цена</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
+                        </div>
                     </div>
                     {
                         orders.map(order =>
