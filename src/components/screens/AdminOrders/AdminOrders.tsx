@@ -82,13 +82,13 @@ const AdminOrders = () => {
             <div>
                 <ul>
                     <div className={styles.orderHeader}>
-                        <div className={"flex gap-1 cursor-pointer select-none"} onClick={(e) => sort(e,"id")}><span>Id</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
+                        <div className={"flex gap-1 cursor-pointer select-none items-center"} onClick={(e) => sort(e,"id")}><span>Id</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
                         </div>
-                        <div className={"flex gap-1 cursor-pointer select-none"} onClick={(e) => sort(e,"date")}><span>Дата заказа</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
+                        <div className={"flex gap-1 cursor-pointer select-none items-center"} onClick={(e) => sort(e,"date")}><span>Дата заказа</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
                         </div>
-                        <div className={"flex gap-1 cursor-pointer select-none"} onClick={(e) => sort(e,"state")}><span>Статус</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
+                        <div className={"flex gap-1 cursor-pointer select-none items-center"} onClick={(e) => sort(e,"state")}><span>Статус</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
                         </div>
-                        <div className={"flex gap-1 cursor-pointer select-none"} onClick={(e) => sort(e,"price")}><span>Цена</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
+                        <div className={"flex gap-1 cursor-pointer select-none items-center"} onClick={(e) => sort(e,"price")}><span>Цена</span> <SvgSprite id={'arrow'} width={14} height={14} classname={"hidden up"}/>
                         </div>
                     </div>
                     {
